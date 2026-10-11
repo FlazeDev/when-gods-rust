@@ -28,8 +28,8 @@ enabled=PackedStringArray("res://addons/anthonyec.camera_preview/plugin.cfg", "r
 
 [global_group]
 
-player=""
 Enemy=""
+Player=""
 
 [input]
 

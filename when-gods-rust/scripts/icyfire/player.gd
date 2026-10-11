@@ -9,7 +9,6 @@ extends CharacterBody3D
 @onready var inventoryC: InventoryComponent = $InventoryComponent
 @onready var blockC: BlockComponent = $BlockComponent
 @onready var anim: AnimationPlayer = $TestAnimPlayer
-@onready var health_bar: ProgressBar = $CanvasLayer/Control/HealthBar
 @onready var iArea: Area3D = $InteractArea
 
 @export var canCombo:bool = false
@@ -26,6 +25,7 @@ var	bodies_hit_this_swing: Array[Node3D] = []
 func _ready() -> void:
 	cameraC.start()
 	resolveC.start()
+	healthC.start()
 	healthC.died.connect(onDeath)
 	blockC.blocking_started.connect(_on_blocking_started)
 	blockC.blocking_ended.connect(_on_blocking_ended)
@@ -38,7 +38,7 @@ func _process(delta: float) -> void:
 	inventoryC.update(resolveC, anim, canStagger, canCombo, canCrit)
 	cameraC.update(self)
 	resolveC.update(delta)
-	health_bar.value = healthC.current_health
+	healthC.update()
 #func _unhandled_input(event:InputEvent) -> void:
 	#if event is InputEventMouseButton:
 		#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

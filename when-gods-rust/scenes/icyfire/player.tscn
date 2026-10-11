@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://d2i164qcqw4na"]
 
-[ext_resource type="Script" uid="uid://choj0y3mf2iix" path="res://scripts/icyfire/player.gd" id="1_dkbgn"]
-[ext_resource type="Script" uid="uid://b6rlibesv2u6e" path="res://scripts/icyfire/InputComponent.gd" id="1_fx4ke"]
-[ext_resource type="Script" uid="uid://dtnjxw1vua83h" path="res://scripts/icyfire/MovementComponent.gd" id="2_que7a"]
-[ext_resource type="Script" uid="uid://2ykk4lgaj6yg" path="res://scripts/F1aze23/InventoryComponent.gd" id="2_vjlaq"]
-[ext_resource type="Script" uid="uid://c3q2bf4w8k2ae" path="res://scripts/F1aze23/CameraComponent.gd" id="5_1mpnw"]
-[ext_resource type="Script" uid="uid://dq71svuwl2njr" path="res://scripts/randem/HealthComponent.gd" id="6_okieb"]
-[ext_resource type="Script" uid="uid://c6h2bauklbph" path="res://scripts/F1aze23/ResolveComponent.gd" id="7_8qorh"]
-[ext_resource type="Script" uid="uid://c5yf8bxmdfcr5" path="res://scripts/randem/StaggerComponent.gd" id="7_vvvn2"]
-[ext_resource type="Script" uid="uid://baudgajyg4pmb" path="res://scripts/randem/BlockComponent.gd" id="9_ahkby"]
+[ext_resource type="Script" uid="uid://choj0y3mf2iix" path="res://Scripts/icyfire/player.gd" id="1_dkbgn"]
+[ext_resource type="Script" uid="uid://b6rlibesv2u6e" path="res://Scripts/icyfire/InputComponent.gd" id="1_fx4ke"]
+[ext_resource type="Script" uid="uid://dtnjxw1vua83h" path="res://Scripts/icyfire/MovementComponent.gd" id="2_que7a"]
+[ext_resource type="Script" uid="uid://2ykk4lgaj6yg" path="res://Scripts/F1aze23/InventoryComponent.gd" id="2_vjlaq"]
+[ext_resource type="Script" uid="uid://c3q2bf4w8k2ae" path="res://Scripts/F1aze23/CameraComponent.gd" id="5_1mpnw"]
+[ext_resource type="Script" uid="uid://dq71svuwl2njr" path="res://Scripts/randem/HealthComponent.gd" id="6_okieb"]
+[ext_resource type="Script" uid="uid://c6h2bauklbph" path="res://Scripts/F1aze23/ResolveComponent.gd" id="7_8qorh"]
+[ext_resource type="Script" uid="uid://c5yf8bxmdfcr5" path="res://Scripts/randem/StaggerComponent.gd" id="7_vvvn2"]
+[ext_resource type="Script" uid="uid://baudgajyg4pmb" path="res://Scripts/randem/BlockComponent.gd" id="9_ahkby"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fgv4r"]
 
@@ -18,9 +18,6 @@
 albedo_color = Color(0, 0.24313726, 1, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_1mpnw"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_wnojd"]
-viewport_path = NodePath("ResolveComponent/Resolve")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8qorh"]
 radius = 0.70654297
@@ -275,7 +272,7 @@ _data = {
 &"Unblock": SubResource("Animation_7anrw")
 }
 
-[node name="Player" type="CharacterBody3D" unique_id=1258498601 groups=["player"]]
+[node name="Player" type="CharacterBody3D" unique_id=1258498601 groups=["Player"]]
 script = ExtResource("1_dkbgn")
 canCombo = true
 canCrit = true
@@ -317,33 +314,17 @@ offset = Vector3(7.725, 9.254, 9.816)
 rotation = Vector3(-0.805, 0, 0)
 metadata/_custom_type_script = "uid://c3q2bf4w8k2ae"
 
-[node name="HealthComponent" type="Node" parent="." unique_id=1763875352]
+[node name="HealthComponent" type="Node" parent="." unique_id=1763875352 node_paths=PackedStringArray("healthBar")]
 script = ExtResource("6_okieb")
+healthBar = NodePath("../CanvasLayer/Control/HealthBar")
 
 [node name="StaggerComponent" type="Node" parent="." unique_id=593057376]
 script = ExtResource("7_vvvn2")
 
 [node name="ResolveComponent" type="Node" parent="." unique_id=378317454 node_paths=PackedStringArray("resolveBar")]
 script = ExtResource("7_8qorh")
-resolveBar = NodePath("Resolve/ResolveBar")
+resolveBar = NodePath("../CanvasLayer/Control/ResolveBar")
 metadata/_custom_type_script = "uid://c6h2bauklbph"
-
-[node name="ResolveSprite" type="Sprite3D" parent="ResolveComponent" unique_id=1649259392]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3153229, 0)
-texture = SubResource("ViewportTexture_wnojd")
-
-[node name="Resolve" type="SubViewport" parent="ResolveComponent" unique_id=1276362489]
-transparent_bg = true
-size = Vector2i(200, 40)
-render_target_update_mode = 4
-
-[node name="ResolveBar" type="ProgressBar" parent="ResolveComponent/Resolve" unique_id=926350882]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="InteractArea" type="Area3D" parent="." unique_id=1817867001]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

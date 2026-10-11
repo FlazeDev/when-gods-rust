@@ -1,3 +1,4 @@
+'''
 class_name ZealotAttackState
 extends AttackState
 
@@ -21,3 +22,4 @@ func perform_attack(attack_target: Node3D) -> void:
 		stagger_duration,
 		dir_to_target(attack_target)
 	)
+'''

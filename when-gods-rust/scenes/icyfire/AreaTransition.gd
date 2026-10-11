@@ -1,7 +1,7 @@
 extends Area3D
 
 @export var PlayerSpawnPosition: Node3D
-@onready var player: CharacterBody3D = self.get_tree().get_first_node_in_group("player")
+@onready var player: CharacterBody3D = self.get_tree().get_first_node_in_group("Player")
 
 
 func _on_body_entered(body: Node3D) -> void:

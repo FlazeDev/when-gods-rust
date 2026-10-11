@@ -3,17 +3,27 @@ var rDir: Vector3
 var mDir: Vector3
 
 @onready var wTimer = $"../../wTimer"
-@onready var body: CharacterBody3D = $"../.."
+@export var body:CharacterBody3D
 @onready var movementC: MovementComponent = $"../../MovementComponent"
 @onready var nav: NavigationAgent3D = $"../../NavigationAgent3D"
+var player:CharacterBody3D
 var wait = false
 
 func enter():
 	randomDir()
-	wTimer.timeout.connect(randomDir)
 	nav.set_navigation_map(body.get_world_3d().navigation_map)
+	player = get_tree().get_first_node_in_group("Player")
 
 func update(delta:float):
+	if !is_inside_tree():
+		return
+	if player == null or not is_instance_valid(player):
+		# Player is dead/gone: just stand still. (Re-entering "wander" here would
+		# restart this state every frame and stack 3s timer coroutines forever.)
+		return
+	if body.global_position.distance_to(player.global_position) <= 7:
+		sm.change_state("Attack")
+		return
 	if wait:
 		return
 	if nav.is_navigation_finished():
