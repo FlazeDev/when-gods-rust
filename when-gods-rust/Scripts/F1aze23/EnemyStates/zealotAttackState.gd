@@ -11,6 +11,7 @@ var dir:Vector3
 @export var canAttack := true
 var hit:Node
 
+
 func enter():
 	player = get_tree().get_first_node_in_group("Player")
 	nav.reparent(body)
@@ -23,6 +24,7 @@ func update(delta):
 		return
 	if attackDist.is_colliding() and canAttack == true:
 		Attack()
+		return
 	elif nav.distance_to_target() > 7:
 		sm.change_state("wander")
 		return

@@ -62,13 +62,16 @@ func _physics_process(delta: float) -> void:
 		attackArea.set_deferred("monitoring", true)
 
 func _try_hit(target: Node3D) -> void:
+	if target.is_in_group("Player"):
+		return
+	if canStagger:
+		return
 	if target in bodies_hit_this_swing:
 		return
 #	if not target.is_in_group("Enemy"):
 #		return
-
 	bodies_hit_this_swing.append(target)
 	var final_damage := roundi(damage * (1.1 if canCrit else 1.0))
-	if target.has_method("take_hit"):
-		target.call("take_hit", final_damage, hit_stagger_duration)
+	if target.has_node("HealthComponent"):
+		target.get_node("HealthComponent").call("take_damage", 50)
 		print("Body", target, " has taken", damage)

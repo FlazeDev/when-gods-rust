@@ -334,6 +334,7 @@ metadata/_custom_type_script = "uid://c6h2bauklbph"
 
 [node name="ResolveSprite" type="Sprite3D" parent="ResolveComponent" unique_id=1348298327]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.575, 0)
+visible = false
 billboard = 1
 texture = SubResource("ViewportTexture_ahkby")
 

@@ -204,7 +204,7 @@ metadata/_custom_type_script = "uid://c5yf8bxmdfcr5"
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1843512695]
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=68682298]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5467877, 0)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 2.5467877, 0)
 texture = SubResource("ViewportTexture_d7kfn")
 
 [node name="SubViewport" type="SubViewport" parent="Sprite3D" unique_id=1893817477]
@@ -233,7 +233,7 @@ bones/1/parent = 0
 bones/1/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5340277, 0)
 bones/1/enabled = true
 bones/1/position = Vector3(0, 0.5340277, 0)
-bones/1/rotation = Quaternion(0, 0.36011812, 0, 0.93290675)
+bones/1/rotation = Quaternion(0, 0, 0, 1)
 bones/1/scale = Vector3(1, 1, 1)
 bones/2/name = "Head"
 bones/2/parent = 1
@@ -282,21 +282,21 @@ bones/8/parent = 7
 bones/8/rest = Transform3D(0.9186961, 0.39496505, -1.8299521e-07, -0.3949651, 0.918696, 2.7060377e-08, 1.7880488e-07, 4.741645e-08, 1, -5.9604645e-08, 0.48138526, 1.7763568e-14)
 bones/8/enabled = true
 bones/8/position = Vector3(-5.9604645e-08, 0.48138526, 1.7763568e-14)
-bones/8/rotation = Quaternion(0.25612384, 0.22155458, 0.20340429, 0.9186625)
+bones/8/rotation = Quaternion(-0.14776981, 0.08411781, 0.06503955, 0.9832894)
 bones/8/scale = Vector3(1, 0.9999998, 1)
 bones/9/name = "LowerArm.R"
 bones/9/parent = 8
 bones/9/rest = Transform3D(0.9999675, 0.008057749, -4.0599653e-09, -0.008057749, 0.9999675, 8.090717e-10, 4.066353e-09, -7.763312e-10, 1, -8.5681684e-08, 0.4336046, 1.5987212e-14)
 bones/9/enabled = true
 bones/9/position = Vector3(-8.5681684e-08, 0.4336046, 1.5987212e-14)
-bones/9/rotation = Quaternion(0.4626959, -0.29123604, 0.42381477, 0.72213244)
+bones/9/rotation = Quaternion(4.3427434e-08, 1.0426655e-08, 0.3736202, 0.92758185)
 bones/9/scale = Vector3(0.99999994, 0.99999994, 1)
 bones/10/name = "Hand.R"
 bones/10/parent = 9
 bones/10/rest = Transform3D(0.99930197, 0.037357006, -4.7264496e-08, -0.037357006, 0.9993019, 5.5202847e-09, 4.7437723e-08, -3.7507712e-09, 1, -1.00582845e-07, 0.70273036, -6.661338e-15)
 bones/10/enabled = true
 bones/10/position = Vector3(-1.00582845e-07, 0.70273036, -6.661338e-15)
-bones/10/rotation = Quaternion(0.010698659, 0.572573, -0.0153149115, 0.8196409)
+bones/10/rotation = Quaternion(-2.2116209e-09, -1.2749262e-08, -0.018681768, 0.9998255)
 bones/10/scale = Vector3(0.99999994, 0.9999999, 1)
 bones/11/name = "UpperLeg.L"
 bones/11/parent = 0
@@ -370,7 +370,7 @@ bones/20/rotation = Quaternion(5.3385087e-08, 0.7071068, -0.7071068, -5.3385087e
 bones/20/scale = Vector3(1, 1, 1)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Zealot/Skeleton3D" unique_id=2137977702]
-transform = Transform3D(-0.2827534, 0.9440051, 0.17001294, -0.5221894, -0.30017272, 0.79825664, 0.80459183, 0.1369311, 0.5778248, 0.3733965, 1.4488442, 0.69658506)
+transform = Transform3D(-0.91080105, -0.24111648, -0.33511686, 0.25591448, -0.9666988, -2.0155964e-07, -0.32395723, -0.085761406, 0.9421766, -0.8592454, 1.0003421, -0.19514853)
 bone_name = "Hand.R"
 bone_idx = 10
 

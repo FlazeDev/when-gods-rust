@@ -7,6 +7,7 @@ extends CharacterBody3D
 
 func _ready() -> void:
 	healthC.start()
+	healthC.died.connect(queue_free)
 
 func _process(delta: float) -> void:
 	if isAttacking:

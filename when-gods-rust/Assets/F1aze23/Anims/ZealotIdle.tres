@@ -1,9 +1,8 @@
-[gd_resource type="Animation" format=3 uid="uid://4bquf5qtm60v"]
+[gd_resource type="Animation" format=3 uid="uid://drvud3l85vd1x"]
 
 [resource]
 resource_name = "Idle"
 length = 0.5416667
-loop_mode = 1
 tracks/0/type = "position_3d"
 tracks/0/imported = true
 tracks/0/enabled = true

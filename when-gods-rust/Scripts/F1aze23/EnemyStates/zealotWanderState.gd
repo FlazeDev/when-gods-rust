@@ -8,6 +8,7 @@ var mDir: Vector3
 @onready var nav: NavigationAgent3D = $"../../NavigationAgent3D"
 var player:CharacterBody3D
 var wait = false
+@export var attackDist:=7
 
 func enter():
 	randomDir()
@@ -18,13 +19,12 @@ func update(delta:float):
 	if !is_inside_tree():
 		return
 	if player == null or not is_instance_valid(player):
-		# Player is dead/gone: just stand still. (Re-entering "wander" here would
-		# restart this state every frame and stack 3s timer coroutines forever.)
 		return
-	if body.global_position.distance_to(player.global_position) <= 7:
+	if body.global_position.distance_to(player.global_position) <= attackDist:
 		sm.change_state("Attack")
 		return
 	if wait:
+		movementC.physics_update(delta, Vector3.ZERO, body)
 		return
 	if nav.is_navigation_finished():
 		randomDir()
@@ -37,7 +37,6 @@ func update(delta:float):
 
 func randomDir() -> void:
 	wait = true
-	body.velocity = Vector3.ZERO
 	await get_tree().create_timer(3.0).timeout
 	wait = false
 	rDir = Vector3(randf_range(-5, 5), 0, randf_range(-5, 5))
