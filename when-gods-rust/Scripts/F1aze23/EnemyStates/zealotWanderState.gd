@@ -37,6 +37,7 @@ func update(delta:float):
 
 func randomDir() -> void:
 	wait = true
+	body.velocity = Vector3.ZERO
 	await get_tree().create_timer(3.0).timeout
 	wait = false
 	rDir = Vector3(randf_range(-5, 5), 0, randf_range(-5, 5))

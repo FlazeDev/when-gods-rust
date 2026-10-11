@@ -5,8 +5,11 @@ var player:CharacterBody3D
 @export var body:CharacterBody3D
 @onready var movementC: MovementComponent = $"../../MovementComponent"
 @onready var aTimer: Timer = $"../../aTimer"
+@onready var anim: AnimationPlayer = $"../../AnimationPlayer"
+@onready var attackDist: RayCast3D = $"../../AttackDist"
 var dir:Vector3
 var canAttack := true
+var hit:Node
 
 func enter():
 	player = get_tree().get_first_node_in_group("Player")
@@ -18,7 +21,7 @@ func update(delta):
 	if player == null or not is_instance_valid(player):
 		sm.change_state("wander")
 		return
-	if nav.distance_to_target() < 1.5:
+	if attackDist.is_colliding() and canAttack == true:
 		Attack()
 	elif nav.distance_to_target() > 7:
 		sm.change_state("wander")
@@ -32,9 +35,25 @@ func update(delta):
 func Attack():
 	if !canAttack:
 		return
-	player.get_node("HealthComponent").take_damage(20)
+	body.isAttacking = true
 	canAttack = false
-	aTimer.start(1)
-	await aTimer.timeout
+	await anim.animation_finished
 	canAttack = true
-	
+	body.isAttacking = false
+	hit = null
+
+func onAttackHit(node: Node3D) -> void:
+	if canAttack:
+		return
+	if node.is_in_group("Player"):
+		if node.has_node("HealthComponent"):
+			hit = node
+			node.get_node("HealthComponent").take_damage(5)
+		elif node.get_parent().has_node("ResolveComponent"):
+			var health = node.get_parent().get_node("HealthComponent")
+			var cHealth = health.current_health
+			await anim.animation_finished
+			if cHealth != health.current_health:
+				return
+			node.get_parent().get_node("ResolveComponent").gainResolve(5)
+			hit = node.get_parent()
