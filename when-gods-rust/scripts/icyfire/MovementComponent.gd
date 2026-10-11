@@ -6,25 +6,28 @@ extends Node
 @export var accel: float
 @export var deccel: float
 @export var speed:float
+@export var air_control: float = 0.25
 
 var grounded:bool
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func physics_update(delta: float, movedir:Vector3, body:CharacterBody3D) -> void:
 	grounded = body.is_on_floor()
-	if grounded:
-		var target_velocity = movedir * speed
-		var horizontal_velocity = Vector2(body.velocity.x, body.velocity.z)
+	var target_velocity = movedir * speed
+	var horizontal_velocity = Vector2(body.velocity.x, body.velocity.z)
 		
-		var rate = accel
-		if movedir.length_squared() < 0.001:
-			rate = deccel
-		horizontal_velocity = horizontal_velocity.move_toward(
-			Vector2(target_velocity.x, target_velocity.z),
-			rate * delta
-		)
-		body.velocity.x = horizontal_velocity.x
-		body.velocity.z = horizontal_velocity.y
+	var rate = accel
+	if movedir.length_squared() < 0.001:
+		rate = deccel
+	if not grounded:
+		rate = air_control
+	horizontal_velocity = horizontal_velocity.move_toward(
+		Vector2(target_velocity.x, target_velocity.z),
+		rate * delta
+	)
+	body.velocity.x = horizontal_velocity.x
+	body.velocity.z = horizontal_velocity.y
+	if grounded:
 		body.velocity.y = -0.1
 	else:
 		body.velocity.y += body.get_gravity().y * delta

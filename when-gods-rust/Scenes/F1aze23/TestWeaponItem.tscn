@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://8ki1um74b20t"]
 
-[ext_resource type="Script" uid="uid://dkwoimokieoao" path="res://Scripts/F1aze23/ItemWeapon.gd" id="1_7c70k"]
-[ext_resource type="PackedScene" uid="uid://ddkuk1on7vabs" path="res://Scenes/F1aze23/TestWeapon.tscn" id="2_daekf"]
+[ext_resource type="Script" uid="uid://dkwoimokieoao" path="res://scripts/F1aze23/ItemWeapon.gd" id="1_7c70k"]
+[ext_resource type="PackedScene" uid="uid://ddkuk1on7vabs" path="res://scenes/F1aze23/TestWeapon.tscn" id="2_daekf"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_daekf"]
 
