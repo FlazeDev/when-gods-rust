@@ -8,7 +8,7 @@ var player:CharacterBody3D
 @onready var anim: AnimationPlayer = $"../../AnimationPlayer"
 @onready var attackDist: RayCast3D = $"../../AttackDist"
 var dir:Vector3
-var canAttack := true
+@export var canAttack := true
 var hit:Node
 
 func enter():
@@ -36,18 +36,14 @@ func Attack():
 	if !canAttack:
 		return
 	body.isAttacking = true
-	canAttack = false
-	await anim.animation_finished
-	canAttack = true
-	body.isAttacking = false
 	hit = null
 
 func onAttackHit(node: Node3D) -> void:
-	if canAttack:
+	if canAttack or hit == node:
 		return
 	if node.is_in_group("Player"):
+		hit = node
 		if node.has_node("HealthComponent"):
-			hit = node
 			node.get_node("HealthComponent").take_damage(5)
 		elif node.get_parent().has_node("ResolveComponent"):
 			var health = node.get_parent().get_node("HealthComponent")
@@ -55,5 +51,4 @@ func onAttackHit(node: Node3D) -> void:
 			await anim.animation_finished
 			if cHealth != health.current_health:
 				return
-			node.get_parent().get_node("ResolveComponent").gainResolve(5)
-			hit = node.get_parent()
+			hit.get_parent().get_node("ResolveComponent").gainResolve(5)

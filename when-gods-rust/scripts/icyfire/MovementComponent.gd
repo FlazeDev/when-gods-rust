@@ -28,7 +28,7 @@ func physics_update(delta: float, movedir:Vector3, body:CharacterBody3D) -> void
 	body.velocity.x = horizontal_velocity.x
 	body.velocity.z = horizontal_velocity.y
 	if grounded:
-		var rate = accel
+		rate = accel
 		if movedir.length_squared() < 0.001:
 			rate = deccel
 		horizontal_velocity = horizontal_velocity.move_toward(

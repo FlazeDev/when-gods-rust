@@ -3,7 +3,7 @@ extends CharacterBody3D
 @onready var healthC: HealthComponent = $HealthComponent
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var movementC: MovementComponent = $MovementComponent
-var isAttacking:=false
+@export var isAttacking:=false
 
 func _ready() -> void:
 	healthC.start()
