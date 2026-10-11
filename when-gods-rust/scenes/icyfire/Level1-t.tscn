@@ -24,7 +24,7 @@ size = Vector3(15, 10, 3)
 [node name="Level1T" type="Node3D" unique_id=1159306355]
 
 [node name="Player" parent="." unique_id=1258498601 instance=ExtResource("6_4rs6u")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -10, 1, -1.25)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 64, 1, 1.75)
 
 [node name="world" type="Node3D" parent="." unique_id=234119108]
 
@@ -912,6 +912,9 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 91.5
 [node name="WL_1X155" parent="world" unique_id=804504725 instance=ExtResource("9_oc8sd")]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 91.5, -1, 2)
 
+[node name="WL_1X176" parent="world" unique_id=1886819052 instance=ExtResource("2_bv0xs")]
+transform = Transform3D(0.25881907, 0, 0.9659258, 0, 1, 0, -0.9659258, 0, 0.25881907, 60, -9, -9)
+
 [node name="Light" type="Node3D" parent="." unique_id=428446071]
 
 [node name="RP_1X22" parent="Light" unique_id=1936627332 instance=ExtResource("8_iio0g")]
@@ -1067,15 +1070,20 @@ spot_angle = 17.393976
 [node name="Zealot" parent="." unique_id=1378631121 instance=ExtResource("16_22ack")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86, -1, 4)
 
-[node name="Area3D" type="Area3D" parent="." unique_id=98740544 node_paths=PackedStringArray("PlayerSpawnPosition")]
+[node name="Area3D" type="Area3D" parent="." unique_id=98740544 node_paths=PackedStringArray("PlayerSpawnPosition", "CameraSpawnPosRot")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85, 0, -4)
 script = ExtResource("17_v3564")
 PlayerSpawnPosition = NodePath("../Node3D")
+CameraSpawnPosRot = NodePath("../Node3D2")
+CamRotation = Vector3(-0.8, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=954698557]
 shape = SubResource("BoxShape3D_22ack")
 
 [node name="Node3D" type="Node3D" parent="." unique_id=1159714728]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86, -6, -10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86, -7, -10)
+
+[node name="Node3D2" type="Node3D" parent="." unique_id=1503443408]
+transform = Transform3D(1, 0, 0, 0, 0.8660254, -0.5, 0, 0.5, 0.8660254, 86, -3, -18)
 
 [connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
