@@ -22,7 +22,6 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if cState and not staggerC.is_staggered:
 		cState.physics_update(delta)
-
 func change_state(newStateName:String):
 	if cState:
 		cState.exit()

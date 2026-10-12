@@ -19,15 +19,12 @@ func update(resolve:ResolveComponent, anim:AnimationPlayer, canStagger:bool, can
 		cWeapon.canStagger = canStagger
 	if not isEquip or iArea == null:
 		return
-	
 	for item in iArea.get_overlapping_bodies():
 		if not item.has_node("ItemWeapon"):
 			continue
-		
 		equip(item.get_node("ItemWeapon"))
 		item.queue_free()
 		return
-
 func equip(itemWeapon:Node):
 	if not itemWeapon or not itemWeapon.Weapon or itemWeapon is not ItemWeapon:
 		return
@@ -37,7 +34,6 @@ func equip(itemWeapon:Node):
 	hand_slot.add_child(new_weapon)
 	cWeapon = new_weapon
 	print(cWeapon)
-
 func drop():
 	cWeapon.queue_free()
 	#Imma do this for now ill implement drop logic later
