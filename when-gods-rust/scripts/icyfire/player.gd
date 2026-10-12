@@ -17,11 +17,12 @@ extends CharacterBody3D
 @export var mouse_sens:float = 0.002
 @export var stagger_dura: float = 0.8
 
+@export var invertControls:float = 1
+
 var TimeSinceDmg:float = 0
 var DmgTime:float = 1
 var block_animation_started := false
 var	bodies_hit_this_swing: Array[Node3D] = []
-
 func _ready() -> void:
 	cameraC.start()
 	resolveC.start()
@@ -58,7 +59,7 @@ func _physics_process(delta: float) -> void:
 		
 	if !staggerC.is_staggered:
 #		print ("not staggered")
-		movementC.physics_update(delta, Vector3(inputC.dir.x, 0, inputC.dir.y), self)
+		movementC.physics_update(delta, Vector3(inputC.dir.x, 0, inputC.dir.y) * invertControls, self)
 	else:
 		print("staggered")
 	move_and_slide()
