@@ -17,9 +17,9 @@
 [ext_resource type="PackedScene" uid="uid://8425gy0kabge" path="res://Modular Blueprint Kit/glTF/WL_CORNER.gltf" id="14_r7noc"]
 [ext_resource type="PackedScene" uid="uid://3yy0b00ka4xo" path="res://Modular Blueprint Kit/glTF/FL_1X1.gltf" id="15_guagr"]
 [ext_resource type="PackedScene" uid="uid://cf6amcblndo4i" path="res://scenes/F1aze23/Zealot.tscn" id="16_22ack"]
-[ext_resource type="PackedScene" uid="uid://dqs54vd1wxvh0" path="res://Scenes/F1aze23/Monoculus.tscn" id="17_xfigw"]
+[ext_resource type="PackedScene" uid="uid://dqs54vd1wxvh0" path="res://scenes/F1aze23/Monoculus.tscn" id="17_xfigw"]
 [ext_resource type="PackedScene" uid="uid://cgybamxl1p0r0" path="res://scenes/icyfire/areatransition.tscn" id="18_hji5y"]
-[ext_resource type="PackedScene" uid="uid://8ki1um74b20t" path="res://Scenes/F1aze23/TestWeaponItem.tscn" id="18_muicg"]
+[ext_resource type="PackedScene" uid="uid://8ki1um74b20t" path="res://scenes/F1aze23/TestWeaponItem.tscn" id="18_muicg"]
 [ext_resource type="Script" uid="uid://iod8kgoluamx" path="res://scenes/icyfire/tempscr.gd" id="21_hji5y"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_muicg"]
@@ -1950,7 +1950,7 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -0.5, 0, 1, -2.1855694e-08, -
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 3, 0)
 
 [node name="WL_1X24" parent="NavigationRegion3D/world" unique_id=888812180 instance=ExtResource("5_7yiwq")]
-transform = Transform3D(-2.1855694e-08, 1, 0, -0.5, -4.371139e-08, 0, 0, 0, 1, -8, 0, -2)
+transform = Transform3D(-2.1855694e-08, 1, 0, -0.5, -4.371139e-08, 0, 0, 0, 1, -6.9635534, 0, -2)
 
 [node name="WL_TJUNCTION2" parent="NavigationRegion3D/world" unique_id=1472406548 instance=ExtResource("11_d2o58")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 5)
@@ -2133,7 +2133,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, -7, -13)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75, -7, -12)
 
 [node name="TestWeaponItem" parent="NavigationRegion3D/world" unique_id=102225822 instance=ExtResource("18_muicg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 1, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.568415, 0.4930998, -5.6223264)
 
 [node name="FL_4X54" parent="NavigationRegion3D/world" unique_id=1980538577 instance=ExtResource("5_5v4nf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 124, -23, -36)
@@ -2874,6 +2874,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 226.19164, -33.752434, -57.98
 
 [node name="Zealot11" parent="enemies" unique_id=522737264 instance=ExtResource("16_22ack")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 208.37823, -30.752434, -49.67761)
+
+[node name="Monoculus6" parent="enemies" unique_id=1461227023 instance=ExtResource("17_xfigw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5773325, 1.1926906, 0.2063913)
 
 [node name="Label3D" type="Label3D" parent="." unique_id=558695586]
 transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 254.57253, -34, -52)

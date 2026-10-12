@@ -11,9 +11,12 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if isAttacking:
-		anim.play("Attack")
+		if anim.current_animation != "Attack":
+			anim.play("Attack")
 	elif movementC.isWalking:
-		anim.play("Walk")
+		if anim.current_animation != "Walk":
+			anim.play("Walk")
 	else:
-		anim.play("Idle")
+		if anim.current_animation != "Idle":
+			anim.play("Idle")
 	healthC.update()
