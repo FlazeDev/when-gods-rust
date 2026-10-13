@@ -1,9 +1,12 @@
 extends Control
+
 @onready var label: Label = $Label
 @onready var label_2: Label = $Label2
+
 func _ready() -> void:
 	label.modulate.a = 1.0
 	label_2.modulate.a = 1.0
+	
 func _process(delta: float) -> void:
 	await get_tree().create_timer(2).timeout
 	label.modulate.a = lerp(label.modulate.a, 0.0, 1.0 * delta)

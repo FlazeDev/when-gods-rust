@@ -1,27 +1,36 @@
 class_name MovementComponent
 extends Node
+
 @onready var body: CharacterBody3D = $".."
+
 @export var accel: float
 @export var deccel: float
 @export var speed:float
 @export var air_control: float = 0.25
+
 var isWalking
 var grounded:bool
+
 func physics_update(delta: float, movedir:Vector3, body:CharacterBody3D) -> void:
 	grounded = body.is_on_floor()
 	var target_velocity = movedir * speed
 	var horizontal_velocity = Vector2(body.velocity.x, body.velocity.z)
 	var rate = accel
+	
 	if movedir.length_squared() < 0.001:
 		rate = deccel
+		
 	if not grounded:
 		rate = air_control
+		
 	horizontal_velocity = horizontal_velocity.move_toward(
 		Vector2(target_velocity.x, target_velocity.z),
 		rate * delta
 	)
+	
 	body.velocity.x = horizontal_velocity.x
 	body.velocity.z = horizontal_velocity.y
+	
 	if grounded:
 		rate = accel
 		if movedir.length_squared() < 0.001:
@@ -40,6 +49,7 @@ func physics_update(delta: float, movedir:Vector3, body:CharacterBody3D) -> void
 		isWalking = true
 	else:
 		isWalking = false
+		
 	var look_dir: Vector3 = movedir
 	look_dir.y = 0
 	

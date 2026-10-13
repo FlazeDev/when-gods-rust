@@ -179,6 +179,17 @@ emission_enabled = true
 emission = Color(1, 0, 0, 1)
 emission_energy_multiplier = 10.0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oy3ji"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.9449954, 0.23277119, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_166cv"]
+material = SubResource("StandardMaterial3D_oy3ji")
+top_radius = 0.025
+bottom_radius = 0.025
+height = 12.0
+
 [sub_resource type="ViewportTexture" id="ViewportTexture_uiwkw"]
 viewport_path = NodePath("Sprite3D/SubViewport")
 
@@ -369,6 +380,8 @@ script = ExtResource("8_uiwkw")
 body = NodePath("../..")
 canAttack = false
 readyToAttack = true
+windup_time = 1.2
+aim_lock_time = 0.2
 metadata/_custom_type_script = "uid://cpwwu1gw7sj85"
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=205544184]
@@ -405,6 +418,11 @@ target_position = Vector3(0, 0, -12)
 transform = Transform3D(0.2, 0, 0, 0, -8.742278e-09, -0.2, 0, 0.2, -8.742278e-09, 0, 0, -0.19999999)
 mesh = SubResource("CylinderMesh_uiwkw")
 surface_material_override/0 = SubResource("StandardMaterial3D_audfn")
+
+[node name="ChargeIndicator" type="MeshInstance3D" parent="LaserSpawn" unique_id=777774167]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -6)
+visible = false
+mesh = SubResource("CylinderMesh_166cv")
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1056348413]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.5924597, 0)

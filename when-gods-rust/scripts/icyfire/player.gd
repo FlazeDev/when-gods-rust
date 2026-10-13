@@ -21,6 +21,7 @@ var TimeSinceDmg:float = 0
 var DmgTime:float = 1
 var block_animation_started := false
 var	bodies_hit_this_swing: Array[Node3D] = []
+
 func _ready() -> void:
 	cameraC.start()
 	resolveC.start()
@@ -28,6 +29,7 @@ func _ready() -> void:
 	healthC.died.connect(onDeath)
 	blockC.blocking_started.connect(_on_blocking_started)
 	blockC.blocking_ended.connect(_on_blocking_ended)
+	
 func _process(delta: float) -> void:
 	inputC.update(delta)
 	blockC.update(inputC.block_held and not _weapon_is_attacking() and not staggerC.is_staggered, inputC.block, delta)
@@ -37,6 +39,7 @@ func _process(delta: float) -> void:
 	cameraC.update(self)
 	resolveC.update(delta)
 	healthC.update()
+	
 func _physics_process(delta: float) -> void:
 	TimeSinceDmg += delta
 	if not is_on_floor():
@@ -50,32 +53,40 @@ func _physics_process(delta: float) -> void:
 	else:
 		print("staggered")
 	move_and_slide()
+	
 func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction:Vector3 = Vector3.LEFT) -> void:
 	var impact_time = float(Time.get_ticks_usec()) / 1_000_000.0
 	var was_blocking_at_impact = blockC.is_blocking
 	await get_tree().create_timer(blockC.late_parry_window).timeout
 	await get_tree().process_frame
+	
 	if not is_inside_tree():
 		return
-		return
+		
 	if blockC.check_parry_press(impact_time):
 		resolveC.gainResolve(blockC.resolve_on_parry)
 		print ("parried")
 		return
+		
 	if was_blocking_at_impact and blockC.spend_for_block():
 		print("blocked")
 		return
+		
 	healthC.take_damage(damage)
 	staggerC.apply_stagger(hit_stagger_duration)
 	print(hit_direction)
 	velocity = hit_direction
+	
 func _on_blocking_started() -> void:
 	anim.play("Block")
+	
 func _on_blocking_ended() -> void:
 	if anim.current_animation == "Block":
 		anim.play("Unblock")
+		
 func _weapon_is_attacking() -> bool:
 	return is_instance_valid(inventoryC.cWeapon) and inventoryC.cWeapon.isAttacking
+	
 func onDeath():
 	queue_free()
 	print("Wow ma so bad you are")

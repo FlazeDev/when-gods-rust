@@ -45,8 +45,9 @@ func onAttackHit(node: Node3D) -> void:
 		return
 	if node.is_in_group("Player"):
 		hit = node
-		if node.has_node("HealthComponent"):
-			node.get_node("HealthComponent").take_damage(5)
+		var direction = (node.global_position - body.global_position).normalized()
+		if node.has_method("take_hit"):
+			node.call("take_hit", 10, 0.8, direction)
 		elif node.get_parent().has_node("ResolveComponent"):
 			var health = node.get_parent().get_node("HealthComponent")
 			var cHealth = health.current_health
