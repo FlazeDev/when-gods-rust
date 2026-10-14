@@ -3,6 +3,7 @@ extends CharacterBody3D
 @onready var healthC: HealthComponent = $HealthComponent
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var movementC: MovementComponent = $MovementComponent
+@onready var staggerC: StaggerComponent = $StaggerComponent
 @export var isAttacking:=false
 
 func _ready() -> void:
@@ -10,6 +11,9 @@ func _ready() -> void:
 	healthC.died.connect(queue_free)
 
 func _process(delta: float) -> void:
+	if staggerC.is_staggered:
+		if anim.current_animation != "Idle":
+			anim.play("Idle")
 	if isAttacking:
 		if anim.current_animation != "Attack":
 			anim.play("Attack")
@@ -19,4 +23,4 @@ func _process(delta: float) -> void:
 	else:
 		if anim.current_animation != "Idle":
 			anim.play("Idle")
-	healthC.update()
+	healthC.update(delta)

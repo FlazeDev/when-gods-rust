@@ -141,6 +141,13 @@ tracks/1/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/2/type = "position_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Zealot/Skeleton3D:Root")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 1.1288339, 0)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_p0wiw"]
 _data = {
@@ -187,13 +194,14 @@ one_shot = true
 
 [node name="MovementComponent" type="Node" parent="." unique_id=563373914]
 script = ExtResource("4_8jpi8")
-accel = 55.0
+accel = 40.0
 deccel = 100.0
-speed = 5.5
+speed = 3.75
 metadata/_custom_type_script = "uid://dtnjxw1vua83h"
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1807576033 node_paths=PackedStringArray("healthBar")]
 script = ExtResource("6_74sap")
+max_health = 60
 healthBar = NodePath("../Sprite3D/SubViewport/HealthBar")
 metadata/_custom_type_script = "uid://dq71svuwl2njr"
 
@@ -225,7 +233,7 @@ bones/0/name = "Root"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1288339, 0)
 bones/0/enabled = true
-bones/0/position = Vector3(0.06024746, 1.0232719, -0.022166513)
+bones/0/position = Vector3(0, 1.1288339, 0)
 bones/0/rotation = Quaternion(0, 0, 0, 1)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "Chest"

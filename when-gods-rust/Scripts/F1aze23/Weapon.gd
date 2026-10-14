@@ -95,6 +95,7 @@ func _try_hit(target: Node3D) -> void:
 	
 	var final_damage := roundi(damage * (1.5 if is_current_attack_crit else 1.0))
 	target.get_node("HealthComponent").call("take_damage", final_damage)
+	HitStop.request(0.07 if is_current_attack_crit else 0.04)
 	
 	if not current_swing_hit:
 		current_swing_hit = true

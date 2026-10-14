@@ -14,6 +14,7 @@ extends CharacterBody3D
 @export var canCrit:bool = false
 @export var canStagger:bool = false
 @export var stagger_dura: float = 0.7
+@export var parry_stagger_duration: float = 1.2
 
 @export var invertControls:float = 1
 
@@ -38,7 +39,7 @@ func _process(delta: float) -> void:
 	inventoryC.update(resolveC, anim, canStagger, canCombo, canCrit)
 	cameraC.update(self)
 	resolveC.update(delta)
-	healthC.update()
+	healthC.update(delta)
 	
 func _physics_process(delta: float) -> void:
 	TimeSinceDmg += delta
@@ -54,7 +55,7 @@ func _physics_process(delta: float) -> void:
 		print("staggered")
 	move_and_slide()
 	
-func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction:Vector3 = Vector3.LEFT) -> void:
+func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction:Vector3 = Vector3.LEFT, attacker: Node3D = null) -> void:
 	var impact_time = float(Time.get_ticks_usec()) / 1_000_000.0
 	var was_blocking_at_impact = blockC.is_blocking
 	await get_tree().create_timer(blockC.late_parry_window).timeout
@@ -65,6 +66,11 @@ func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction:Vect
 		
 	if blockC.check_parry_press(impact_time):
 		resolveC.gainResolve(blockC.resolve_on_parry)
+		if is_instance_valid(attacker):
+			var enemy_stagger = attacker.get_node_or_null("StaggerComponent") as StaggerComponent
+			if enemy_stagger:
+				enemy_stagger.apply_stagger(parry_stagger_duration)
+		HitStop.request(0.1, 0.3)
 		print ("parried")
 		return
 		

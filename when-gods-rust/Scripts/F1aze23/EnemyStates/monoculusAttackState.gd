@@ -103,7 +103,7 @@ func Attack() -> void:
 		print("Laser hit: ", target.name)
 		if target == player:
 			var direction = (player.global_position - body.global_position).normalized()
-			player.take_hit(15, 0.7, direction)
+			player.take_hit(10, 0.5, direction, body)
 	
 	await get_tree().create_timer(recovery_time).timeout
 	
@@ -113,25 +113,6 @@ func Attack() -> void:
 	_finish_attack()
 	wander_state.call("start_wander")
 	sm.change_state("Wander")
-	#if attackRay:
-		#attackRay.force_raycast_update()
-		#if attackRay.is_colliding():
-			#print("hello")
-			#var collider = attackRay.get_collider()
-			#var current_distance = laserSpawn.global_position.distance_to(hitpoint)
-			#if beam:
-				#beamNode.scale.z = current_distance* 2
-			#print(collider)
-			#if collider.is_in_group("Player"):
-				#print("player")
-				#var hc = collider.get_node("HealthComponent")
-				#if hc:
-					#hc.take_damage(20)
-		#else:
-			#if beam:
-				#player.get_node("ResolveComponent").gainResolve(5)
-				#beamNode.scale.z = 12.0
-				#print("hi")
 
 func _turn_body_towards_player(delta: float) -> void:
 	var direction = player.global_position - body.global_position

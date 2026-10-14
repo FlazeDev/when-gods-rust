@@ -16,4 +16,4 @@ func _process(delta: float) -> void:
 		anim.play("Walk")
 	else:
 		anim.play("Idle")
-	healthC.update()
+	healthC.update(delta)

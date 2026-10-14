@@ -11,28 +11,51 @@ extends Node
 @export var cResolve:float = 100.0
 @export var resolveBar:ProgressBar
 @export var resolveDecay:float = 0.03
+@export var followSpeed = 18.0
+@export var bar_smoothing_speed: float = 12.0
+
 var canDecay:bool = true 
+
 func _ready() -> void:
 	player = get_parent() as CharacterBody3D
-	call_deferred("_assign_viewport_texture")
-func _process(delta: float) -> void:
-	if is_instance_valid(player) and is_instance_valid(world_sprite):
+	resolveBar.max_value = maxResolve
+	resolveBar.value = cResolve
+	
+	progress_bar.max_value = 100.0
+	progress_bar.value = (cResolve/maxResolve) * 100
+	if is_instance_valid(player):
 		world_sprite.global_position = player.global_position + offset
+	call_deferred("_assign_viewport_texture")
+	
+func _process(delta: float) -> void:
+	var target_position = player.global_position + offset
+	var weight = 1.0 - exp(-followSpeed * delta)
+	world_sprite.global_position = world_sprite.global_position.lerp(
+		target_position,
+		weight
+	)
+		
 func _assign_viewport_texture() -> void:
 	world_sprite.texture = world_viewport.get_texture()
+	
 func start():
 	resolveBar.max_value = maxResolve
 	resolveBar.value = cResolve
+	
 func update(delta:float):
-	if cResolve >= maxResolve:
-		cResolve = maxResolve
-	elif cResolve <= 0.0:
-		cResolve = 0
-	resolveBar.value = cResolve
-	progress_bar.value = (cResolve / maxResolve) * 100.0
 	if canDecay:
-		cResolve-=resolveDecay
-	progress_bar.value = (cResolve/maxResolve) * 100
+		cResolve -= resolveDecay
+	
+	cResolve = clampf(cResolve, 0.0, maxResolve)
+	
+	var bar_weight = 1.0 - exp(-bar_smoothing_speed * delta)
+	var target_percent = (cResolve/maxResolve) * 100.0
+	
+	if is_instance_valid(resolveBar):
+		resolveBar.value = lerpf(resolveBar.value, cResolve, bar_weight)
+	if is_instance_valid(progress_bar):
+		progress_bar.value = lerpf(progress_bar.value, target_percent, bar_weight)
+	
 func gainResolve(amt:float):
 	cResolve += amt
 	canDecay = false
@@ -45,5 +68,6 @@ func gainResolve(amt:float):
 		)
 	timer.start()
 	print(amt, " Resolve Gained")
+	
 func useResolve(amt:float):
 	cResolve = maxf(cResolve - amt, 0.0)

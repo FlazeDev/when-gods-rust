@@ -275,6 +275,20 @@ _data = {
 &"Unblock": SubResource("Animation_7anrw")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahkby"]
+bg_color = Color(0.17254902, 0.17254902, 0.17254902, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7anrw"]
+bg_color = Color(0.7254902, 0.3764706, 0.13333334, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y8aiu"]
+bg_color = Color(0.42352942, 0.42352942, 0.42352942, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_em3uv"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ahkby"]
+shadow_size = 3
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_enw72"]
 size = Vector3(1.7, 1.0375366, 1.7)
 
@@ -297,6 +311,8 @@ mesh = SubResource("BoxMesh_1mpnw")
 
 [node name="BlockComponent" type="Node" parent="." unique_id=2078383352]
 script = ExtResource("9_ahkby")
+block_resolve_cost = 15.0
+resolve_on_parry = 20.0
 
 [node name="InventoryComponent" type="Node" parent="." unique_id=332656653 node_paths=PackedStringArray("hand_slot", "iArea", "anim")]
 script = ExtResource("2_vjlaq")
@@ -320,9 +336,10 @@ offset = Vector3(7.725, 9.254, 9.816)
 rotation = Vector3(-0.805, 0, 0)
 metadata/_custom_type_script = "uid://c3q2bf4w8k2ae"
 
-[node name="HealthComponent" type="Node" parent="." unique_id=1763875352 node_paths=PackedStringArray("healthBar")]
+[node name="HealthComponent" type="Node" parent="." unique_id=1763875352 node_paths=PackedStringArray("healthBar", "ghostHealthBar")]
 script = ExtResource("6_okieb")
 healthBar = NodePath("../CanvasLayer/Control/HealthBar")
+ghostHealthBar = NodePath("../CanvasLayer/Control/GhostHealthBar")
 
 [node name="StaggerComponent" type="Node" parent="." unique_id=593057376]
 script = ExtResource("7_vvvn2")
@@ -330,11 +347,11 @@ script = ExtResource("7_vvvn2")
 [node name="ResolveComponent" type="Node" parent="." unique_id=378317454 node_paths=PackedStringArray("resolveBar")]
 script = ExtResource("7_8qorh")
 resolveBar = NodePath("Resolve/ResolveBar")
+followSpeed = 20.0
 metadata/_custom_type_script = "uid://c6h2bauklbph"
 
 [node name="ResolveSprite" type="Sprite3D" parent="ResolveComponent" unique_id=1348298327]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.575, 0)
-visible = false
 billboard = 1
 texture = SubResource("ViewportTexture_ahkby")
 
@@ -378,6 +395,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ResolveBar" type="ProgressBar" parent="CanvasLayer/Control" unique_id=1692755755]
+visible = false
 layout_mode = 0
 offset_left = 9.0
 offset_top = 88.99999
@@ -391,9 +409,24 @@ offset_left = 10.000003
 offset_top = 36.0
 offset_right = 270.0
 offset_bottom = 63.0
+theme_override_constants/outline_size = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_ahkby")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7anrw")
+rounded = true
+
+[node name="GhostHealthBar" type="ProgressBar" parent="CanvasLayer/Control" unique_id=1406790969]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 36.0
+offset_right = 270.0
+offset_bottom = 63.0
+theme_override_constants/outline_size = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_y8aiu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_em3uv")
 rounded = true
 
 [node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=681222580]
+visible = false
 layout_mode = 0
 offset_left = 10.0
 offset_top = 65.0
@@ -408,6 +441,7 @@ offset_top = 7.0
 offset_right = 92.0
 offset_bottom = 30.0
 text = "HEALTH"
+label_settings = SubResource("LabelSettings_ahkby")
 
 [node name="DodgeArea" type="Area3D" parent="." unique_id=2094541135 groups=["Player"]]
 
