@@ -1785,10 +1785,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -4)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0, -4)
 
 [node name="WL_DOOR2" parent="NavigationRegion3D/world" unique_id=451714724 instance=ExtResource("8_r7noc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 6.143259)
 
 [node name="WL_1X4_HALF2" parent="NavigationRegion3D/world" unique_id=1580741182 instance=ExtResource("13_ifywn")]
-transform = Transform3D(0.49999997, 0, 0.86602545, 0, 1, 0, -0.86602545, 0, 0.49999997, 8, 0, 4)
+transform = Transform3D(0.49999997, 0, 0.86602545, 0, 1, 0, -0.86602545, 0, 0.49999997, 8, 0, 6.0527716)
 
 [node name="WL_1X4_HALF4" parent="NavigationRegion3D/world" unique_id=1855989974 instance=ExtResource("13_ifywn")]
 transform = Transform3D(-5.9604645e-08, 0, 1, 0, 1, 0, -1, 0, -5.9604645e-08, 8, 0, 11)
@@ -1950,19 +1950,19 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -0.5, 0, 1, -2.1855694e-08, -
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 3, 0)
 
 [node name="WL_1X24" parent="NavigationRegion3D/world" unique_id=888812180 instance=ExtResource("5_7yiwq")]
-transform = Transform3D(-2.1855694e-08, 1, 0, -0.5, -4.371139e-08, 0, 0, 0, 1, -6.9635534, 0, -2)
+transform = Transform3D(-2.1855694e-08, 1, 0, -0.5, -4.371139e-08, 0, 0, 0, 1, -11.634238, 0, -5.0276275)
 
 [node name="WL_TJUNCTION2" parent="NavigationRegion3D/world" unique_id=1472406548 instance=ExtResource("11_d2o58")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 5)
 
 [node name="WL_CROSS2" parent="NavigationRegion3D/world" unique_id=2087774520 instance=ExtResource("12_qwd6y")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 7)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 8.370655)
 
 [node name="WL_1X4_HALF21" parent="NavigationRegion3D/world" unique_id=1291112365 instance=ExtResource("13_ifywn")]
-transform = Transform3D(0.25881907, 0, 0.9659258, 0, 1, 0, -0.9659258, 0, 0.25881907, -3, 0, 6)
+transform = Transform3D(0.25881907, 0, 0.9659258, 0, 1, 0, -0.9659258, 0, 0.25881907, -3, 0, 7.183509)
 
 [node name="WL_1X4_HALF22" parent="NavigationRegion3D/world" unique_id=98239079 instance=ExtResource("13_ifywn")]
-transform = Transform3D(0.25000003, 0.25881904, 0.93301266, -0.066987306, 0.9659258, -0.25, -0.9659258, -7.450581e-09, 0.25881907, 0, 1, 6)
+transform = Transform3D(0.25000003, 0.25881904, 0.93301266, -0.066987306, 0.9659258, -0.25, -0.9659258, -7.450581e-09, 0.25881907, 0, 1.0137, 7.1517177)
 
 [node name="WL_1X4_HALF23" parent="NavigationRegion3D/world" unique_id=1179140092 instance=ExtResource("13_ifywn")]
 transform = Transform3D(-0.9659258, 0, -0.258819, 0, 1, 0, 0.258819, 0, -0.9659258, -1.75, -6, 20.299038)
@@ -1977,7 +1977,7 @@ transform = Transform3D(0.25881907, 0, -0.96592593, 0, 1, 0, 0.96592593, 0, 0.25
 transform = Transform3D(0.26645657, -0.2241439, -0.93742245, -0.06698732, 0.96592605, -0.25000006, 0.96151626, 0.12940955, 0.2423625, 31.200962, -5, 15.75)
 
 [node name="WL_CORNER2" parent="NavigationRegion3D/world" unique_id=837272314 instance=ExtResource("14_r7noc")]
-transform = Transform3D(1, 0, 0, 0, 0.258819, 0.9659258, 0, -0.9659258, 0.258819, 4, 1, 8)
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.9659258, 0, -0.9659258, 0.258819, 4, 1, 9.267774)
 
 [node name="WL_1X16" parent="NavigationRegion3D/world" unique_id=135991786 instance=ExtResource("9_oc8sd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, -4)
@@ -2889,5 +2889,8 @@ script = ExtResource("21_hji5y")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D4" unique_id=1826716195]
 shape = SubResource("BoxShape3D_hji5y")
+
+[node name="Zealot" parent="." unique_id=769290116 instance=ExtResource("16_22ack")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4185593, 0, 0.97067666)
 
 [connection signal="body_entered" from="Area3D4" to="Area3D4" method="_on_body_entered"]

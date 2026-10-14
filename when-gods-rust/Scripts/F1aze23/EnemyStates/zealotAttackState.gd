@@ -41,17 +41,31 @@ func Attack():
 	hit = null
 
 func onAttackHit(node: Node3D) -> void:
-	if canAttack or hit == node:
+	if canAttack or player == null:
 		return
-	if node.is_in_group("Player"):
-		hit = node
-		var direction = (node.global_position - body.global_position).normalized()
-		if node.has_method("take_hit"):
-			node.call("take_hit", 10, 0.8, direction)
-		elif node.get_parent().has_node("ResolveComponent"):
-			var health = node.get_parent().get_node("HealthComponent")
-			var cHealth = health.current_health
-			await anim.animation_finished
-			if cHealth != health.current_health:
-				return
-			hit.get_parent().get_node("ResolveComponent").gainResolve(5)
+	
+	var hit_player: Node3D = node
+	if node == player.get_node_or_null("DodgeArea"):
+		hit_player = player
+	
+	if hit_player != player or hit == player:
+		return
+	
+	hit = player
+	var direction = (player.global_position - body.global_position).normalized()
+	player.take_hit(10, 0.8, direction)
+	
+	#if canAttack or hit == node:
+		#return
+	#if node.is_in_group("Player"):
+		#hit = node
+		#var direction = (node.global_position - body.global_position).normalized()
+		#if node.has_method("take_hit"):
+			#node.call("take_hit", 10, 0.8, direction)
+		#elif node.get_parent().has_node("ResolveComponent"):
+			#var health = node.get_parent().get_node("HealthComponent")
+			#var cHealth = health.current_health
+			#await anim.animation_finished
+			#if cHealth != health.current_health:
+				#return
+			#hit.get_parent().get_node("ResolveComponent").gainResolve(5)

@@ -102,7 +102,8 @@ func Attack() -> void:
 		var target = attackRay.get_collider()
 		print("Laser hit: ", target.name)
 		if target == player:
-			player.take_hit(15)
+			var direction = (player.global_position - body.global_position).normalized()
+			player.take_hit(15, 0.7, direction)
 	
 	await get_tree().create_timer(recovery_time).timeout
 	
