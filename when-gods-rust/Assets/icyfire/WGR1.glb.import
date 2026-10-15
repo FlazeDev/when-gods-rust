@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bkodq7pxq8jkl"
-path="res://.godot/imported/WGR.glb-8b95b4b1f3ec7253efdb2e152188e937.scn"
+uid="uid://ihjcxm53umva"
+path="res://.godot/imported/WGR1.glb-4b9d0d78035b1a9306ea49a52e469884.scn"
 
 [deps]
 
-source_file="res://Assets/icyfire/WGR.glb"
-dest_files=["res://.godot/imported/WGR.glb-8b95b4b1f3ec7253efdb2e152188e937.scn"]
+source_file="res://Assets/icyfire/WGR1.glb"
+dest_files=["res://.godot/imported/WGR1.glb-4b9d0d78035b1a9306ea49a52e469884.scn"]
 
 [params]
 
@@ -18,7 +18,7 @@ nodes/root_name=""
 nodes/root_script=null
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
-nodes/import_as_skeleton_bones=true
+nodes/import_as_skeleton_bones=false
 nodes/use_name_suffixes=true
 nodes/use_node_type_suffixes=true
 meshes/ensure_tangents=true
