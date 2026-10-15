@@ -14,7 +14,7 @@ func _process(delta: float) -> void:
 	if staggerC.is_staggered:
 		if anim.current_animation != "Idle":
 			anim.play("Idle")
-	if isAttacking:
+	elif isAttacking:
 		if anim.current_animation != "Attack":
 			anim.play("Attack")
 	elif movementC.isWalking:

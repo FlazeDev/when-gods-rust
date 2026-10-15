@@ -1,4 +1,6 @@
 extends CharacterBody3D
+
+
 @onready var inputC: InputComponent = $InputComponent
 @onready var movementC: MovementComponent = $MovementComponent
 @onready var cameraC: CameraComponent = $CameraComponent
@@ -9,6 +11,8 @@ extends CharacterBody3D
 @onready var blockC: BlockComponent = $BlockComponent
 @onready var anim: AnimationPlayer = $TestAnimPlayer
 @onready var iArea: Area3D = $InteractArea
+
+const PARRY_SPARK = preload("res://Assets/Randemlyy/ParrySpark.tscn")
 
 @export var canCombo:bool = false
 @export var canCrit:bool = false
@@ -33,11 +37,16 @@ func _ready() -> void:
 	
 func _process(delta: float) -> void:
 	inputC.update(delta)
-	blockC.update(inputC.block_held and not _weapon_is_attacking() and not staggerC.is_staggered, inputC.block, delta)
+	var can_block := not _weapon_is_attacking() and not staggerC.is_staggered
+	blockC.update(
+		inputC.block_held and can_block,
+		inputC.block and can_block,
+		delta
+	)
 	inventoryC.isEquip = inputC.interact
 	inventoryC.isAttack = inputC.attack
 	inventoryC.update(resolveC, anim, canStagger, canCombo, canCrit)
-	cameraC.update(self)
+	cameraC.update(self, delta)
 	resolveC.update(delta)
 	healthC.update(delta)
 	
@@ -71,6 +80,8 @@ func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction:Vect
 			if enemy_stagger:
 				enemy_stagger.apply_stagger(parry_stagger_duration)
 		HitStop.request(0.1, 0.3)
+		_spawn_parry_spark(attacker)
+		cameraC.shake(0.16, 0.12)
 		print ("parried")
 		return
 		
@@ -79,9 +90,22 @@ func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction:Vect
 		return
 		
 	healthC.take_damage(damage)
+	cameraC.shake(0.12, 0.18)
 	staggerC.apply_stagger(hit_stagger_duration)
 	print(hit_direction)
 	velocity = hit_direction
+	
+func _spawn_parry_spark(target: Node3D) -> void:
+	var spark = PARRY_SPARK.instantiate() as GPUParticles3D
+	get_tree().current_scene.add_child(spark)
+	
+	if is_instance_valid(target):
+		spark.global_position = (
+			global_position.lerp(target.global_position, .5) + Vector3.UP * 0.8
+		)
+	else:
+		spark.global_position = global_position + Vector3.UP
+	spark.restart()
 	
 func _on_blocking_started() -> void:
 	anim.play("Block")

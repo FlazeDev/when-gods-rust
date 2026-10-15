@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://cv110r5rurna0"]
+
+[ext_resource type="Script" uid="uid://bnyauvqe30pwk" path="res://Scripts/randem/ParrySpark.gd" id="1_d0sgo"]
+
+[sub_resource type="Curve" id="Curve_d0sgo"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 0.94382024), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_denor"]
+curve = SubResource("Curve_d0sgo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_e8u63"]
+particle_flag_align_y = true
+initial_velocity_min = 8.0
+initial_velocity_max = 15.0
+damping_min = 1.0
+damping_max = 1.0
+scale_curve = SubResource("CurveTexture_denor")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kvpd6"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_ir0oq"]
+material = SubResource("StandardMaterial3D_kvpd6")
+size = Vector2(0.05, 0.2)
+
+[node name="ParrySpark" type="GPUParticles3D" unique_id=1536669526]
+emitting = false
+amount = 20
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+transform_align = 2
+process_material = SubResource("ParticleProcessMaterial_e8u63")
+draw_pass_1 = SubResource("QuadMesh_ir0oq")
+script = ExtResource("1_d0sgo")

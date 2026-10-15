@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://o73v2cty65b6"]
 
 [ext_resource type="Script" uid="uid://oe0nin6c2r7t" path="res://scripts/icyfire/MainMenuManager.gd" id="1_hvww4"]
+[ext_resource type="PackedScene" uid="uid://cv110r5rurna0" path="res://Assets/Randemlyy/ParrySpark.tscn" id="1_kigpr"]
 
 [node name="Mainmenu" type="Node" unique_id=1457896708]
+
+[node name="ParrySpark" parent="." unique_id=1536669526 instance=ExtResource("1_kigpr")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1755251101]
 
