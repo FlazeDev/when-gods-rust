@@ -9,6 +9,10 @@
 [ext_resource type="Script" uid="uid://c6h2bauklbph" path="res://scripts/F1aze23/ResolveComponent.gd" id="7_8qorh"]
 [ext_resource type="Script" uid="uid://c5yf8bxmdfcr5" path="res://scripts/randem/StaggerComponent.gd" id="7_vvvn2"]
 [ext_resource type="Script" uid="uid://baudgajyg4pmb" path="res://scripts/randem/BlockComponent.gd" id="9_ahkby"]
+[ext_resource type="Script" uid="uid://cmxokty7h552d" path="res://scripts/randem/UpgradeComponent.gd" id="10_7anrw"]
+[ext_resource type="Resource" uid="uid://n2jh37nkpt5m" path="res://scripts/randem/TestArmGear.tres" id="11_jep08"]
+[ext_resource type="Script" uid="uid://oshbw25w75od" path="res://scripts/randem/SpamPenaltyComponent.gd" id="11_y8aiu"]
+[ext_resource type="Resource" uid="uid://b8h8cieynl118" path="res://scripts/randem/TestCoreGear.tres" id="12_eol4w"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fgv4r"]
 
@@ -1091,3 +1095,11 @@ mesh = SubResource("ArrayMesh_srbw3")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Node3D/WGR1" unique_id=749960444]
 libraries/ = SubResource("AnimationLibrary_c1vle")
+
+[node name="UpgradeComponent" type="Node" parent="." unique_id=1683946898]
+script = ExtResource("10_7anrw")
+arm_gear = ExtResource("11_jep08")
+core_gear = ExtResource("12_eol4w")
+
+[node name="SpamPenaltyComponent" type="Node" parent="." unique_id=668005136]
+script = ExtResource("11_y8aiu")

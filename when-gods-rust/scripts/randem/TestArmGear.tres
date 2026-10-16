@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="GearData" format=3 uid="uid://n2jh37nkpt5m"]
+
+[ext_resource type="Script" uid="uid://o1qk5pbh6kq6" path="res://scripts/randem/GearData.gd" id="1_87hqc"]
+
+[resource]
+script = ExtResource("1_87hqc")
+gear_name = "Test Arm Gear"
+load = 30.0
+metadata/_custom_type_script = "uid://o1qk5pbh6kq6"
