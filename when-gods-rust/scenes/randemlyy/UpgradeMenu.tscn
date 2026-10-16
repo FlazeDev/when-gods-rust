@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://b8ccocassarbd"]
+
+[ext_resource type="Script" uid="uid://dba8jh5n3kn4w" path="res://scripts/randem/UpgradeMenu.gd" id="1_57dm1"]
+
+[node name="UpgradeMenu" type="Control" unique_id=1609659467]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_57dm1")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=309912497]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=624286403]
+custom_minimum_size = Vector2(800, 450)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer" unique_id=1818036826]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="InventoryColumn" type="VBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer" unique_id=1025045309]
+custom_minimum_size = Vector2(250, 300)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/InventoryColumn" unique_id=2063770840]
+layout_mode = 2
+text = "Available Gears"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/PanelContainer/HBoxContainer/InventoryColumn" unique_id=337482520]
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GearList" type="VBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer/InventoryColumn/ScrollContainer" unique_id=2083766824]
+layout_mode = 2
+
+[node name="ArmColumn" type="VBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer" unique_id=581728873]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/ArmColumn" unique_id=963251628]
+layout_mode = 2
+text = "Arm"
+
+[node name="ArmSockets" type="VBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer/ArmColumn" unique_id=1463104376]
+layout_mode = 2
+
+[node name="CoreColumn" type="VBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer" unique_id=1629021000]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/CoreColumn" unique_id=1773061993]
+layout_mode = 2
+text = "Core"
+
+[node name="CoreSockets" type="VBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer/CoreColumn" unique_id=656249270]
+layout_mode = 2

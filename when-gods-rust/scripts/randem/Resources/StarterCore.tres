@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BodyPartData" format=3 uid="uid://53kot2lsjgh"]
+
+[ext_resource type="Script" uid="uid://c4a41odhxhg10" path="res://scripts/randem/BodyPartData.gd" id="1_gsy08"]
+
+[resource]
+script = ExtResource("1_gsy08")
+part_name = "BasicCore"
+metadata/_custom_type_script = "uid://c4a41odhxhg10"
