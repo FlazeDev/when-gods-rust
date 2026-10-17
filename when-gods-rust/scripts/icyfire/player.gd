@@ -9,6 +9,7 @@ extends CharacterBody3D
 @onready var resolveC: ResolveComponent = $ResolveComponent
 @onready var inventoryC: InventoryComponent = $InventoryComponent
 @onready var blockC: BlockComponent = $BlockComponent
+@onready var upgradeMenu: UpgradeMenu = $CanvasLayer/UpgradeMenu
 @onready var anim: AnimationPlayer = $TestAnimPlayer
 @onready var iArea: Area3D = $InteractArea
 
@@ -43,6 +44,8 @@ func _process(delta: float) -> void:
 		inputC.block and can_block,
 		delta
 	)
+	if inputC.upgrade_menu:
+		upgradeMenu.toggle_menu()
 	inventoryC.isEquip = inputC.interact
 	inventoryC.isAttack = inputC.attack
 	inventoryC.update(resolveC, anim, canStagger, canCombo, canCrit)

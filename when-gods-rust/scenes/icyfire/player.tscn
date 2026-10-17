@@ -805,6 +805,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="LoadMarker" type="ColorRect" parent="ResolveComponent/Resolve" unique_id=1769568357]
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(1, 0.4117647, 0.2784314, 1)
+
 [node name="InteractArea" type="Area3D" parent="." unique_id=1817867001]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
@@ -883,6 +888,7 @@ text = "HEALTH"
 label_settings = SubResource("LabelSettings_ahkby")
 
 [node name="UpgradeMenu" parent="CanvasLayer" unique_id=1609659467 instance=ExtResource("10_taabd")]
+visible = false
 
 [node name="DodgeArea" type="Area3D" parent="." unique_id=2094541135 groups=["Player"]]
 

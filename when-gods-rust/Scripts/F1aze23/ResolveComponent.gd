@@ -5,6 +5,8 @@ extends Node
 @onready var world_sprite: Sprite3D = $ResolveSprite
 @onready var progress_bar: ProgressBar = $"../CanvasLayer/Control/ResolveBar"
 @onready var player: CharacterBody3D
+@onready var upgradeC: UpgradeComponent = $"../UpgradeComponent"
+@onready var load_marker: ColorRect = $Resolve/LoadMarker
 
 @export var offset: Vector3 = Vector3(0, 1.8, 0)
 @export var maxResolve:float = 100.0
@@ -20,9 +22,11 @@ func _ready() -> void:
 	player = get_parent() as CharacterBody3D
 	resolveBar.max_value = maxResolve
 	resolveBar.value = cResolve
-	
 	progress_bar.max_value = 100.0
 	progress_bar.value = (cResolve/maxResolve) * 100
+	upgradeC.load_changed.connect(_update_load_marker)
+	_update_load_marker(upgradeC.get_current_load(), maxResolve)
+	
 	if is_instance_valid(player):
 		world_sprite.global_position = player.global_position + offset
 	call_deferred("_assign_viewport_texture")
@@ -68,6 +72,20 @@ func gainResolve(amt:float):
 		)
 	timer.start()
 	print(amt, " Resolve Gained")
+
+func _update_load_marker(current_load: float, max_load: float) -> void:
+	if max_load <= 0.0:
+		return
 	
+	var ratio = clampf(current_load / max_load, 0.0, 1.0)
+	
+	load_marker.anchor_bottom = 1.0
+	load_marker.anchor_left = ratio
+	load_marker.anchor_right = ratio
+	load_marker.anchor_top = 0.0
+	load_marker.offset_bottom = 0.0
+	load_marker.offset_top = 0.0
+	load_marker.offset_right = 1.5
+	load_marker.offset_left = -1.5
 func useResolve(amt:float):
 	cResolve = maxf(cResolve - amt, 0.0)

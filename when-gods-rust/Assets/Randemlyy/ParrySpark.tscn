@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cv110r5rurna0"]
 
-[ext_resource type="Script" uid="uid://bnyauvqe30pwk" path="res://Scripts/randem/ParrySpark.gd" id="1_d0sgo"]
+[ext_resource type="Script" uid="uid://bnyauvqe30pwk" path="res://scripts/randem/ParrySpark.gd" id="1_d0sgo"]
 
 [sub_resource type="Curve" id="Curve_d0sgo"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 0.94382024), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]

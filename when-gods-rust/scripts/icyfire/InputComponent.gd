@@ -6,6 +6,7 @@ var dodge:bool
 var block:bool
 var block_held: bool
 var attack:bool
+var upgrade_menu: bool
 var interact:bool
 var InvBool:bool = false
 
@@ -16,3 +17,4 @@ func update(delta: float) -> void:
 	block_held = Input.is_action_pressed("block")
 	attack = Input.is_action_just_pressed("attack")
 	interact = Input.is_action_just_pressed("PickUp")
+	upgrade_menu = Input.is_action_just_pressed("open_upgrade_menu")
