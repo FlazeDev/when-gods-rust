@@ -2770,6 +2770,8 @@ spot_angle = 17.393976
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85, 0, -4)
 PlayerSpawnPosition = NodePath("../Node3D")
 CameraSpawnPosRot = NodePath("../Node3D2")
+InvertControlsX = true
+InvertControlsY = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1083311903]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
@@ -2806,7 +2808,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126, -22, -32)
 PlayerSpawnPosition = NodePath("Node3D")
 CameraSpawnPosRot = NodePath("Node3D2")
 CamRotation = Vector3(-0.8, 0, 0)
-InvertControls = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2" unique_id=725806129]
 shape = SubResource("BoxShape3D_26go8")

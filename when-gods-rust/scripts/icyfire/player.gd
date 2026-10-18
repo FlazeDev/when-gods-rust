@@ -23,9 +23,8 @@ const PARRY_SPARK = preload("res://Assets/Randemlyy/ParrySpark.tscn")
 @export var canStagger:bool = false
 @export var stagger_dura: float = 0.7
 @export var parry_stagger_duration: float = 1.2
-
-@export var invertControls:float = 1
-
+@export var invertControlsX:float = 1
+@export var invertControlsY:float = 1
 var TimeSinceDmg:float = 0
 var DmgTime:float = 1
 var block_animation_started := false
@@ -67,13 +66,15 @@ func _physics_process(delta: float) -> void:
 		velocity.z = Vector3.ZERO.y
 		return
 	if !staggerC.is_staggered:
-		movementC.physics_update(delta, Vector3(inputC.dir.x, 0, inputC.dir.y) * invertControls, self)
+		movementC.physics_update(delta, Vector3(inputC.dir.x * invertControlsX, 0, inputC.dir.y * invertControlsY), self)
 		if inputC.dir != Vector2.ZERO:
-			animC.process(delta, true)
+			animC.process(true, false)
 		else:
-			animC.process(delta, false)
+			animC.process(false, false)
 	else:
 		print("staggered")
+		animC.process(false, true)
+		
 	move_and_slide()
 	
 func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction:Vector3 = Vector3.LEFT, attacker: Node3D = null, hit_collider: Node3D = null) -> void:
@@ -110,6 +111,7 @@ func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction:Vect
 	healthC.take_damage(final_damage)
 	cameraC.shake(0.12, 0.18)
 	staggerC.apply_stagger(hit_stagger_duration)
+	animC.process(false, true)
 	print(hit_direction)
 	velocity = hit_direction
 	

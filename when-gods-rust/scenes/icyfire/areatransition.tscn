@@ -5,6 +5,5 @@
 [node name="Area3D" type="Area3D" unique_id=267873684]
 script = ExtResource("1_6vt61")
 CamRotation = Vector3(-0.8, 3.14, 0)
-InvertControls = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
