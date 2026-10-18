@@ -34,7 +34,7 @@ size = Vector3(13, 1, 1)
 size = Vector3(3, 3, 3)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_26go8"]
-size = Vector3(5, 3, 1)
+size = Vector3(6, 5, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hji5y"]
 size = Vector3(9, 4, 10)
@@ -2831,6 +2831,40 @@ shape = SubResource("BoxShape3D_26go8")
 [node name="Node3D2" type="Node3D" parent="Area3D2" unique_id=2016689187]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 13)
 
+[node name="Area3D5" parent="." unique_id=255098149 node_paths=PackedStringArray("PlayerSpawnPosition", "CameraSpawnPosRot") instance=ExtResource("18_hji5y")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 176, -27, -45)
+PlayerSpawnPosition = NodePath("Node3D")
+CameraSpawnPosRot = NodePath("Node3D2")
+InvertControlsX = true
+InvertControlsY = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D5" unique_id=1248456787]
+shape = SubResource("BoxShape3D_26go8")
+
+[node name="Node3D" type="Node3D" parent="Area3D5" unique_id=540253137]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 1)
+
+[node name="Node3D2" type="Node3D" parent="Area3D5" unique_id=2023713724]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 8, 2)
+
+[node name="Area3D6" parent="." unique_id=961020719 node_paths=PackedStringArray("PlayerSpawnPosition", "CameraSpawnPosRot") instance=ExtResource("18_hji5y")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 218, -27, -27)
+PlayerSpawnPosition = NodePath("Node3D")
+CameraSpawnPosRot = NodePath("Node3D2")
+CamRotation = Vector3(-0.8, 1.07, 0)
+InvertControlsX = true
+SwitchControlAxes = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D6" unique_id=557488850]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 2)
+shape = SubResource("BoxShape3D_26go8")
+
+[node name="Node3D" type="Node3D" parent="Area3D6" unique_id=206763231]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 4)
+
+[node name="Node3D2" type="Node3D" parent="Area3D6" unique_id=655300515]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9073486e-06, 8, 24)
+
 [node name="enemies" type="Node3D" parent="." unique_id=817273062]
 
 [node name="Zealot" parent="enemies" unique_id=1378631121 instance=ExtResource("16_22ack")]
@@ -2879,10 +2913,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 203.95143, -29.752434, -48.23
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 241.37823, -36.752434, -56.67761)
 
 [node name="Zealot15" parent="enemies" unique_id=1558165480 instance=ExtResource("16_22ack")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 255.37823, -36.752434, -49.67761)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 255.37823, -38.752434, -49.67761)
 
 [node name="Zealot14" parent="enemies" unique_id=1335771127 instance=ExtResource("16_22ack")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 225.37823, -30.752434, -51.67761)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 225.37823, -33.752434, -51.67761)
 
 [node name="Zealot13" parent="enemies" unique_id=261507128 instance=ExtResource("16_22ack")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 226.19164, -33.752434, -57.98853)
