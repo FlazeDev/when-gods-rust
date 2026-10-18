@@ -6,11 +6,13 @@ extends Node
 @export var hand_slot: Node3D
 @export var iArea:Area3D
 @export var anim: AnimationPlayer
+@onready var label_4: Label = $"../CanvasLayer/Control/Label4"
 
 var cWeapon:Weapon = null
 var isEquip:bool = false
 var isAttack:bool = false
 
+var Heals:int = 3
 
 func update(resolve:ResolveComponent, anim:AnimationPlayer, canStagger:bool, canCombo:bool, canCrit:bool):
 	if is_instance_valid(cWeapon):
@@ -42,3 +44,7 @@ func equip(itemWeapon:Node):
 func drop():
 	cWeapon.queue_free()
 	#Imma do this for now ill implement drop logic later
+	
+func UseHeal() -> void:
+	if Heals > 0:
+		Heals -= 1

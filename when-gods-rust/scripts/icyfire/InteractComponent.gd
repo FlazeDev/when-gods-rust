@@ -9,4 +9,4 @@ func process(delta: float, IsInteractInput:bool) -> void:
 		for obj in interact_area.get_overlapping_bodies():
 			if obj.is_in_group("Checkpoint"):
 				print("campfire")
-				# save game
+				obj.get_parent().Rest(self.get_parent())

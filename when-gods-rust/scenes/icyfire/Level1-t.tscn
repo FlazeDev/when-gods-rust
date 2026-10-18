@@ -2928,8 +2928,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 208.37823, -29.752434, -49.67
 [node name="Monoculus6" parent="enemies" unique_id=1461227023 instance=ExtResource("17_xfigw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.02639, 1.1926906, 0.2063913)
 
-[node name="Campfire" parent="enemies" unique_id=928643603 instance=ExtResource("22_26go8")]
+[node name="Campfire" parent="enemies" unique_id=928643603 node_paths=PackedStringArray("camPos", "playerPos") instance=ExtResource("22_26go8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, 3)
+camPos = NodePath("Node3D")
+playerPos = NodePath("Node3D2")
+
+[node name="Node3D" type="Node3D" parent="enemies/Campfire" unique_id=1810307125]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, 3)
+
+[node name="Node3D2" type="Node3D" parent="enemies/Campfire" unique_id=878465628]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
 
 [node name="Label3D" type="Label3D" parent="." unique_id=558695586]
 transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 254.57253, -34, -52)
@@ -2944,7 +2952,7 @@ script = ExtResource("21_hji5y")
 shape = SubResource("BoxShape3D_hji5y")
 
 [node name="Zealot" parent="." unique_id=769290116 instance=ExtResource("16_22ack")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1704144, 1, 0.97067666)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.716851, 1, 0.97067666)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=761010916]
 process_mode = 3

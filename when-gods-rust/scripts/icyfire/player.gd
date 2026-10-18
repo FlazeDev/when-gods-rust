@@ -18,6 +18,7 @@ extends CharacterBody3D
 @onready var upgradeC: UpgradeComponent = $UpgradeComponent
 @onready var interactC: InteractComponent = $InteractComponent
 
+@onready var label_4: Label = $CanvasLayer/Control/Label4
 
 const PARRY_SPARK = preload("res://Assets/Randemlyy/ParrySpark.tscn")
 
@@ -68,7 +69,12 @@ func _process(delta: float) -> void:
 	healthC.update(delta)
 	if inputC.dodge:
 		dodgeC.dodge()
-	
+		
+	if inputC.use:
+		if inventoryC.Heals > 0:
+			healthC.current_health += 10
+			inventoryC.UseHeal()
+	label_4.text = str(inventoryC.Heals)
 func _physics_process(delta: float) -> void:
 	TimeSinceDmg += delta
 	if not is_on_floor():
