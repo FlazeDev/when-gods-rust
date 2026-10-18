@@ -16,6 +16,7 @@ extends CharacterBody3D
 @onready var loadPenaltyC: LoadPenaltyComponent = $LoadPenaltyComponent
 @onready var dodgeC: DodgeComponent = $DodgeComponent
 
+
 const PARRY_SPARK = preload("res://Assets/Randemlyy/ParrySpark.tscn")
 
 @export var canCombo:bool = false
