@@ -1,6 +1,8 @@
 class_name InventoryComponent
 extends Node
 
+@onready var upgradeC: UpgradeComponent = $"../UpgradeComponent"
+
 @export var hand_slot: Node3D
 @export var iArea:Area3D
 @export var anim: AnimationPlayer
@@ -25,15 +27,18 @@ func update(resolve:ResolveComponent, anim:AnimationPlayer, canStagger:bool, can
 		equip(item.get_node("ItemWeapon"))
 		item.queue_free()
 		return
+		
 func equip(itemWeapon:Node):
 	if not itemWeapon or not itemWeapon.Weapon or itemWeapon is not ItemWeapon:
 		return
 	if is_instance_valid(cWeapon):
 		drop()
 	var new_weapon = itemWeapon.Weapon.instantiate() as Weapon
+	new_weapon.upgradeC = upgradeC
 	hand_slot.add_child(new_weapon)
 	cWeapon = new_weapon
 	print(cWeapon)
+	
 func drop():
 	cWeapon.queue_free()
 	#Imma do this for now ill implement drop logic later

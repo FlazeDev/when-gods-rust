@@ -12,6 +12,8 @@ signal loadout_changed
 
 var arm_sockets: Array[GearData] = []
 var core_sockets: Array[GearData] = []
+var attack_damage_bonus: float = 0.0
+var block_resolve_cost_reduction: float = 0.0
 
 func _ready() -> void:
 	if arm_part != null:
@@ -78,9 +80,24 @@ func remove_gear(slot: GearData.Slot, socket_index: int) -> bool:
 	return true
 	
 func _notify_loadout_changed() -> void:
+	_recalculate_final_stats()
 	load_changed.emit(get_current_load(), resolveC.maxResolve)
 	loadout_changed.emit()
+
+func _recalculate_final_stats() -> void:
+	attack_damage_bonus = 0.0
+	block_resolve_cost_reduction = 0.0
+	_add_gear_stats(arm_sockets)
+	_add_gear_stats(core_sockets)
 	
+func _add_gear_stats(sockets: Array[GearData]) -> void:
+	for gear in sockets:
+		if gear == null:
+			return
+		
+		attack_damage_bonus += gear.attack_damage_bonus
+		block_resolve_cost_reduction += gear.attack_damage_bonus
+
 func _install_into(sockets: Array[GearData], gear: GearData, socket_index: int) -> bool:
 	if socket_index < 0 or socket_index >= sockets.size():
 		return false

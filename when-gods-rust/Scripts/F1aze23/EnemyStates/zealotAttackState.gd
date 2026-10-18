@@ -1,15 +1,17 @@
 extends state
 
-var player:CharacterBody3D
 @onready var nav: NavigationAgent3D = $"../../NavigationAgent3D"
-@export var body:CharacterBody3D
 @onready var movementC: MovementComponent = $"../../MovementComponent"
 @onready var aTimer: Timer = $"../../aTimer"
 @onready var anim: AnimationPlayer = $"../../AnimationPlayer"
 @onready var attackDist: RayCast3D = $"../../AttackDist"
-var dir:Vector3
+
 @export var canAttack := true
+@export var body:CharacterBody3D
+
+var player:CharacterBody3D
 var hit:Node
+var dir:Vector3
 
 
 func enter():
@@ -41,31 +43,11 @@ func Attack():
 	hit = null
 
 func onAttackHit(node: Node3D) -> void:
-	if canAttack or player == null:
+	if canAttack or player == null or hit == player:
 		return
-	
-	var hit_player: Node3D = node
-	if node == player.get_node_or_null("DodgeArea"):
-		hit_player = player
-	
-	if hit_player != player or hit == player:
+	if not node.is_in_group("Player"):
 		return
 	
 	hit = player
 	var direction = (player.global_position - body.global_position).normalized()
-	player.take_hit(10, 0.8, direction, body)
-	
-	#if canAttack or hit == node:
-		#return
-	#if node.is_in_group("Player"):
-		#hit = node
-		#var direction = (node.global_position - body.global_position).normalized()
-		#if node.has_method("take_hit"):
-			#node.call("take_hit", 10, 0.8, direction)
-		#elif node.get_parent().has_node("ResolveComponent"):
-			#var health = node.get_parent().get_node("HealthComponent")
-			#var cHealth = health.current_health
-			#await anim.animation_finished
-			#if cHealth != health.current_health:
-				#return
-			#hit.get_parent().get_node("ResolveComponent").gainResolve(5)
+	player.take_hit(10, 0.8, direction, body, node)

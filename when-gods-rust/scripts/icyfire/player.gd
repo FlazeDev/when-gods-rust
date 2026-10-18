@@ -67,7 +67,7 @@ func _physics_process(delta: float) -> void:
 		print("staggered")
 	move_and_slide()
 	
-func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction:Vector3 = Vector3.LEFT, attacker: Node3D = null) -> void:
+func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction:Vector3 = Vector3.LEFT, attacker: Node3D = null, hit_collider: Node3D = null) -> void:
 	var impact_time = float(Time.get_ticks_usec()) / 1_000_000.0
 	var was_blocking_at_impact = blockC.is_blocking
 	await get_tree().create_timer(blockC.late_parry_window).timeout

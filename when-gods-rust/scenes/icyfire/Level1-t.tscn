@@ -2876,7 +2876,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 226.19164, -33.752434, -57.98
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 208.37823, -30.752434, -49.67761)
 
 [node name="Monoculus6" parent="enemies" unique_id=1461227023 instance=ExtResource("17_xfigw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.5773325, 1.1926906, 0.2063913)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.02639, 1.1926906, 0.2063913)
 
 [node name="Label3D" type="Label3D" parent="." unique_id=558695586]
 transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 254.57253, -34, -52)
@@ -2891,6 +2891,6 @@ script = ExtResource("21_hji5y")
 shape = SubResource("BoxShape3D_hji5y")
 
 [node name="Zealot" parent="." unique_id=769290116 instance=ExtResource("16_22ack")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4185593, 0, 0.97067666)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1704144, 0, 0.97067666)
 
 [connection signal="body_entered" from="Area3D4" to="Area3D4" method="_on_body_entered"]

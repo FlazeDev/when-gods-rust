@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_e6re5")
+block_resolve_cost_reduction = 70.0
 gear_name = "Test Core Gear"
 slot = 1
 load = 50.0

@@ -14,12 +14,14 @@ var isAttacking: bool = false
 @export var resolve_gain_combo: float = 10.0
 @export var combo_cooldown: float = 0.6
 
+var resolveC: ResolveComponent
+var upgradeC: UpgradeComponent
+
 var bodies_hit_this_swing: Array[Node3D] = []
 var is_current_attack_crit: bool = false
 var current_swing_hit = false
 var successful_swings = 0
 var combo_cooldown_left: float = 0.0
-var resolveC: ResolveComponent
 
 func _ready() -> void:
 	if attackArea == null:
@@ -93,7 +95,12 @@ func _try_hit(target: Node3D) -> void:
 		
 	bodies_hit_this_swing.append(target)
 	
-	var final_damage := roundi(damage * (1.5 if is_current_attack_crit else 1.0))
+	var damage_bonus = 0.0
+	if is_instance_valid(upgradeC):
+		damage_bonus = upgradeC.attack_damage_bonus
+	
+	var crit_mult = 1.5 if is_current_attack_crit else 1.0
+	var final_damage := roundi(damage * (1.0 + damage_bonus) * crit_mult)
 	target.get_node("HealthComponent").call("take_damage", final_damage)
 	HitStop.request(0.07 if is_current_attack_crit else 0.04)
 	

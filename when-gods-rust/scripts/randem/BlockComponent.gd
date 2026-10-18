@@ -6,11 +6,13 @@ signal blocking_ended
 
 @onready var resolveC: ResolveComponent = $"../ResolveComponent"
 @onready var spamC: SpamPenaltyComponent =  $"../SpamPenaltyComponent"
+@onready var upgradeC: UpgradeComponent = $"../UpgradeComponent"
 
 @export var block_resolve_cost: float = 10.0
 @export var early_parry_window: float = 0.15
 @export var late_parry_window: float = 0.04
 @export var resolve_on_parry: float = 40.0
+
 
 var last_block_press_time: float = -1.0e20
 var is_blocking: bool = false
@@ -29,11 +31,12 @@ func update(block_held: bool, block_pressed: bool, delta: float) -> void:
 	_set_blocking(true)
 
 func spend_for_block() -> bool:
-	if resolveC.cResolve < block_resolve_cost:
+	var reduction = clampf(upgradeC.block_resolve_cost_reduction, 0.0, 1.0)
+	var adjusted_cost = block_resolve_cost * (1.0 - reduction)
+	
+	if resolveC.cResolve < adjusted_cost:
 		_set_blocking(false)
 		return false
-	
-	resolveC.useResolve(block_resolve_cost)
 	
 	if resolveC.cResolve <= 0.0:
 		_set_blocking(false)
