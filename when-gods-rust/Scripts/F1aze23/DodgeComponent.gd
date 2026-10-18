@@ -1,12 +1,12 @@
 class_name DodgeComponent
 extends Node
 
+@export var dArea:Area3D
+@export var body:CharacterBody3D
+var isDodging
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func dodge():
+	body.velocity += Vector3(5,0,5)
+	isDodging =  true
+	await get_tree().create_timer(1).timeout
+	isDodging = false

@@ -14,6 +14,7 @@ extends CharacterBody3D
 @onready var anim: AnimationPlayer = $TestAnimPlayer
 @onready var iArea: Area3D = $InteractArea
 @onready var loadPenaltyC: LoadPenaltyComponent = $LoadPenaltyComponent
+@onready var dodgeC: DodgeComponent = $DodgeComponent
 
 const PARRY_SPARK = preload("res://Assets/Randemlyy/ParrySpark.tscn")
 
@@ -54,6 +55,8 @@ func _process(delta: float) -> void:
 	cameraC.update(self, delta)
 	resolveC.update(delta)
 	healthC.update(delta)
+	if inputC.dodge:
+		dodgeC.dodge()
 	
 func _physics_process(delta: float) -> void:
 	TimeSinceDmg += delta
@@ -74,6 +77,10 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction:Vector3 = Vector3.LEFT, attacker: Node3D = null, hit_collider: Node3D = null) -> void:
+	if dodgeC.isDodging:
+		resolveC.gainResolve(10)
+		return
+	
 	var impact_time = float(Time.get_ticks_usec()) / 1_000_000.0
 	var was_blocking_at_impact = blockC.is_blocking
 	await get_tree().create_timer(blockC.late_parry_window).timeout
