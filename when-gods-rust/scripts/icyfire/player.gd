@@ -55,6 +55,7 @@ func _process(delta: float) -> void:
 		for i in iArea.get_overlapping_bodies():
 			if i.is_in_group('Gear'):
 				upgradeC.pickupGear(i.gearData)
+				upgradeMenu._refresh_menu()
 				print("picking up")
 				i.queue_free()
 	inventoryC.isAttack = inputC.attack
