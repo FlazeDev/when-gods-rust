@@ -74,6 +74,7 @@ func _process(delta: float) -> void:
 		if inventoryC.Heals > 0:
 			healthC.current_health += 10
 			inventoryC.UseHeal()
+			
 	label_4.text = str(inventoryC.Heals)
 func _physics_process(delta: float) -> void:
 	TimeSinceDmg += delta

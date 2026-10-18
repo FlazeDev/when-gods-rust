@@ -1120,7 +1120,6 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_em3uv")
 rounded = true
 
 [node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=681222580]
-visible = false
 layout_mode = 0
 offset_left = 10.0
 offset_top = 65.0
