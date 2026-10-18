@@ -15,6 +15,7 @@ extends CharacterBody3D
 @onready var iArea: Area3D = $InteractArea
 @onready var loadPenaltyC: LoadPenaltyComponent = $LoadPenaltyComponent
 @onready var dodgeC: DodgeComponent = $DodgeComponent
+@onready var upgradeC: UpgradeComponent = $UpgradeComponent
 
 
 const PARRY_SPARK = preload("res://Assets/Randemlyy/ParrySpark.tscn")
@@ -49,7 +50,13 @@ func _process(delta: float) -> void:
 	)
 	if inputC.upgrade_menu:
 		upgradeMenu.toggle_menu()
-	inventoryC.isEquip = inputC.interact
+	if inputC.interact:
+		inventoryC.isEquip = true
+		for i in iArea.get_overlapping_bodies():
+			if i.is_in_group('Gear'):
+				upgradeC.pickupGear(i.gearData)
+				print("picking up")
+				i.queue_free()
 	inventoryC.isAttack = inputC.attack
 	inventoryC.update(resolveC, anim, canStagger, canCombo, canCrit)
 	cameraC.update(self, delta)

@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bo6mdnv4kfwx3" path="res://Scripts/icyfire/control.gd" id="4_0rvhb"]
 [ext_resource type="Script" uid="uid://ceaptm6x6iqxo" path="res://Scenes/icyfire/worldboundary.gd" id="5_10rk6"]
 [ext_resource type="PackedScene" uid="uid://bgsaetvue6br8" path="res://Scenes/F1aze23/StTaurus.tscn" id="6_c4had"]
+[ext_resource type="PackedScene" uid="uid://grg0vrqqiqc6" path="res://Scenes/F1aze23/ReducedBlockCost.tscn" id="7_s4pnn"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_l0j3u"]
 vertices = PackedVector3Array(-1.6476479, 1.3005524, -1.2508545, 0.10235214, 1.3005524, -1.5008545, 0.10235214, 1.3005524, -9.5008545, -60.897648, 1.3005524, -9.5008545, 0.10235214, 1.3005524, 9.7491455, 0.10235214, 1.3005524, 1.4991455, -1.6476479, 1.3005524, 1.2491455, -60.897648, 1.3005524, 9.7491455, 1.6023521, 1.3005524, -1.2508545, 61.102352, 1.3005524, -9.5008545, 1.6023521, 1.3005524, 1.2491455, 61.102352, 1.3005524, 9.7491455, 63.852352, -11.699448, -9.5008545, 63.852352, -11.699448, 9.7491455, 112.102356, -8.449448, 9.7491455, 112.102356, -8.449448, -9.5008545, 106.852356, -22.949448, -3.7508545, 106.852356, -22.949448, 15.4991455, 142.85236, -22.949448, 15.4991455, 142.85236, -22.949448, -3.7508545, -0.64764786, 4.0505524, -0.5008545, -0.64764786, 4.0505524, 0.4991455, 0.60235214, 4.0505524, 0.4991455, 0.60235214, 4.0505524, -0.5008545, -0.39764786, 1.3005524, -0.2508545, -0.39764786, 1.3005524, 0.24914551, 0.35235214, 1.3005524, 0.24914551, 0.35235214, 1.3005524, -0.2508545, 35.352352, -2.6994476, 12.2491455, 35.352352, -2.6994476, 31.249146, 71.352356, -2.6994476, 31.249146, 71.352356, -2.6994476, 12.2491455)
@@ -189,5 +190,8 @@ gizmo_extents = 2.85
 
 [node name="StTaurus" parent="." unique_id=1928915340 instance=ExtResource("6_c4had")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.790314, 3.8024921, 0)
+
+[node name="ReducedBlockCost" parent="." unique_id=2119478206 instance=ExtResource("7_s4pnn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 1.162632, 0)
 
 [connection signal="body_entered" from="Node3D/Area3D" to="Node3D/Area3D" method="_on_body_entered"]
