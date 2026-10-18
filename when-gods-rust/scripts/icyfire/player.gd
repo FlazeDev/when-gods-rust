@@ -27,6 +27,7 @@ const PARRY_SPARK = preload("res://Assets/Randemlyy/ParrySpark.tscn")
 @export var parry_stagger_duration: float = 1.2
 @export var invertControlsX:float = 1
 @export var invertControlsY:float = 1
+@export var SwitchControlAxes:bool = false
 var TimeSinceDmg:float = 0
 var DmgTime:float = 1
 var block_animation_started := false
@@ -75,7 +76,11 @@ func _physics_process(delta: float) -> void:
 		velocity.z = Vector3.ZERO.y
 		return
 	if !staggerC.is_staggered:
-		movementC.physics_update(delta, Vector3(inputC.dir.x * invertControlsX, 0, inputC.dir.y * invertControlsY), self)
+		if !SwitchControlAxes:
+			movementC.physics_update(delta, Vector3(inputC.dir.x * invertControlsX, 0, inputC.dir.y * invertControlsY), self)
+		else:
+			#print("control axes switched")
+			movementC.physics_update(delta, Vector3(inputC.dir.y * invertControlsY, 0, inputC.dir.x * invertControlsX), self)
 		if inputC.dir != Vector2.ZERO:
 			animC.process(true, false)
 		else:

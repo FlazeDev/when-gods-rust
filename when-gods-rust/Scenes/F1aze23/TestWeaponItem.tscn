@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://8ki1um74b20t"]
 
-[ext_resource type="Script" uid="uid://dkwoimokieoao" path="res://scripts/F1aze23/ItemWeapon.gd" id="1_7c70k"]
-[ext_resource type="PackedScene" uid="uid://ddkuk1on7vabs" path="res://scenes/F1aze23/TestWeapon.tscn" id="2_daekf"]
+[ext_resource type="Script" uid="uid://dkwoimokieoao" path="res://Scripts/F1aze23/ItemWeapon.gd" id="1_7c70k"]
+[ext_resource type="PackedScene" uid="uid://ddkuk1on7vabs" path="res://Scenes/F1aze23/TestWeapon.tscn" id="2_daekf"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_daekf"]
 
@@ -33,5 +33,5 @@ offset_bottom = 23.0
 text = "E to Interact"
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1402877695]
-transform = Transform3D(3.6444778, 0, 0, 0, 2.659582, 2.4917548, 0, -2.4917548, 2.659582, 0, 0.94337356, 0)
+transform = Transform3D(3.6444778, 0, 0, 0, 2.659582, 2.4917548, 0, -2.4917548, 2.659582, 0, 1.1525193, 0.3340968)
 texture = SubResource("ViewportTexture_daekf")

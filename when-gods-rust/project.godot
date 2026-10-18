@@ -34,6 +34,7 @@ Enemy=""
 Player=""
 PatrolPoint=""
 Gear=""
+Checkpoint=""
 
 [input]
 

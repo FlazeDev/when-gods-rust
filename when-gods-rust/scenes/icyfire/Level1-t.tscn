@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bj4s2hn8pbd5d"]
 
 [ext_resource type="PackedScene" uid="uid://dm30ay8emvaab" path="res://Modular Blueprint Kit/glTF/FL_8X8.gltf" id="1_7yiwq"]
+[ext_resource type="Script" uid="uid://5afi4tpjl066" path="res://scripts/icyfire/GameManager.gd" id="1_30bdk"]
 [ext_resource type="PackedScene" uid="uid://dl2k5j6m74c31" path="res://Modular Blueprint Kit/glTF/WL_1X4.gltf" id="2_bv0xs"]
 [ext_resource type="PackedScene" uid="uid://by8ubdo3y18ly" path="res://Modular Blueprint Kit/glTF/FL_2X2.gltf" id="4_oc8sd"]
 [ext_resource type="PackedScene" uid="uid://5mt1i8ytxwwc" path="res://Modular Blueprint Kit/glTF/FL_4X4.gltf" id="5_5v4nf"]
@@ -39,6 +40,10 @@ size = Vector3(5, 3, 1)
 size = Vector3(9, 4, 10)
 
 [node name="Level1T" type="Node3D" unique_id=1159306355]
+
+[node name="GameManager" type="Node" parent="." unique_id=1898377832]
+process_mode = 3
+script = ExtResource("1_30bdk")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=827837410]
 navigation_mesh = SubResource("NavigationMesh_muicg")
@@ -2600,6 +2605,15 @@ transform = Transform3D(6.9819245, -0.49999982, -5.651837, 3.9424208e-08, 0.7071
 [node name="FL_8X209" parent="NavigationRegion3D/world" unique_id=984653430 instance=ExtResource("1_7yiwq")]
 transform = Transform3D(9.873933, 5.9604645e-08, -4.7683716e-07, 2.4750182e-07, 0.7071067, -7.9929, 0, 0.7071066, 7.9929023, -23, -28, -65)
 
+[node name="FL_8X240" parent="NavigationRegion3D/world" unique_id=289505096 instance=ExtResource("1_7yiwq")]
+transform = Transform3D(9.873932, 5.9604634e-08, -4.7683713e-07, 2.1434286e-07, 0.9659256, -2.9256034, -1.2375095e-07, 0.25881884, 10.918507, -23, -34, -46)
+
+[node name="FL_8X242" parent="NavigationRegion3D/world" unique_id=1296937017 instance=ExtResource("1_7yiwq")]
+transform = Transform3D(9.537486, 0.066987306, 2.825917, 2.1434285e-07, 0.9659256, -2.9256034, -2.5555618, 0.24999978, 10.546468, 60, -34, -46)
+
+[node name="FL_8X241" parent="NavigationRegion3D/world" unique_id=62009531 instance=ExtResource("1_7yiwq")]
+transform = Transform3D(9.537486, -0.06698719, -2.825918, 2.1434285e-07, 0.9659256, -2.9256034, 2.5555613, 0.2499998, 10.546468, -96, -34, -65)
+
 [node name="Player" parent="." unique_id=1258498601 instance=ExtResource("6_4rs6u")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -9.841427, 1, -1.0096121)
 
@@ -2835,10 +2849,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87, -13, -23)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, -13, -23)
 
 [node name="Zealot3" parent="enemies" unique_id=932975976 instance=ExtResource("16_22ack")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86, -2, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86, -1, 4)
 
 [node name="Zealot5" parent="enemies" unique_id=132636911 instance=ExtResource("16_22ack")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125, -23, -43)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125, -22, -43)
 
 [node name="Monoculus3" parent="enemies" unique_id=321040527 instance=ExtResource("17_xfigw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 146, -26, -39)
@@ -2856,10 +2870,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 157.37823, -29.752436, -45.67
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 170.55981, -29.752436, -44.819897)
 
 [node name="Zealot9" parent="enemies" unique_id=1274996219 instance=ExtResource("16_22ack")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 194.37823, -29.752434, -42.67761)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 194.37823, -28.752434, -42.67761)
 
 [node name="Zealot10" parent="enemies" unique_id=636623450 instance=ExtResource("16_22ack")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 203.95143, -30.752434, -48.234276)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 203.95143, -29.752434, -48.234276)
 
 [node name="Zealot12" parent="enemies" unique_id=2142712665 instance=ExtResource("16_22ack")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 241.37823, -36.752434, -56.67761)
@@ -2874,7 +2888,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 225.37823, -30.752434, -51.67
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 226.19164, -33.752434, -57.98853)
 
 [node name="Zealot11" parent="enemies" unique_id=522737264 instance=ExtResource("16_22ack")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 208.37823, -30.752434, -49.67761)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 208.37823, -29.752434, -49.67761)
 
 [node name="Monoculus6" parent="enemies" unique_id=1461227023 instance=ExtResource("17_xfigw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.02639, 1.1926906, 0.2063913)
@@ -2892,6 +2906,38 @@ script = ExtResource("21_hji5y")
 shape = SubResource("BoxShape3D_hji5y")
 
 [node name="Zealot" parent="." unique_id=769290116 instance=ExtResource("16_22ack")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1704144, 0, 0.97067666)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1704144, 1, 0.97067666)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=761010916]
+process_mode = 3
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1665636742]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.14509805, 0.14509805, 0.14509805, 0.54509807)
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=244375370]
+offset_left = 522.0
+offset_top = 184.0
+offset_right = 634.0
+offset_bottom = 207.0
+text = "GAME PAUSED"
+
+[node name="cont" type="Button" parent="CanvasLayer" unique_id=104047761]
+offset_left = 508.0
+offset_top = 248.0
+offset_right = 653.0
+offset_bottom = 315.0
+text = "CONTINUE"
+
+[node name="quit" type="Button" parent="CanvasLayer" unique_id=410221566]
+offset_left = 510.0
+offset_top = 400.0
+offset_right = 655.0
+offset_bottom = 467.0
+text = "QUIT"
 
 [connection signal="body_entered" from="Area3D4" to="Area3D4" method="_on_body_entered"]

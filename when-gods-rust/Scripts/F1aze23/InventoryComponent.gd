@@ -38,7 +38,7 @@ func equip(itemWeapon:Node):
 	hand_slot.add_child(new_weapon)
 	cWeapon = new_weapon
 	print(cWeapon)
-	
+
 func drop():
 	cWeapon.queue_free()
 	#Imma do this for now ill implement drop logic later
