@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://bgsaetvue6br8"]
+
+[ext_resource type="Script" uid="uid://dyp3dlym7cmbv" path="res://Scripts/F1aze23/StateMachine.gd" id="1_6glc1"]
+[ext_resource type="Script" uid="uid://c30qtjhxnsdh0" path="res://Scripts/F1aze23/EnemyStates/stTaurusPatrol.gd" id="2_b0vb5"]
+[ext_resource type="Script" uid="uid://dtnjxw1vua83h" path="res://Scripts/icyfire/MovementComponent.gd" id="4_4atil"]
+[ext_resource type="Script" uid="uid://b0kvjspvxbmpb" path="res://Scripts/F1aze23/EnemyStates/stTaurusAttack.gd" id="4_805la"]
+[ext_resource type="Script" uid="uid://c5yf8bxmdfcr5" path="res://Scripts/randem/StaggerComponent.gd" id="6_805la"]
+[ext_resource type="Script" uid="uid://dq71svuwl2njr" path="res://Scripts/randem/HealthComponent.gd" id="6_aboue"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dnbyt"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_bm3dy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jmsyx"]
+albedo_color = Color(0.19076231, 0.19076234, 0.19076231, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_me333"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkciu"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_805la"]
+transparency = 1
+albedo_color = Color(0.9999997, 0.24524122, 0.18784547, 0.5529412)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_805la"]
+radius = 1.1564394
+
+[node name="StTaurus" type="CharacterBody3D" unique_id=1928915340]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=303706227]
+shape = SubResource("CapsuleShape3D_dnbyt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1404991443]
+mesh = SubResource("CapsuleMesh_bm3dy")
+surface_material_override/0 = SubResource("StandardMaterial3D_jmsyx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D" unique_id=469477141]
+transform = Transform3D(0.9246517, 0, 0, 0, 0.3315708, 0, 0, 0, 0.72729874, 0, 0.47166467, -0.30899215)
+mesh = SubResource("BoxMesh_me333")
+surface_material_override/0 = SubResource("StandardMaterial3D_pkciu")
+
+[node name="StaggerComponent" type="Node" parent="." unique_id=686726233]
+script = ExtResource("6_805la")
+metadata/_custom_type_script = "uid://c5yf8bxmdfcr5"
+
+[node name="StateMachine" type="Node" parent="." unique_id=595018600 node_paths=PackedStringArray("iState", "staggerC")]
+script = ExtResource("1_6glc1")
+iState = NodePath("Patrol")
+staggerC = NodePath("../StaggerComponent")
+metadata/_custom_type_script = "uid://dyp3dlym7cmbv"
+
+[node name="Patrol" type="Node" parent="StateMachine" unique_id=1261323547 node_paths=PackedStringArray("nav", "body", "movementC", "vArea")]
+script = ExtResource("2_b0vb5")
+nav = NodePath("../../NavigationAgent3D")
+body = NodePath("../..")
+movementC = NodePath("../../MovementComponent")
+vArea = NodePath("../../VisionArea")
+metadata/_custom_type_script = "uid://cpwwu1gw7sj85"
+
+[node name="Attack" type="Node" parent="StateMachine" unique_id=323999453 node_paths=PackedStringArray("nav", "body", "movementC", "dArea")]
+script = ExtResource("4_805la")
+nav = NodePath("../../NavigationAgent3D")
+body = NodePath("../..")
+movementC = NodePath("../../MovementComponent")
+dArea = NodePath("../../DamageArea")
+metadata/_custom_type_script = "uid://cpwwu1gw7sj85"
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1372853692]
+
+[node name="MovementComponent" type="Node" parent="." unique_id=1390420461]
+script = ExtResource("4_4atil")
+accel = 60.0
+deccel = 100.0
+speed = 5.0
+metadata/_custom_type_script = "uid://dtnjxw1vua83h"
+
+[node name="HealthComponent" type="Node" parent="." unique_id=1314475188]
+script = ExtResource("6_aboue")
+metadata/_custom_type_script = "uid://dq71svuwl2njr"
+
+[node name="VisionArea" type="Area3D" parent="." unique_id=2026891129]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 1, 0)
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="VisionArea" unique_id=1416301076]
+depth = 2.0
+polygon = PackedVector2Array(0, 0, 5, 10, -5, 10)
+debug_color = Color(0.9783754, 0, 0.4004526, 0.41960785)
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="VisionArea" unique_id=576267709]
+polygon = PackedVector2Array(0, 0, 5, 10, -5, 10)
+depth = 2.0
+material = SubResource("StandardMaterial3D_805la")
+
+[node name="DamageArea" type="Area3D" parent="." unique_id=1242344658]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DamageArea" unique_id=1840441633]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15762329, 0)
+shape = SubResource("SphereShape3D_805la")
+
+[connection signal="navigation_finished" from="NavigationAgent3D" to="StateMachine/Patrol" method="updatePatrol"]
+[connection signal="body_entered" from="VisionArea" to="StateMachine/Patrol" method="onVisionEntered"]

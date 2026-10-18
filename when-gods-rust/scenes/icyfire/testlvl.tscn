@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://8ki1um74b20t" path="res://Scenes/F1aze23/TestWeaponItem.tscn" id="3_0jgn4"]
 [ext_resource type="Script" uid="uid://bo6mdnv4kfwx3" path="res://Scripts/icyfire/control.gd" id="4_0rvhb"]
 [ext_resource type="Script" uid="uid://ceaptm6x6iqxo" path="res://Scenes/icyfire/worldboundary.gd" id="5_10rk6"]
-[ext_resource type="PackedScene" uid="uid://dqs54vd1wxvh0" path="res://Scenes/F1aze23/Monoculus.tscn" id="5_c4had"]
+[ext_resource type="PackedScene" uid="uid://bgsaetvue6br8" path="res://Scenes/F1aze23/StTaurus.tscn" id="6_c4had"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_l0j3u"]
 vertices = PackedVector3Array(-1.6476479, 1.3005524, -1.2508545, 0.10235214, 1.3005524, -1.5008545, 0.10235214, 1.3005524, -9.5008545, -60.897648, 1.3005524, -9.5008545, 0.10235214, 1.3005524, 9.7491455, 0.10235214, 1.3005524, 1.4991455, -1.6476479, 1.3005524, 1.2491455, -60.897648, 1.3005524, 9.7491455, 1.6023521, 1.3005524, -1.2508545, 61.102352, 1.3005524, -9.5008545, 1.6023521, 1.3005524, 1.2491455, 61.102352, 1.3005524, 9.7491455, 63.852352, -11.699448, -9.5008545, 63.852352, -11.699448, 9.7491455, 112.102356, -8.449448, 9.7491455, 112.102356, -8.449448, -9.5008545, 106.852356, -22.949448, -3.7508545, 106.852356, -22.949448, 15.4991455, 142.85236, -22.949448, 15.4991455, 142.85236, -22.949448, -3.7508545, -0.64764786, 4.0505524, -0.5008545, -0.64764786, 4.0505524, 0.4991455, 0.60235214, 4.0505524, 0.4991455, 0.60235214, 4.0505524, -0.5008545, -0.39764786, 1.3005524, -0.2508545, -0.39764786, 1.3005524, 0.24914551, 0.35235214, 1.3005524, 0.24914551, 0.35235214, 1.3005524, -0.2508545, 35.352352, -2.6994476, 12.2491455, 35.352352, -2.6994476, 31.249146, 71.352356, -2.6994476, 31.249146, 71.352356, -2.6994476, 12.2491455)
@@ -108,7 +108,7 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.0709834, 4.8172655, -3.7885466)
 
 [node name="TestWeaponItem" parent="." unique_id=102225822 instance=ExtResource("3_0jgn4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.501633, 1.0095048, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.501633, 1.7013474, 0)
 
 [node name="Control" type="Control" parent="." unique_id=756796931]
 layout_mode = 3
@@ -141,9 +141,6 @@ GIVES MORE RESOLVE"
 
 [node name="enemies" type="Node3D" parent="." unique_id=1908741127]
 
-[node name="Monoculus" parent="enemies" unique_id=242683207 instance=ExtResource("5_c4had")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.126842, 4.091362, 0)
-
 [node name="Zealot2" parent="enemies" unique_id=2013569586 instance=ExtResource("2_25x4d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 104.90965, -5.89023, 0)
 
@@ -170,5 +167,27 @@ script = ExtResource("5_10rk6")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/Area3D" unique_id=897713695]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -32.31281, 16.160782)
 shape = SubResource("WorldBoundaryShape3D_0rvhb")
+
+[node name="PatrolPoints" type="Node3D" parent="." unique_id=1785672784 groups=["PatrolPoint"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.09746, 5.6059017, 0)
+
+[node name="Marker3D" type="Marker3D" parent="PatrolPoints" unique_id=851098735]
+transform = Transform3D(1, 0, 0, 0, 0.65485954, -0.7557506, 0, 0.7557506, 0.65485954, -4.3364296, -4.0644007, 4.305069)
+gizmo_extents = 2.85
+
+[node name="Marker3D2" type="Marker3D" parent="PatrolPoints" unique_id=1195916295]
+transform = Transform3D(1, 0, 0, 0, 0.65485954, -0.7557506, 0, 0.7557506, 0.65485954, 9.437046, -4.0644007, 4.3424883)
+gizmo_extents = 2.85
+
+[node name="Marker3D4" type="Marker3D" parent="PatrolPoints" unique_id=1529352827]
+transform = Transform3D(1, 0, 0, 0, 0.65485954, -0.7557506, 0, 0.7557506, 0.65485954, 9.437046, -4.0644007, -6.653782)
+gizmo_extents = 2.85
+
+[node name="Marker3D3" type="Marker3D" parent="PatrolPoints" unique_id=1821838708]
+transform = Transform3D(1, 0, 0, 0, 0.65485954, -0.7557506, 0, 0.7557506, 0.65485954, -4.36561, -4.0644007, -5.8360505)
+gizmo_extents = 2.85
+
+[node name="StTaurus" parent="." unique_id=1928915340 instance=ExtResource("6_c4had")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.790314, 3.8024921, 0)
 
 [connection signal="body_entered" from="Node3D/Area3D" to="Node3D/Area3D" method="_on_body_entered"]

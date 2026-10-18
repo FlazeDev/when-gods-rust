@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://hb3e4hhcpxtc"]
+
+[ext_resource type="Script" uid="uid://dyp3dlym7cmbv" path="res://Scripts/F1aze23/StateMachine.gd" id="1_me333"]
+[ext_resource type="Script" uid="uid://c30qtjhxnsdh0" path="res://Scripts/F1aze23/EnemyStates/stTaurusPatrol.gd" id="2_pkciu"]
+[ext_resource type="Script" uid="uid://cpwwu1gw7sj85" path="res://Scripts/F1aze23/state.gd" id="3_v2yw2"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dnbyt"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_bm3dy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jmsyx"]
+albedo_color = Color(0.19076231, 0.19076234, 0.19076231, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_me333"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkciu"]
+albedo_color = Color(1, 0, 0, 1)
+
+[node name="StTaurus" type="CharacterBody3D" unique_id=1928915340]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=303706227]
+shape = SubResource("CapsuleShape3D_dnbyt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1404991443]
+mesh = SubResource("CapsuleMesh_bm3dy")
+surface_material_override/0 = SubResource("StandardMaterial3D_jmsyx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D" unique_id=469477141]
+transform = Transform3D(0.9246517, 0, 0, 0, 0.3315708, 0, 0, 0, 0.72729874, 0, 0.47166467, -0.30899215)
+mesh = SubResource("BoxMesh_me333")
+surface_material_override/0 = SubResource("StandardMaterial3D_pkciu")
+
+[node name="StateMachine" type="Node" parent="." unique_id=595018600]
+script = ExtResource("1_me333")
+metadata/_custom_type_script = "uid://dyp3dlym7cmbv"
+
+[node name="Patrol" type="Node" parent="StateMachine" unique_id=1261323547]
+script = ExtResource("2_pkciu")
+metadata/_custom_type_script = "uid://cpwwu1gw7sj85"
+
+[node name="Attack" type="Node" parent="StateMachine" unique_id=323999453]
+script = ExtResource("3_v2yw2")
+metadata/_custom_type_script = "uid://cpwwu1gw7sj85"

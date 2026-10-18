@@ -21,8 +21,6 @@ HitStop="*uid://b1spu6sk5a6ml"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
@@ -34,6 +32,7 @@ enabled=PackedStringArray("res://addons/anthonyec.camera_preview/plugin.cfg", "r
 
 Enemy=""
 Player=""
+PatrolPoint=""
 
 [input]
 
@@ -86,6 +85,10 @@ open_upgrade_menu={
 [layer_names]
 
 3d_physics/layer_2="Enemy"
+
+[limbo_ai]
+
+behavior_tree/behavior_tree_default_dir="res://Scripts/F1aze23/EnemyStates"
 
 [physics]
 
