@@ -5,10 +5,11 @@ extends CharacterBody3D
 @onready var movementC: MovementComponent = $MovementComponent
 @onready var staggerC: StaggerComponent = $StaggerComponent
 @export var isAttacking:=false
+@onready var lootC: LootComponent = $LootComponent
 
 func _ready() -> void:
 	healthC.start()
-	healthC.died.connect(queue_free)
+	healthC.died.connect(death)
 
 func _process(delta: float) -> void:
 	if staggerC.is_staggered:
@@ -24,3 +25,7 @@ func _process(delta: float) -> void:
 		if anim.current_animation != "Idle":
 			anim.play("Idle")
 	healthC.update(delta)
+	
+func death():
+	lootC.spawnLoot()
+	queue_free()

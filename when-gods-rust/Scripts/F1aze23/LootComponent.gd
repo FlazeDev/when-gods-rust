@@ -12,7 +12,7 @@ func spawnLoot():
 		if roll <= totalWeight:
 			var inst = i.instantiate()
 			get_tree().root.add_child(inst)
-			inst.global_position = body.global_position
+			inst.global_position = body.global_position 
 			print("Successfully spawned: ", inst.name)
 			break
 		

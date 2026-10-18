@@ -1,16 +1,19 @@
 [gd_scene format=4 uid="uid://cf6amcblndo4i"]
 
-[ext_resource type="Script" uid="uid://bjjc3prpxfcdt" path="res://scripts/F1aze23/zealot.gd" id="1_8v36v"]
-[ext_resource type="Script" uid="uid://dyp3dlym7cmbv" path="res://scripts/F1aze23/StateMachine.gd" id="1_q00h4"]
-[ext_resource type="Script" uid="uid://d0uwgok04xqcf" path="res://scripts/F1aze23/EnemyStates/zealotWanderState.gd" id="2_d7kfn"]
-[ext_resource type="Script" uid="uid://dtnjxw1vua83h" path="res://scripts/icyfire/MovementComponent.gd" id="4_8jpi8"]
-[ext_resource type="Script" uid="uid://c4sb3mq5mcq2a" path="res://scripts/F1aze23/EnemyStates/zealotAttackState.gd" id="4_it8qr"]
-[ext_resource type="Script" uid="uid://dq71svuwl2njr" path="res://scripts/randem/HealthComponent.gd" id="6_74sap"]
-[ext_resource type="Script" uid="uid://c5yf8bxmdfcr5" path="res://scripts/randem/StaggerComponent.gd" id="7_gcpxs"]
+[ext_resource type="Script" uid="uid://bjjc3prpxfcdt" path="res://Scripts/F1aze23/zealot.gd" id="1_8v36v"]
+[ext_resource type="Script" uid="uid://dyp3dlym7cmbv" path="res://Scripts/F1aze23/StateMachine.gd" id="1_q00h4"]
+[ext_resource type="Script" uid="uid://d0uwgok04xqcf" path="res://Scripts/F1aze23/EnemyStates/zealotWanderState.gd" id="2_d7kfn"]
+[ext_resource type="Script" uid="uid://dtnjxw1vua83h" path="res://Scripts/icyfire/MovementComponent.gd" id="4_8jpi8"]
+[ext_resource type="Script" uid="uid://c4sb3mq5mcq2a" path="res://Scripts/F1aze23/EnemyStates/zealotAttackState.gd" id="4_it8qr"]
+[ext_resource type="Script" uid="uid://dq71svuwl2njr" path="res://Scripts/randem/HealthComponent.gd" id="6_74sap"]
+[ext_resource type="Script" uid="uid://c5yf8bxmdfcr5" path="res://Scripts/randem/StaggerComponent.gd" id="7_gcpxs"]
 [ext_resource type="Texture2D" uid="uid://dsk8f78uvnwx7" path="res://Assets/F1aze23/Zealot-WGR_image.png" id="8_kqtf2"]
 [ext_resource type="Animation" uid="uid://c23lms7mqslly" path="res://Assets/F1aze23/Anims/ZealotAttack.tres" id="9_hfppt"]
 [ext_resource type="Animation" uid="uid://drvud3l85vd1x" path="res://Assets/F1aze23/Anims/ZealotIdle.tres" id="10_38ql3"]
 [ext_resource type="Animation" uid="uid://d0fuvrogk866m" path="res://Assets/F1aze23/Anims/ZealotWalk.tres" id="11_8do7w"]
+[ext_resource type="Script" uid="uid://chrslpr65wig4" path="res://Scripts/F1aze23/LootComponent.gd" id="12_hfppt"]
+[ext_resource type="PackedScene" uid="uid://grg0vrqqiqc6" path="res://Scenes/F1aze23/Gears/ReducedBlockCost.tscn" id="13_8do7w"]
+[ext_resource type="PackedScene" uid="uid://pb5jox1hybs7" path="res://Scenes/F1aze23/Gears/IncreasedAttack.tscn" id="14_byday"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kqtf2"]
 size = Vector3(1.3704834, 1.3842773, 1)
@@ -162,11 +165,11 @@ collision_layer = 3
 script = ExtResource("1_8v36v")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=1111897379]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.029968262, 1.0281663, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.029968262, -0.1541884, 0)
 shape = SubResource("BoxShape3D_kqtf2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1162409723]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0751704, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.10718429, 0)
 shape = SubResource("CapsuleShape3D_byday")
 
 [node name="StateMachine" type="Node" parent="." unique_id=726161304 node_paths=PackedStringArray("iState", "staggerC")]
@@ -213,7 +216,7 @@ metadata/_custom_type_script = "uid://c5yf8bxmdfcr5"
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1843512695]
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=68682298]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 2.5467877, 0)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.364433, 0)
 texture = SubResource("ViewportTexture_d7kfn")
 
 [node name="SubViewport" type="SubViewport" parent="Sprite3D" unique_id=1893817477]
@@ -227,7 +230,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Zealot" type="Node3D" parent="." unique_id=954371852]
-transform = Transform3D(-0.7, 0, -6.119594e-08, 0, 0.7, 0, 6.119594e-08, 0, -0.7, 0, 0.09886491, 0)
+transform = Transform3D(-0.7, 0, -6.119594e-08, 0, 0.7, 0, 6.119594e-08, 0, -0.7, 0, -1.0834898, 0)
 
 [node name="Skeleton3D" type="Skeleton3D" parent="Zealot" unique_id=1566643566]
 bones/0/name = "Root"
@@ -242,7 +245,7 @@ bones/1/parent = 0
 bones/1/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5340277, 0)
 bones/1/enabled = true
 bones/1/position = Vector3(0, 0.5340277, 0)
-bones/1/rotation = Quaternion(0, -0.008191226, 0, 0.9999665)
+bones/1/rotation = Quaternion(0, 0, 0, 1)
 bones/1/scale = Vector3(1, 1, 1)
 bones/2/name = "Head"
 bones/2/parent = 1
@@ -291,21 +294,21 @@ bones/8/parent = 7
 bones/8/rest = Transform3D(0.9186961, 0.39496505, -1.8299521e-07, -0.3949651, 0.918696, 2.7060377e-08, 1.7880488e-07, 4.741645e-08, 1, -5.9604645e-08, 0.48138526, 1.7763568e-14)
 bones/8/enabled = true
 bones/8/position = Vector3(-5.9604645e-08, 0.48138526, 1.7763568e-14)
-bones/8/rotation = Quaternion(-0.11710733, 0.12921959, 0.07115816, 0.9821023)
+bones/8/rotation = Quaternion(-0.14776976, 0.0841178, 0.06503955, 0.9832894)
 bones/8/scale = Vector3(1, 0.9999998, 1)
 bones/9/name = "LowerArm.R"
 bones/9/parent = 8
 bones/9/rest = Transform3D(0.9999675, 0.008057749, -4.0599653e-09, -0.008057749, 0.9999675, 8.090717e-10, 4.066353e-09, -7.763312e-10, 1, -8.5681684e-08, 0.4336046, 1.5987212e-14)
 bones/9/enabled = true
 bones/9/position = Vector3(-8.5681684e-08, 0.4336046, 1.5987212e-14)
-bones/9/rotation = Quaternion(0.07998346, 0.051234383, 0.39864072, 0.91217506)
+bones/9/rotation = Quaternion(4.342743e-08, 1.0426657e-08, 0.3736202, 0.92758185)
 bones/9/scale = Vector3(0.99999994, 0.99999994, 1)
 bones/10/name = "Hand.R"
 bones/10/parent = 9
 bones/10/rest = Transform3D(0.99930197, 0.037357006, -4.7264496e-08, -0.037357006, 0.9993019, 5.5202847e-09, 4.7437723e-08, -3.7507712e-09, 1, -1.00582845e-07, 0.70273036, -6.661338e-15)
 bones/10/enabled = true
 bones/10/position = Vector3(-1.00582845e-07, 0.70273036, -6.661338e-15)
-bones/10/rotation = Quaternion(-0.00024957658, -0.01335671, -0.018680109, 0.99973637)
+bones/10/rotation = Quaternion(-2.211621e-09, -1.274926e-08, -0.018681768, 0.9998255)
 bones/10/scale = Vector3(0.99999994, 0.9999999, 1)
 bones/11/name = "UpperLeg.L"
 bones/11/parent = 0
@@ -379,7 +382,7 @@ bones/20/rotation = Quaternion(5.3385087e-08, 0.7071068, -0.7071068, -5.3385087e
 bones/20/scale = Vector3(1, 1, 1)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Zealot/Skeleton3D" unique_id=2137977702]
-transform = Transform3D(-0.915279, -0.25796193, -0.30938533, 0.168862, -0.94301516, 0.28671768, -0.3657175, 0.21018343, 0.90668285, -0.87199616, 1.0099666, 0.03119281)
+transform = Transform3D(-0.9108012, -0.24111654, -0.3351168, 0.25591445, -0.9666989, -1.7175734e-07, -0.32395715, -0.08576136, 0.9421766, -0.8592455, 1.0003421, -0.19514847)
 bone_name = "Hand.R"
 bone_idx = 10
 
@@ -399,8 +402,17 @@ skeleton = NodePath("..")
 libraries/ = SubResource("AnimationLibrary_p0wiw")
 
 [node name="AttackDist" type="RayCast3D" parent="." unique_id=373568476]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0257862, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15656853, 0)
 target_position = Vector3(0, 0, -0.62)
+
+[node name="LootComponent" type="Node" parent="." unique_id=1689106634 node_paths=PackedStringArray("body")]
+script = ExtResource("12_hfppt")
+lootTable = {
+ExtResource("13_8do7w"): 50.0,
+ExtResource("14_byday"): 40.0
+}
+body = NodePath("..")
+metadata/_custom_type_script = "uid://chrslpr65wig4"
 
 [connection signal="timeout" from="wTimer" to="StateMachine/Wander" method="randomDir"]
 [connection signal="area_entered" from="Zealot/Skeleton3D/BoneAttachment3D/Area3D" to="StateMachine/Attack" method="onAttackHit"]

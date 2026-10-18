@@ -114,7 +114,7 @@ func pickupGear(gear:GearData):
 				_install_into(arm_sockets, gear, i)
 				print("installed arm scoket succesfully")
 	elif gear.slot == gear.Slot.CORE:
-		for i in range(core_sockets.size()-1):
+		for i in range(core_sockets.size()):
 			if core_sockets[i] == null:
 				_install_into(core_sockets, gear, i)
 				print("Installed core socket sucessfully")

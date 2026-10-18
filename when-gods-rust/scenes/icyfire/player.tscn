@@ -34,7 +34,7 @@ albedo_color = Color(0, 0.24313726, 1, 1)
 viewport_path = NodePath("ResolveComponent/Resolve")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8qorh"]
-radius = 0.70654297
+radius = 0.9296875
 height = 2.8999023
 
 [sub_resource type="BoxMesh" id="BoxMesh_8qorh"]
