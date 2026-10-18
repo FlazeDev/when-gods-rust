@@ -6,12 +6,12 @@ extends Node
 func process(IsMoving:bool, IsStaggered:bool) -> void:
 	if !IsStaggered:
 		if IsMoving:
-			print("moveanim")
+#			print("moveanim")
 			animation_player.play("Walk2")
 		elif !IsMoving:
-			print("walkanim")
+#			print("walkanim")
 			animation_player.play("Idle")
 	else:
 		animation_player.stop()
 		animation_player.play("Staggered")
-		print("staggeredanim")
+#		print("staggeredanim")

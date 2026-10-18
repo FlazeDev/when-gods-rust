@@ -4,8 +4,8 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_6b5mn"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_6b5mn"]
-size = Vector3(3, 3, 3)
+[sub_resource type="BoxShape3D" id="BoxShape3D_ccaea"]
+size = Vector3(1.4306641, 2, 1.2548828)
 
 [node name="Campfire" type="Node3D" unique_id=928643603 groups=["Checkpoint"]]
 script = ExtResource("1_ccaea")
@@ -14,9 +14,9 @@ script = ExtResource("1_ccaea")
 transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_6b5mn")
 
-[node name="Area3D" type="Area3D" parent="." unique_id=1555029524]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1095292844]
-shape = SubResource("BoxShape3D_6b5mn")
-
 [node name="PlayerSpawnPos" type="Node3D" parent="." unique_id=515640734]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=59277319 groups=["Checkpoint"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1137294549]
+shape = SubResource("BoxShape3D_ccaea")
