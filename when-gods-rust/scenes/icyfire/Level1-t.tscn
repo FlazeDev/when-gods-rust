@@ -17,9 +17,9 @@
 [ext_resource type="PackedScene" uid="uid://8425gy0kabge" path="res://Modular Blueprint Kit/glTF/WL_CORNER.gltf" id="14_r7noc"]
 [ext_resource type="PackedScene" uid="uid://3yy0b00ka4xo" path="res://Modular Blueprint Kit/glTF/FL_1X1.gltf" id="15_guagr"]
 [ext_resource type="PackedScene" uid="uid://cf6amcblndo4i" path="res://scenes/F1aze23/Zealot.tscn" id="16_22ack"]
-[ext_resource type="PackedScene" uid="uid://dqs54vd1wxvh0" path="res://scenes/F1aze23/Monoculus.tscn" id="17_xfigw"]
+[ext_resource type="PackedScene" uid="uid://dqs54vd1wxvh0" path="res://Scenes/F1aze23/Monoculus.tscn" id="17_xfigw"]
 [ext_resource type="PackedScene" uid="uid://cgybamxl1p0r0" path="res://scenes/icyfire/areatransition.tscn" id="18_hji5y"]
-[ext_resource type="PackedScene" uid="uid://8ki1um74b20t" path="res://scenes/F1aze23/TestWeaponItem.tscn" id="18_muicg"]
+[ext_resource type="PackedScene" uid="uid://8ki1um74b20t" path="res://Scenes/F1aze23/TestWeaponItem.tscn" id="18_muicg"]
 [ext_resource type="Script" uid="uid://iod8kgoluamx" path="res://scenes/icyfire/tempscr.gd" id="21_hji5y"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_muicg"]

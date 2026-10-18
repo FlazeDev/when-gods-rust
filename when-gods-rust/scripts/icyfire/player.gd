@@ -9,6 +9,7 @@ extends CharacterBody3D
 @onready var resolveC: ResolveComponent = $ResolveComponent
 @onready var inventoryC: InventoryComponent = $InventoryComponent
 @onready var blockC: BlockComponent = $BlockComponent
+@onready var animC: AnimationComponent = $AnimationComponent
 @onready var upgradeMenu: UpgradeMenu = $CanvasLayer/UpgradeMenu
 @onready var anim: AnimationPlayer = $TestAnimPlayer
 @onready var iArea: Area3D = $InteractArea
@@ -64,6 +65,10 @@ func _physics_process(delta: float) -> void:
 		return
 	if !staggerC.is_staggered:
 		movementC.physics_update(delta, Vector3(inputC.dir.x, 0, inputC.dir.y) * invertControls, self)
+		if inputC.dir != Vector2.ZERO:
+			animC.process(delta, true)
+		else:
+			animC.process(delta, false)
 	else:
 		print("staggered")
 	move_and_slide()

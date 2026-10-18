@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://choj0y3mf2iix" path="res://scripts/icyfire/player.gd" id="1_dkbgn"]
 [ext_resource type="Script" uid="uid://b6rlibesv2u6e" path="res://scripts/icyfire/InputComponent.gd" id="1_fx4ke"]
 [ext_resource type="Script" uid="uid://dtnjxw1vua83h" path="res://scripts/icyfire/MovementComponent.gd" id="2_que7a"]
-[ext_resource type="Script" uid="uid://2ykk4lgaj6yg" path="res://scripts/F1aze23/InventoryComponent.gd" id="2_vjlaq"]
+[ext_resource type="Script" uid="uid://2ykk4lgaj6yg" path="res://Scripts/F1aze23/InventoryComponent.gd" id="2_vjlaq"]
 [ext_resource type="Script" uid="uid://c3q2bf4w8k2ae" path="res://scripts/F1aze23/CameraComponent.gd" id="5_1mpnw"]
 [ext_resource type="Script" uid="uid://dq71svuwl2njr" path="res://scripts/randem/HealthComponent.gd" id="6_okieb"]
-[ext_resource type="Script" uid="uid://c6h2bauklbph" path="res://scripts/F1aze23/ResolveComponent.gd" id="7_8qorh"]
+[ext_resource type="Script" uid="uid://c6h2bauklbph" path="res://Scripts/F1aze23/ResolveComponent.gd" id="7_8qorh"]
 [ext_resource type="Script" uid="uid://c5yf8bxmdfcr5" path="res://scripts/randem/StaggerComponent.gd" id="7_vvvn2"]
 [ext_resource type="Script" uid="uid://baudgajyg4pmb" path="res://scripts/randem/BlockComponent.gd" id="9_ahkby"]
 [ext_resource type="Script" uid="uid://cmxokty7h552d" path="res://scripts/randem/UpgradeComponent.gd" id="10_7anrw"]
@@ -18,6 +18,7 @@
 [ext_resource type="Resource" uid="uid://53kot2lsjgh" path="res://scripts/randem/Resources/StarterCore.tres" id="12_taabd"]
 [ext_resource type="Script" uid="uid://o1qk5pbh6kq6" path="res://scripts/randem/GearData.gd" id="13_vbyrk"]
 [ext_resource type="Script" uid="uid://dk366pulvy7f7" path="res://scripts/randem/LoadPenaltyComponent.gd" id="18_vbyrk"]
+[ext_resource type="Script" uid="uid://cym6bodw36out" path="res://scripts/icyfire/AnimationComponent.gd" id="19_1cd4j"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fgv4r"]
 
@@ -1107,6 +1108,7 @@ mesh = SubResource("ArrayMesh_srbw3")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Node3D/WGR1" unique_id=749960444]
 libraries/ = SubResource("AnimationLibrary_c1vle")
+speed_scale = 2.0
 
 [node name="UpgradeComponent" type="Node" parent="." unique_id=1683946898]
 script = ExtResource("10_7anrw")
@@ -1119,3 +1121,6 @@ script = ExtResource("11_y8aiu")
 
 [node name="LoadPenaltyComponent" type="Node" parent="." unique_id=1063614118]
 script = ExtResource("18_vbyrk")
+
+[node name="AnimationComponent" type="Node" parent="." unique_id=1675244083]
+script = ExtResource("19_1cd4j")
