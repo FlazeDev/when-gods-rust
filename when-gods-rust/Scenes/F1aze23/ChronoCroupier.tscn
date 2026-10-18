@@ -1,0 +1,128 @@
+[gd_scene format=3 uid="uid://eapa1kt7w17j"]
+
+[ext_resource type="Script" uid="uid://dyp3dlym7cmbv" path="res://Scripts/F1aze23/StateMachine.gd" id="1_1t2ud"]
+[ext_resource type="Script" uid="uid://hanm45w65igs" path="res://Scripts/F1aze23/EnemyStates/kingOfClubs.gd" id="2_73nya"]
+[ext_resource type="Script" uid="uid://cpwwu1gw7sj85" path="res://Scripts/F1aze23/state.gd" id="3_e85m6"]
+[ext_resource type="Script" uid="uid://dtnjxw1vua83h" path="res://Scripts/icyfire/MovementComponent.gd" id="4_xc4l3"]
+[ext_resource type="Script" uid="uid://dq71svuwl2njr" path="res://Scripts/randem/HealthComponent.gd" id="5_woblf"]
+[ext_resource type="Script" uid="uid://c5yf8bxmdfcr5" path="res://Scripts/randem/StaggerComponent.gd" id="6_73nya"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bsnpc"]
+radius = 1.0
+height = 4.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6acxo"]
+radius = 1.0
+height = 4.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t48ij"]
+albedo_color = Color(0.53928834, 0.2623919, 9.62615e-08, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ts7fx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jbuow"]
+albedo_color = Color(0.82786953, 0.0005211598, 0.82416326, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_wjn5g"]
+viewport_path = NodePath("HealthComponent/Sprite3D/SubViewport")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7jwx7"]
+height = 1.0
+radius = 8.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_73nya"]
+top_radius = 8.0
+bottom_radius = 8.0
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_73nya"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 0.6392157)
+
+[node name="ChronoCroupier" type="CharacterBody3D" unique_id=295014865]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=126715902]
+shape = SubResource("CapsuleShape3D_bsnpc")
+
+[node name="Model" type="MeshInstance3D" parent="." unique_id=1301964661]
+mesh = SubResource("CapsuleMesh_6acxo")
+surface_material_override/0 = SubResource("StandardMaterial3D_t48ij")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model" unique_id=552979780]
+transform = Transform3D(1.4012698, 0, 0, 0, 0.62925303, 0, 0, 0, 1.826148, 0, 0.9244603, -0.31696337)
+mesh = SubResource("BoxMesh_ts7fx")
+surface_material_override/0 = SubResource("StandardMaterial3D_jbuow")
+
+[node name="StateMachine" type="Node" parent="." unique_id=286786227 node_paths=PackedStringArray("iState", "staggerC")]
+script = ExtResource("1_1t2ud")
+iState = NodePath("KingOfClubs")
+staggerC = NodePath("../StaggerComponent")
+metadata/_custom_type_script = "uid://dyp3dlym7cmbv"
+
+[node name="KingOfClubs" type="Node" parent="StateMachine" unique_id=1130240204 node_paths=PackedStringArray("body", "nav", "movementC", "shockwave")]
+script = ExtResource("2_73nya")
+body = NodePath("../..")
+nav = NodePath("../../NavigationAgent3D")
+movementC = NodePath("../../MovementComponent")
+shockwave = NodePath("../../Shockwave")
+metadata/_custom_type_script = "uid://cpwwu1gw7sj85"
+
+[node name="QueenOfSpades" type="Node" parent="StateMachine" unique_id=229917858]
+script = ExtResource("3_e85m6")
+metadata/_custom_type_script = "uid://cpwwu1gw7sj85"
+
+[node name="AceOfDiamonds" type="Node" parent="StateMachine" unique_id=426641383]
+script = ExtResource("3_e85m6")
+metadata/_custom_type_script = "uid://cpwwu1gw7sj85"
+
+[node name="Jester" type="Node" parent="StateMachine" unique_id=1461717132]
+script = ExtResource("3_e85m6")
+metadata/_custom_type_script = "uid://cpwwu1gw7sj85"
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1560469738]
+
+[node name="MovementComponent" type="Node" parent="." unique_id=1748195717]
+script = ExtResource("4_xc4l3")
+accel = 100.0
+deccel = 60.0
+speed = 5.0
+metadata/_custom_type_script = "uid://dtnjxw1vua83h"
+
+[node name="HealthComponent" type="Node" parent="." unique_id=1874844479 node_paths=PackedStringArray("healthBar")]
+script = ExtResource("5_woblf")
+healthBar = NodePath("Sprite3D/SubViewport/HealthBar")
+metadata/_custom_type_script = "uid://dq71svuwl2njr"
+
+[node name="Sprite3D" type="Sprite3D" parent="HealthComponent" unique_id=1503083468]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4915757, 0)
+flip_h = true
+texture = SubResource("ViewportTexture_wjn5g")
+
+[node name="SubViewport" type="SubViewport" parent="HealthComponent/Sprite3D" unique_id=2134192378]
+size = Vector2i(400, 80)
+
+[node name="HealthBar" type="ProgressBar" parent="HealthComponent/Sprite3D/SubViewport" unique_id=22924402]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+
+[node name="StaggerComponent" type="Node" parent="." unique_id=1208887200]
+script = ExtResource("6_73nya")
+metadata/_custom_type_script = "uid://c5yf8bxmdfcr5"
+
+[node name="Shockwave" type="Area3D" parent="." unique_id=1293463263]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Shockwave" unique_id=370343830]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.46118164, 0)
+shape = SubResource("CylinderShape3D_7jwx7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Shockwave" unique_id=6232409]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("CylinderMesh_73nya")
+surface_material_override/0 = SubResource("StandardMaterial3D_73nya")
+
+[connection signal="body_entered" from="Shockwave" to="StateMachine/KingOfClubs" method="_on_shockwave_body_entered"]

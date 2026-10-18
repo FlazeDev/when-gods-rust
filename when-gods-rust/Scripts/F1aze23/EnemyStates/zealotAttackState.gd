@@ -50,4 +50,4 @@ func onAttackHit(node: Node3D) -> void:
 	
 	hit = player
 	var direction = (player.global_position - body.global_position).normalized()
-	player.take_hit(10, 0.8, direction, body, node)
+	player.take_hit(10, 0.6, direction, body, node)

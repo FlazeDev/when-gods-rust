@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://8ki1um74b20t" path="res://Scenes/F1aze23/TestWeaponItem.tscn" id="3_0jgn4"]
 [ext_resource type="Script" uid="uid://bo6mdnv4kfwx3" path="res://Scripts/icyfire/control.gd" id="4_0rvhb"]
 [ext_resource type="Script" uid="uid://ceaptm6x6iqxo" path="res://Scenes/icyfire/worldboundary.gd" id="5_10rk6"]
-[ext_resource type="PackedScene" uid="uid://bgsaetvue6br8" path="res://Scenes/F1aze23/StTaurus.tscn" id="6_c4had"]
+[ext_resource type="PackedScene" uid="uid://eapa1kt7w17j" path="res://Scenes/F1aze23/ChronoCroupier.tscn" id="6_c4had"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_l0j3u"]
 vertices = PackedVector3Array(-1.6476479, 1.3005524, -1.2508545, 0.10235214, 1.3005524, -1.5008545, 0.10235214, 1.3005524, -9.5008545, -60.897648, 1.3005524, -9.5008545, 0.10235214, 1.3005524, 9.7491455, 0.10235214, 1.3005524, 1.4991455, -1.6476479, 1.3005524, 1.2491455, -60.897648, 1.3005524, 9.7491455, 1.6023521, 1.3005524, -1.2508545, 61.102352, 1.3005524, -9.5008545, 1.6023521, 1.3005524, 1.2491455, 61.102352, 1.3005524, 9.7491455, 63.852352, -11.699448, -9.5008545, 63.852352, -11.699448, 9.7491455, 112.102356, -8.449448, 9.7491455, 112.102356, -8.449448, -9.5008545, 106.852356, -22.949448, -3.7508545, 106.852356, -22.949448, 15.4991455, 142.85236, -22.949448, 15.4991455, 142.85236, -22.949448, -3.7508545, -0.64764786, 4.0505524, -0.5008545, -0.64764786, 4.0505524, 0.4991455, 0.60235214, 4.0505524, 0.4991455, 0.60235214, 4.0505524, -0.5008545, -0.39764786, 1.3005524, -0.2508545, -0.39764786, 1.3005524, 0.24914551, 0.35235214, 1.3005524, 0.24914551, 0.35235214, 1.3005524, -0.2508545, 35.352352, -2.6994476, 12.2491455, 35.352352, -2.6994476, 31.249146, 71.352356, -2.6994476, 31.249146, 71.352356, -2.6994476, 12.2491455)
@@ -153,14 +153,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 135.40775, -19.74226, 3.61973
 [node name="Zealot9" parent="enemies" unique_id=638982139 instance=ExtResource("2_25x4d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110.3464, -19.74226, 3.6197376)
 
-[node name="Zealot4" parent="enemies" unique_id=1775715605 instance=ExtResource("2_25x4d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64.4456, -1.046442, 19.252977)
-
 [node name="Zealot5" parent="enemies" unique_id=125789042 instance=ExtResource("2_25x4d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.384247, -1.046442, 20.061312)
-
-[node name="Zealot6" parent="enemies" unique_id=1378631121 instance=ExtResource("2_25x4d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.384247, 3.0242662, 4.915394)
 
 [node name="Node3D" type="Node3D" parent="." unique_id=1957598855]
 
@@ -190,7 +184,7 @@ gizmo_extents = 2.85
 transform = Transform3D(1, 0, 0, 0, 0.65485954, -0.7557506, 0, 0.7557506, 0.65485954, -4.36561, -4.0644007, -5.8360505)
 gizmo_extents = 2.85
 
-[node name="StTaurus" parent="." unique_id=1928915340 instance=ExtResource("6_c4had")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.790314, 3.8024921, 0)
+[node name="ChronoCroupier" parent="." unique_id=295014865 instance=ExtResource("6_c4had")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.423843, 3.7670774, 0)
 
 [connection signal="body_entered" from="Node3D/Area3D" to="Node3D/Area3D" method="_on_body_entered"]

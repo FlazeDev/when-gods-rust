@@ -30,6 +30,9 @@ albedo_color = Color(0.9999997, 0.24524122, 0.18784547, 0.5529412)
 [sub_resource type="SphereShape3D" id="SphereShape3D_805la"]
 radius = 1.1564394
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_o8tgp"]
+viewport_path = NodePath("Health/SubViewport")
+
 [node name="StTaurus" type="CharacterBody3D" unique_id=1928915340]
 script = ExtResource("1_gwauj")
 
@@ -80,8 +83,9 @@ deccel = 100.0
 speed = 5.0
 metadata/_custom_type_script = "uid://dtnjxw1vua83h"
 
-[node name="HealthComponent" type="Node" parent="." unique_id=1314475188]
+[node name="HealthComponent" type="Node" parent="." unique_id=1314475188 node_paths=PackedStringArray("healthBar")]
 script = ExtResource("6_aboue")
+healthBar = NodePath("../Health/SubViewport/HealthBar")
 metadata/_custom_type_script = "uid://dq71svuwl2njr"
 
 [node name="VisionArea" type="Area3D" parent="." unique_id=2026891129]
@@ -111,6 +115,21 @@ ExtResource("10_y7t1h"): 60.0
 }
 body = NodePath("..")
 metadata/_custom_type_script = "uid://chrslpr65wig4"
+
+[node name="Health" type="Sprite3D" parent="." unique_id=373707364]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.414458, 0)
+flip_h = true
+texture = SubResource("ViewportTexture_o8tgp")
+
+[node name="SubViewport" type="SubViewport" parent="Health" unique_id=387511180]
+size = Vector2i(200, 40)
+
+[node name="HealthBar" type="ProgressBar" parent="Health/SubViewport" unique_id=908545565]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="navigation_finished" from="NavigationAgent3D" to="StateMachine/Patrol" method="updatePatrol"]
 [connection signal="body_entered" from="VisionArea" to="StateMachine/Patrol" method="onVisionEntered"]
