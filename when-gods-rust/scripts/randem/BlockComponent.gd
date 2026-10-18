@@ -38,6 +38,8 @@ func spend_for_block() -> bool:
 		_set_blocking(false)
 		return false
 	
+	resolveC.useResolve(adjusted_cost)
+	
 	if resolveC.cResolve <= 0.0:
 		_set_blocking(false)
 	
@@ -55,17 +57,18 @@ func _set_blocking(value: bool) -> void:
 		blocking_ended.emit()	
 
 func check_parry_press(impact_time: float) -> bool:
-	var window_scale = spamC.window_scale()
+	var press_time = last_block_press_time
+	last_block_press_time = -1.0e20
 	
+	var window_scale = spamC.window_scale()
 	if window_scale <= 0.0:
 		return false
 
-	var parry_offset = last_block_press_time - impact_time
+	var parry_offset = press_time - impact_time
 	if parry_offset < -early_parry_window * window_scale:
 		return false
 	if parry_offset > late_parry_window * window_scale:
 		return false
 		
 	spamC.reset()
-	last_block_press_time = -1.0e20
 	return true

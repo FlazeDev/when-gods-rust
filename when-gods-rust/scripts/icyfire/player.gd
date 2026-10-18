@@ -12,6 +12,7 @@ extends CharacterBody3D
 @onready var upgradeMenu: UpgradeMenu = $CanvasLayer/UpgradeMenu
 @onready var anim: AnimationPlayer = $TestAnimPlayer
 @onready var iArea: Area3D = $InteractArea
+@onready var loadPenaltyC: LoadPenaltyComponent = $LoadPenaltyComponent
 
 const PARRY_SPARK = preload("res://Assets/Randemlyy/ParrySpark.tscn")
 
@@ -92,7 +93,9 @@ func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction:Vect
 		print("blocked")
 		return
 		
-	healthC.take_damage(damage)
+	var final_damage = roundi(damage * loadPenaltyC.damage_taken_mult())
+		
+	healthC.take_damage(final_damage)
 	cameraC.shake(0.12, 0.18)
 	staggerC.apply_stagger(hit_stagger_duration)
 	print(hit_direction)

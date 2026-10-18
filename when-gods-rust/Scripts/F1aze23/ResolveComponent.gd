@@ -7,6 +7,7 @@ extends Node
 @onready var player: CharacterBody3D
 @onready var upgradeC: UpgradeComponent = $"../UpgradeComponent"
 @onready var load_marker: ColorRect = $Resolve/LoadMarker
+@onready var loadPenaltyC: LoadPenaltyComponent = $"../LoadPenaltyComponent"
 
 @export var offset: Vector3 = Vector3(0, 1.8, 0)
 @export var maxResolve:float = 100.0
@@ -48,7 +49,7 @@ func start():
 	
 func update(delta:float):
 	if canDecay:
-		cResolve -= resolveDecay
+		cResolve -= resolveDecay * loadPenaltyC.resolve_drain_mult() * 0.8
 	
 	cResolve = clampf(cResolve, 0.0, maxResolve)
 	
@@ -87,5 +88,7 @@ func _update_load_marker(current_load: float, max_load: float) -> void:
 	load_marker.offset_top = 0.0
 	load_marker.offset_right = 1.5
 	load_marker.offset_left = -1.5
+	
 func useResolve(amt:float):
+	amt *= loadPenaltyC.resolve_drain_mult()
 	cResolve = maxf(cResolve - amt, 0.0)

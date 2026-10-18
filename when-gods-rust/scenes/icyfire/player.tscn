@@ -17,6 +17,7 @@
 [ext_resource type="Resource" uid="uid://b8h8cieynl118" path="res://scripts/randem/Resources/Gears/TestCoreGear.tres" id="12_eol4w"]
 [ext_resource type="Resource" uid="uid://53kot2lsjgh" path="res://scripts/randem/Resources/StarterCore.tres" id="12_taabd"]
 [ext_resource type="Script" uid="uid://o1qk5pbh6kq6" path="res://scripts/randem/GearData.gd" id="13_vbyrk"]
+[ext_resource type="Script" uid="uid://dk366pulvy7f7" path="res://scripts/randem/LoadPenaltyComponent.gd" id="18_vbyrk"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fgv4r"]
 
@@ -839,7 +840,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ResolveBar" type="ProgressBar" parent="CanvasLayer/Control" unique_id=1692755755]
-visible = false
 layout_mode = 0
 offset_left = 9.0
 offset_top = 88.99999
@@ -1116,3 +1116,6 @@ owned_gears = Array[ExtResource("13_vbyrk")]([ExtResource("11_jep08"), ExtResour
 
 [node name="SpamPenaltyComponent" type="Node" parent="." unique_id=668005136]
 script = ExtResource("11_y8aiu")
+
+[node name="LoadPenaltyComponent" type="Node" parent="." unique_id=1063614118]
+script = ExtResource("18_vbyrk")

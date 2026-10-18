@@ -93,10 +93,10 @@ func _recalculate_final_stats() -> void:
 func _add_gear_stats(sockets: Array[GearData]) -> void:
 	for gear in sockets:
 		if gear == null:
-			return
+			continue
 		
 		attack_damage_bonus += gear.attack_damage_bonus
-		block_resolve_cost_reduction += gear.attack_damage_bonus
+		block_resolve_cost_reduction += gear.block_resolve_cost_reduction
 
 func _install_into(sockets: Array[GearData], gear: GearData, socket_index: int) -> bool:
 	if socket_index < 0 or socket_index >= sockets.size():

@@ -100,7 +100,7 @@ func _try_hit(target: Node3D) -> void:
 		damage_bonus = upgradeC.attack_damage_bonus
 	
 	var crit_mult = 1.5 if is_current_attack_crit else 1.0
-	var final_damage := roundi(damage * (1.0 + damage_bonus) * crit_mult)
+	var final_damage := roundi(damage * (1.0 + damage_bonus / 100.0) * crit_mult)
 	target.get_node("HealthComponent").call("take_damage", final_damage)
 	HitStop.request(0.07 if is_current_attack_crit else 0.04)
 	
