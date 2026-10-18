@@ -300,9 +300,6 @@ bg_color = Color(0.42352942, 0.42352942, 0.42352942, 0)
 [sub_resource type="LabelSettings" id="LabelSettings_ahkby"]
 shadow_size = 3
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_enw72"]
-size = Vector3(1.7, 1.0375366, 1.7)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lko33"]
 resource_name = "Material"
 cull_mode = 2
@@ -892,12 +889,6 @@ label_settings = SubResource("LabelSettings_ahkby")
 [node name="UpgradeMenu" parent="CanvasLayer" unique_id=1609659467 instance=ExtResource("10_taabd")]
 visible = false
 
-[node name="DodgeArea" type="Area3D" parent="." unique_id=2094541135 groups=["Player"]]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="DodgeArea" unique_id=137384557]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044433594, 0.19302368, -0.008117676)
-shape = SubResource("BoxShape3D_enw72")
-
 [node name="Node3D" type="Node3D" parent="." unique_id=1454625070]
 
 [node name="WGR1" type="Node3D" parent="Node3D" unique_id=806410736]
@@ -1126,6 +1117,7 @@ script = ExtResource("18_vbyrk")
 [node name="AnimationComponent" type="Node" parent="." unique_id=1675244083]
 script = ExtResource("19_1cd4j")
 
-[node name="DodgeComponent" type="Node" parent="." unique_id=890325805]
+[node name="DodgeComponent" type="Node" parent="." unique_id=890325805 node_paths=PackedStringArray("body")]
 script = ExtResource("19_d4y3p")
+body = NodePath("..")
 metadata/_custom_type_script = "uid://ci65tdq6gqlvu"
