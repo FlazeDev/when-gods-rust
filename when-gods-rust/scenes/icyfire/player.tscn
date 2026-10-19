@@ -3,15 +3,16 @@
 [ext_resource type="Script" uid="uid://choj0y3mf2iix" path="res://scripts/icyfire/player.gd" id="1_dkbgn"]
 [ext_resource type="Script" uid="uid://b6rlibesv2u6e" path="res://scripts/icyfire/InputComponent.gd" id="1_fx4ke"]
 [ext_resource type="Script" uid="uid://dtnjxw1vua83h" path="res://scripts/icyfire/MovementComponent.gd" id="2_que7a"]
-[ext_resource type="Script" uid="uid://2ykk4lgaj6yg" path="res://Scripts/F1aze23/InventoryComponent.gd" id="2_vjlaq"]
+[ext_resource type="Script" uid="uid://2ykk4lgaj6yg" path="res://scripts/F1aze23/InventoryComponent.gd" id="2_vjlaq"]
 [ext_resource type="Script" uid="uid://c3q2bf4w8k2ae" path="res://scripts/F1aze23/CameraComponent.gd" id="5_1mpnw"]
 [ext_resource type="Script" uid="uid://dq71svuwl2njr" path="res://scripts/randem/HealthComponent.gd" id="6_okieb"]
-[ext_resource type="Script" uid="uid://c6h2bauklbph" path="res://Scripts/F1aze23/ResolveComponent.gd" id="7_8qorh"]
+[ext_resource type="Script" uid="uid://c6h2bauklbph" path="res://scripts/F1aze23/ResolveComponent.gd" id="7_8qorh"]
 [ext_resource type="Script" uid="uid://c5yf8bxmdfcr5" path="res://scripts/randem/StaggerComponent.gd" id="7_vvvn2"]
 [ext_resource type="Script" uid="uid://baudgajyg4pmb" path="res://scripts/randem/BlockComponent.gd" id="9_ahkby"]
 [ext_resource type="Script" uid="uid://cmxokty7h552d" path="res://scripts/randem/UpgradeComponent.gd" id="10_7anrw"]
 [ext_resource type="PackedScene" uid="uid://b8ccocassarbd" path="res://scenes/randemlyy/UpgradeMenu.tscn" id="10_taabd"]
 [ext_resource type="Resource" uid="uid://53cnmwlkucl1" path="res://scripts/randem/Resources/StarterArm.tres" id="11_c1vle"]
+[ext_resource type="PackedScene" uid="uid://bk73iiws550cg" path="res://scenes/randemlyy/CampfireMenu.tscn" id="11_huo1t"]
 [ext_resource type="Resource" uid="uid://n2jh37nkpt5m" path="res://scripts/randem/Resources/Gears/TestArmGear.tres" id="11_jep08"]
 [ext_resource type="Script" uid="uid://oshbw25w75od" path="res://scripts/randem/SpamPenaltyComponent.gd" id="11_y8aiu"]
 [ext_resource type="Resource" uid="uid://b8h8cieynl118" path="res://scripts/randem/Resources/Gears/TestCoreGear.tres" id="12_eol4w"]
@@ -19,7 +20,7 @@
 [ext_resource type="Script" uid="uid://o1qk5pbh6kq6" path="res://scripts/randem/GearData.gd" id="13_vbyrk"]
 [ext_resource type="Script" uid="uid://dk366pulvy7f7" path="res://scripts/randem/LoadPenaltyComponent.gd" id="18_vbyrk"]
 [ext_resource type="Script" uid="uid://cym6bodw36out" path="res://scripts/icyfire/AnimationComponent.gd" id="19_1cd4j"]
-[ext_resource type="Script" uid="uid://ci65tdq6gqlvu" path="res://Scripts/F1aze23/DodgeComponent.gd" id="19_d4y3p"]
+[ext_resource type="Script" uid="uid://ci65tdq6gqlvu" path="res://scripts/F1aze23/DodgeComponent.gd" id="19_d4y3p"]
 [ext_resource type="Script" uid="uid://dihlsl8jcher0" path="res://scripts/icyfire/InteractComponent.gd" id="21_jcpvw"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fgv4r"]
@@ -1154,6 +1155,8 @@ text = "0"
 
 [node name="UpgradeMenu" parent="CanvasLayer" unique_id=1609659467 instance=ExtResource("10_taabd")]
 visible = false
+
+[node name="CampfireMenu" parent="CanvasLayer" unique_id=180815333 instance=ExtResource("11_huo1t")]
 
 [node name="Model2" type="Node3D" parent="." unique_id=1454625070]
 

@@ -17,6 +17,7 @@ extends CharacterBody3D
 @onready var dodgeC: DodgeComponent = $DodgeComponent
 @onready var upgradeC: UpgradeComponent = $UpgradeComponent
 @onready var interactC: InteractComponent = $InteractComponent
+@onready var campfireMenu: CampfireMenu = $CanvasLayer/CampfireMenu
 
 @onready var label_4: Label = $CanvasLayer/Control/Label4
 
@@ -30,6 +31,7 @@ const PARRY_SPARK = preload("res://Assets/Randemlyy/ParrySpark.tscn")
 @export var invertControlsX:float = 1
 @export var invertControlsY:float = 1
 @export var SwitchControlAxes:bool = false
+@export var max_heals = 4
 var TimeSinceDmg:float = 0
 var DmgTime:float = 1
 var block_animation_started := false
@@ -40,50 +42,84 @@ func _ready() -> void:
 	resolveC.start()
 	healthC.start()
 	healthC.died.connect(onDeath)
+	campfireMenu.set_gears_pressed.connect(_on_set_gears_pressed)
+	campfireMenu.refill_heals_pressed.connect(_on_refill_heals_pressed)
 	blockC.blocking_started.connect(_on_blocking_started)
 	blockC.blocking_ended.connect(_on_blocking_ended)
+	upgradeMenu.back_pressed.connect(_on_upgrade_back_pressed)
+	campfireMenu.exit_pressed.connect(_on_campfire_exit_pressed)
 	
 func _process(delta: float) -> void:
 	inputC.update(delta)
-	var can_block := not _weapon_is_attacking() and not staggerC.is_staggered
+
+	if inputC.upgrade_menu:
+		if campfireMenu.visible:
+			campfireMenu.close()
+		elif upgradeMenu.visible:
+			upgradeMenu.toggle_menu()
+			
+	inventoryC.isEquip = false
+	
+	var menu_open = campfireMenu.visible or upgradeMenu.visible
+	
+	if inputC.interact and not menu_open:
+		var handled := interactC.process(delta, true)
+		if not handled:
+			inventoryC.isEquip = true
+				
+			for item in iArea.get_overlapping_bodies():
+				if item.is_in_group("Gear"):
+					upgradeC.pickupGear(item.gearData)
+					item.queue_free()
+	
+	menu_open = campfireMenu.visible or upgradeMenu.visible
+	
+	var can_block := (
+		not menu_open and 
+		not _weapon_is_attacking() and
+		not staggerC.is_staggered
+	)
+	
 	blockC.update(
 		inputC.block_held and can_block,
 		inputC.block and can_block,
 		delta
 	)
-	if inputC.upgrade_menu:
-		upgradeMenu.toggle_menu()
-	if inputC.interact:
-		interactC.process(delta, true)
-		inventoryC.isEquip = true
-		for i in iArea.get_overlapping_bodies():
-			if i.is_in_group('Gear'):
-				upgradeC.pickupGear(i.gearData)
-				upgradeMenu._refresh_menu()
-				print("picking up")
-				i.queue_free()
-	inventoryC.isAttack = inputC.attack
+	
+	inventoryC.isAttack = inputC.attack and not menu_open
 	inventoryC.update(resolveC, anim, canStagger, canCombo, canCrit)
-	cameraC.update(self, delta)
+	
+	if not menu_open:
+		cameraC.update(self, delta)
+		
 	resolveC.update(delta)
 	healthC.update(delta)
-	if inputC.dodge:
+	
+	if inputC.dodge and not menu_open:
 		dodgeC.dodge()
 		
-	if inputC.use:
+	if inputC.use and not menu_open:
 		if inventoryC.Heals > 0:
-			healthC.current_health += 10
+			healthC.current_health += 25
 			inventoryC.UseHeal()
 			
 	label_4.text = str(inventoryC.Heals)
+	
 func _physics_process(delta: float) -> void:
+	
+	if campfireMenu.visible or upgradeMenu.visible:
+		velocity = Vector3.ZERO
+		return
+		
 	TimeSinceDmg += delta
 	if not is_on_floor():
 		velocity.y += get_gravity().y * delta
+		
 	if staggerC.is_staggered:
 		velocity.x = Vector3.ZERO.x
 		velocity.z = Vector3.ZERO.y
 		return
+		
 	if !staggerC.is_staggered:
 		if !SwitchControlAxes:
 			movementC.physics_update(delta, Vector3(inputC.dir.x * invertControlsX, 0, inputC.dir.y * invertControlsY), self)
@@ -159,7 +195,26 @@ func _on_blocking_ended() -> void:
 		
 func _weapon_is_attacking() -> bool:
 	return is_instance_valid(inventoryC.cWeapon) and inventoryC.cWeapon.isAttacking
-	
+
+func open_campfire_menu() -> void:
+	campfireMenu.open()
+
+func _on_set_gears_pressed() -> void:
+	campfireMenu.close()
+	upgradeMenu.toggle_menu()
+
+func _on_refill_heals_pressed() -> void:
+	inventoryC.Heals = max_heals
+	campfireMenu.close()
+
+func _on_campfire_exit_pressed() -> void:
+	campfireMenu.close()
+
+func _on_upgrade_back_pressed() -> void:
+	upgradeMenu.toggle_menu()
+	campfireMenu.open()
+
+
 func onDeath():
 	queue_free()
 	print("Wow ma so bad you are")

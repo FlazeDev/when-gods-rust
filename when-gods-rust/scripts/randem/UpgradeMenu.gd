@@ -1,10 +1,13 @@
 class_name UpgradeMenu
 extends Control
 
+signal back_pressed
+
 @onready var upgradeC: UpgradeComponent = get_node("../../UpgradeComponent")
 @onready var gear_list: VBoxContainer = $CenterContainer/PanelContainer/HBoxContainer/InventoryColumn/ScrollContainer/GearList
 @onready var arm_sockets: VBoxContainer = $CenterContainer/PanelContainer/HBoxContainer/ArmColumn/ArmSockets
 @onready var core_sockets: VBoxContainer = $CenterContainer/PanelContainer/HBoxContainer/CoreColumn/CoreSockets
+@onready var back_button: Button = $CenterContainer/PanelContainer/HBoxContainer/InventoryColumn/BackButton
 
 var previous_mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 
@@ -13,6 +16,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	$CenterContainer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	upgradeC.loadout_changed.connect(_refresh_menu)
+	back_button.pressed.connect(_on_back_pressed)
 	_refresh_menu()
 
 func toggle_menu() -> void:
@@ -58,3 +62,6 @@ func _clear_children(container: Node) -> void:
 	for child in container.get_children():
 		container.remove_child(child)
 		child.queue_free()
+	
+func _on_back_pressed() -> void:
+	back_pressed.emit()

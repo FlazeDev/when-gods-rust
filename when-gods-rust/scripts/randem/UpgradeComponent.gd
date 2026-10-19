@@ -108,15 +108,20 @@ func _install_into(sockets: Array[GearData], gear: GearData, socket_index: int) 
 	return true
 	
 func pickupGear(gear:GearData):
-	if gear.slot == gear.Slot.ARM:
-		for i in range(arm_sockets.size()):
-			if arm_sockets[i] == null:
-				_install_into(arm_sockets, gear, i)
-				print("installed arm scoket succesfully")
-				break
-	elif gear.slot == gear.Slot.CORE:
-		for i in range(core_sockets.size()):
-			if core_sockets[i] == null:
-				_install_into(core_sockets, gear, i)
-				print("Installed core socket sucessfully")
-				break
+	if gear == null:
+		return
+	
+	owned_gears.append(gear)
+	_notify_loadout_changed()
+	#if gear.slot == gear.Slot.ARM:
+		#for i in range(arm_sockets.size()):
+			#if arm_sockets[i] == null:
+				#_install_into(arm_sockets, gear, i)
+				#print("installed arm scoket succesfully")
+				#break
+	#elif gear.slot == gear.Slot.CORE:
+		#for i in range(core_sockets.size()):
+			#if core_sockets[i] == null:
+				#_install_into(core_sockets, gear, i)
+				#print("Installed core socket sucessfully")
+				#break

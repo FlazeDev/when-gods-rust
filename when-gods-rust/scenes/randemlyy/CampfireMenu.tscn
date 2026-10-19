@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://bk73iiws550cg"]
+
+[ext_resource type="Script" uid="uid://dg08yqugle78u" path="res://scripts/randem/CampfireMenu.gd" id="1_oterd"]
+
+[node name="CampfireMenu" type="Control" unique_id=180815333]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_oterd")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1635680664]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=1572120692]
+custom_minimum_size = Vector2(520, 360)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer" unique_id=154435311]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="CampfireText" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=798223650]
+layout_mode = 2
+text = "Campfire"
+horizontal_alignment = 1
+
+[node name="SetGearsButton" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=2028173550]
+custom_minimum_size = Vector2(420, 64)
+layout_mode = 2
+text = "Set Gears"
+
+[node name="RefillHealsButton" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=341322399]
+custom_minimum_size = Vector2(420, 64)
+layout_mode = 2
+text = "Refill Heals"
+
+[node name="ExitButton" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=217028848]
+layout_mode = 2
+text = "Leave Campfire"
