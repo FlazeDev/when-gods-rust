@@ -6,27 +6,37 @@ extends Node
 @export var min_pitch_degrees: float = -55.0
 @export var max_pitch_degrees: float = 30.0
 @export var follow_smoothing: float = 24.0
+@export var lock_turn_speed: float = 4.0
+@export var lock_zoom_speed: float = 0.7
+@export var max_lock_on_camera_distance: float = 10.0
 
+@onready var spring_arm: SpringArm3D = $"../CameraPivot/SpringArm3D"
 @onready var pivot: Node3D = $"../CameraPivot"
 @onready var cam: Camera3D = $"../CameraPivot/SpringArm3D/ShakePivot/Camera3D"
 
 var yaw: float = 0.0
 var pitch: float = deg_to_rad(-15.0)
 
+var lock_target: Node3D
+var default_spring_length: float
 var shake_timer: float = 0.0
 var shake_duration = 0.0
 var shake_strength = 0.0
 
 func start() -> void:
 	var body = get_parent() as Node3D
+	spring_arm.add_excluded_object(body.get_rid())
 	
 	pivot.top_level = true
 	yaw = body.global_rotation.y
 	pivot.global_position = body.global_position + Vector3.UP * follow_height
 	pivot.global_rotation = Vector3(pitch, yaw, 0.0)
-	
+	default_spring_length = spring_arm.spring_length
 	cam.make_current()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func set_lock_on_target(target: Node3D) -> void:
+	lock_target = target
 
 func _input(event: InputEvent) -> void:
 	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
@@ -60,10 +70,41 @@ func shake(strength: float, duration: float) -> void:
 func update(body: CharacterBody3D, delta: float) -> void:
 	var target_position := body.global_position + Vector3.UP * follow_height
 	var weight := 1.0 - exp(-follow_smoothing * delta)
+	
+	if is_instance_valid(lock_target):
+		target_position = (body.global_position + lock_target.global_position) * .5 + Vector3.UP * follow_height
+		
+		var to_target = lock_target.global_position - body.global_position
+		to_target.y = 0
+		
+		if to_target.length_squared() > 0.001:
+			var target_yaw = atan2(-to_target.x, -to_target.z)
+			var turn_weight = 1.0 - exp(-lock_turn_speed * delta)
+			yaw = lerp_angle(yaw, target_yaw, turn_weight)
+		
+		var distance = Vector2(to_target.x, to_target.z).length()
+		var wanted_length = clampf(
+			distance * lock_zoom_speed,
+			default_spring_length,
+			max_lock_on_camera_distance
+		)
+		spring_arm.spring_length = lerpf(
+			spring_arm.spring_length,
+			wanted_length,
+			weight
+		)
+		
+	else:
+		target_position = body.global_position + Vector3.UP * follow_height
+		spring_arm.spring_length = lerpf(
+			spring_arm.spring_length,
+			default_spring_length,
+			weight
+		)
+		
 	pivot.global_position = pivot.global_position.lerp(target_position, weight)
 	pivot.global_rotation = Vector3(pitch, yaw, 0.0)
 
-	
 	if shake_timer <= 0.0:
 		cam.position = Vector3.ZERO
 		return

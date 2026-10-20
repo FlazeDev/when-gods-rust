@@ -10,6 +10,7 @@ var upgrade_menu: bool
 var interact:bool
 var InvBool:bool = false
 var use:bool
+var lock_on:bool
 
 func update(delta: float) -> void:
 	dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -20,3 +21,4 @@ func update(delta: float) -> void:
 	interact = Input.is_action_just_pressed("PickUp")
 	upgrade_menu = Input.is_action_just_pressed("open_upgrade_menu")
 	use = Input.is_action_just_pressed("use")
+	lock_on = Input.is_action_just_pressed("lock_on")

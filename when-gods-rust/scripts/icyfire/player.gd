@@ -32,6 +32,9 @@ const PARRY_SPARK = preload("res://Assets/Randemlyy/ParrySpark.tscn")
 @export var invertControlsY:float = 1
 @export var SwitchControlAxes:bool = false
 @export var max_heals = 4
+@export var lock_on_range = 20.0
+
+var lock_on_target: Node3D = null
 var TimeSinceDmg:float = 0
 var DmgTime:float = 1
 var block_animation_started := false
@@ -87,7 +90,20 @@ func _process(delta: float) -> void:
 	)
 	
 	inventoryC.isAttack = inputC.attack and not menu_open
+	
 	inventoryC.update(resolveC, anim, canStagger, canCombo, canCrit)
+	if inputC.lock_on and not menu_open:
+		if is_instance_valid(lock_on_target):
+			_set_lock_on_target(null)
+		else:
+			_set_lock_on_target(_find_lock_on_target())
+	
+	if lock_on_target != null:
+		if not is_instance_valid(lock_on_target):
+			_set_lock_on_target(null)
+		elif global_position.distance_to(lock_on_target.global_position) > lock_on_range:
+			_set_lock_on_target(null)
+	
 	
 	if not menu_open:
 		cameraC.update(self, delta)
@@ -127,9 +143,33 @@ func _physics_process(delta: float) -> void:
 		move_input = Vector2(inputC.dir.x * invertControlsX, inputC.dir.y * invertControlsY)
 	else:
 		move_input = Vector2(inputC.dir.y * invertControlsY, inputC.dir.x * invertControlsX)
+		
+	var move_dir: Vector3	
 	
-	var move_dir = cameraC.get_move_direction(move_input)
+	if is_instance_valid(lock_on_target):
+		var to_target = lock_on_target.global_position - global_position
+		to_target.y = 0
+		
+		if to_target.length_squared() > 0.001:
+			var forward = to_target.normalized()
+			var right = forward.cross(Vector3.UP).normalized()
+			
+			move_dir = (right * move_input.x - forward * move_input.y).limit_length(1.0)
+		else:
+			move_dir = Vector3.ZERO
+	else:
+		_set_lock_on_target(null)
+		move_dir = cameraC.get_move_direction(move_input)
+		
 	movementC.physics_update(delta, move_dir, self)
+	
+	if is_instance_valid(lock_on_target):
+		var to_target = lock_on_target.global_position - global_position
+		to_target.y = 0
+		
+		if to_target.length_squared() > 0.001:
+			var target_yaw := atan2(-to_target.x, -to_target.z)
+			rotation.y = rotate_toward(rotation.y, target_yaw, 16.0 * delta)
 	
 	if inputC.dir != Vector2.ZERO:
 		animC.process(true, false)
@@ -216,6 +256,25 @@ func _on_upgrade_back_pressed() -> void:
 	upgradeMenu.toggle_menu()
 	campfireMenu.open()
 
+func _set_lock_on_target(target: Node3D) -> void:
+	lock_on_target = target
+	cameraC.set_lock_on_target(lock_on_target)
+
+func _find_lock_on_target() -> Node3D:
+	var closest: Node3D = null
+	var closest_distance = lock_on_range
+	
+	for node in get_tree().get_nodes_in_group("Enemy"):
+		if not node is Node3D:
+			continue
+		
+		var candidate = node as Node3D
+		var distance = global_position.distance_to(candidate.global_position)
+		
+		if distance < closest_distance:
+			closest = candidate
+			closest_distance = distance
+	return closest
 
 func onDeath():
 	queue_free()
