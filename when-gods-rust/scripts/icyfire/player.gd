@@ -112,6 +112,7 @@ func _physics_process(delta: float) -> void:
 		return
 		
 	TimeSinceDmg += delta
+	
 	if not is_on_floor():
 		velocity.y += get_gravity().y * delta
 		
@@ -120,20 +121,21 @@ func _physics_process(delta: float) -> void:
 		velocity.z = Vector3.ZERO.y
 		return
 		
-	if !staggerC.is_staggered:
-		if !SwitchControlAxes:
-			movementC.physics_update(delta, Vector3(inputC.dir.x * invertControlsX, 0, inputC.dir.y * invertControlsY), self)
-		else:
-			#print("control axes switched")
-			movementC.physics_update(delta, Vector3(inputC.dir.y * invertControlsY, 0, inputC.dir.x * invertControlsX), self)
-		if inputC.dir != Vector2.ZERO:
-			animC.process(true, false)
-		else:
-			animC.process(false, false)
+	var move_input: Vector2
+	
+	if not SwitchControlAxes:
+		move_input = Vector2(inputC.dir.x * invertControlsX, inputC.dir.y * invertControlsY)
 	else:
-		print("staggered")
-		animC.process(false, true)
-		
+		move_input = Vector2(inputC.dir.y * invertControlsY, inputC.dir.x * invertControlsX)
+	
+	var move_dir = cameraC.get_move_direction(move_input)
+	movementC.physics_update(delta, move_dir, self)
+	
+	if inputC.dir != Vector2.ZERO:
+		animC.process(true, false)
+	else:
+		animC.process(false, false)
+	
 	move_and_slide()
 	
 func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction:Vector3 = Vector3.LEFT, attacker: Node3D = null, hit_collider: Node3D = null) -> void:

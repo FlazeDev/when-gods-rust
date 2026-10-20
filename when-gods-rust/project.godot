@@ -122,3 +122,4 @@ behavior_tree/behavior_tree_default_dir="res://Scripts/F1aze23/EnemyStates"
 gl_compatibility/driver.windows="opengl3_angle"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+occlusion_culling/use_occlusion_culling=true

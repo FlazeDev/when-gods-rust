@@ -1023,8 +1023,6 @@ speed = 6.0
 
 [node name="CameraComponent" type="Node" parent="." unique_id=1924322493]
 script = ExtResource("5_1mpnw")
-offset = Vector3(7.725, 9.254, 9.816)
-rotation = Vector3(-0.805, 0, 0)
 metadata/_custom_type_script = "uid://c3q2bf4w8k2ae"
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1763875352 node_paths=PackedStringArray("healthBar", "ghostHealthBar")]
@@ -1393,3 +1391,15 @@ metadata/_custom_type_script = "uid://ci65tdq6gqlvu"
 
 [node name="InteractComponent" type="Node" parent="." unique_id=750357832]
 script = ExtResource("21_jcpvw")
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=742428775]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=1166604215]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0, 0)
+spring_length = 3.5
+
+[node name="ShakePivot" type="Node3D" parent="CameraPivot/SpringArm3D" unique_id=1793247349]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D/ShakePivot" unique_id=324556177]
+fov = 70.0

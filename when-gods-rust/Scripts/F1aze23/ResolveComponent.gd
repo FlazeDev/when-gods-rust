@@ -73,6 +73,7 @@ func gainResolve(amt:float):
 		)
 	timer.start()
 	print(amt, " Resolve Gained")
+	print("")
 
 func _update_load_marker(current_load: float, max_load: float) -> void:
 	if max_load <= 0.0:

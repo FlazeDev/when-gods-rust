@@ -29,7 +29,7 @@ func update(resolve:ResolveComponent, anim:AnimationPlayer, canStagger:bool, can
 		equip(item.get_node("ItemWeapon"))
 		item.queue_free()
 		return
-		
+
 func equip(itemWeapon:Node):
 	if not itemWeapon or not itemWeapon.Weapon or itemWeapon is not ItemWeapon:
 		return
@@ -44,7 +44,7 @@ func equip(itemWeapon:Node):
 func drop():
 	cWeapon.queue_free()
 	#Imma do this for now ill implement drop logic later
-	
+
 func UseHeal() -> void:
 	if Heals > 0:
 		Heals -= 1
