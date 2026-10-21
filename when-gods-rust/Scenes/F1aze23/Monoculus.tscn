@@ -412,6 +412,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.94242764, -0.3091855)
 
 [node name="AttackRay" type="RayCast3D" parent="LaserSpawn" unique_id=95418105]
 target_position = Vector3(0, 0, -12)
+collision_mask = 32769
+collide_with_areas = true
 
 [node name="BeamNode" type="Node3D" parent="LaserSpawn" unique_id=2046124973]
 

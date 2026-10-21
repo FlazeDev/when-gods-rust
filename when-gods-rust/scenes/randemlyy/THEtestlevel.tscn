@@ -1,0 +1,171 @@
+[gd_scene format=3 uid="uid://5sh5qtoayu8u"]
+
+[ext_resource type="PackedScene" uid="uid://dl2k5j6m74c31" path="res://Modular Blueprint Kit/glTF/WL_1X4.gltf" id="1_e3ydj"]
+[ext_resource type="Script" uid="uid://5afi4tpjl066" path="res://scripts/icyfire/GameManager.gd" id="2_kxya2"]
+[ext_resource type="PackedScene" uid="uid://cf6amcblndo4i" path="res://scenes/F1aze23/Zealot.tscn" id="2_lupdm"]
+[ext_resource type="PackedScene" uid="uid://dqs54vd1wxvh0" path="res://scenes/F1aze23/Monoculus.tscn" id="3_j6wm6"]
+[ext_resource type="PackedScene" uid="uid://d2i164qcqw4na" path="res://scenes/icyfire/player.tscn" id="3_ugkgb"]
+[ext_resource type="PackedScene" uid="uid://8ki1um74b20t" path="res://scenes/F1aze23/TestWeaponItem.tscn" id="4_inmm5"]
+[ext_resource type="PackedScene" uid="uid://yuqms0gt7djj" path="res://scenes/icyfire/campfire.tscn" id="4_lupdm"]
+[ext_resource type="Script" uid="uid://bo6mdnv4kfwx3" path="res://scripts/icyfire/control.gd" id="5_j6wm6"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_inmm5"]
+
+[node name="Node3D" type="Node3D" unique_id=1211164968]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=228699428]
+navigation_mesh = SubResource("NavigationMesh_inmm5")
+
+[node name="WL_1X47" parent="NavigationRegion3D" unique_id=1332275326 instance=ExtResource("1_e3ydj")]
+transform = Transform3D(-5.0224384e-07, -11.49, 0, 11.49, -5.0224384e-07, 0, 0, 0, 11.49, 17.574, 0, -19.03)
+
+[node name="Zealot" parent="NavigationRegion3D" unique_id=1378631121 instance=ExtResource("2_lupdm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.824953, 1.0834845, 17.533386)
+
+[node name="Monoculus" parent="NavigationRegion3D" unique_id=242683207 instance=ExtResource("3_j6wm6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.080237, -1.4905573, -2.3260975)
+
+[node name="TestWeaponItem" parent="NavigationRegion3D" unique_id=102225822 instance=ExtResource("4_inmm5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1999474, 0.4999987, 7.962166)
+
+[node name="GameManager" type="Node" parent="." unique_id=173124850]
+process_mode = 3
+script = ExtResource("2_kxya2")
+
+[node name="Player" parent="." unique_id=1258498601 instance=ExtResource("3_ugkgb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.7186823, 0.99999726, 9.866554)
+
+[node name="PauseMenu" type="CanvasLayer" parent="." unique_id=1929551229]
+process_mode = 3
+
+[node name="ColorRect" type="ColorRect" parent="PauseMenu" unique_id=1226723633]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.14509805, 0.14509805, 0.14509805, 0.54509807)
+
+[node name="Label" type="Label" parent="PauseMenu" unique_id=1485513582]
+offset_left = 522.0
+offset_top = 184.0
+offset_right = 634.0
+offset_bottom = 207.0
+text = "GAME PAUSED"
+
+[node name="cont" type="Button" parent="PauseMenu" unique_id=1453458869]
+offset_left = 508.0
+offset_top = 248.0
+offset_right = 653.0
+offset_bottom = 315.0
+text = "CONTINUE"
+
+[node name="quit" type="Button" parent="PauseMenu" unique_id=1177452988]
+offset_left = 510.0
+offset_top = 400.0
+offset_right = 655.0
+offset_bottom = 467.0
+text = "QUIT"
+
+[node name="Campfire" parent="PauseMenu" unique_id=928643603 node_paths=PackedStringArray("playerPos") instance=ExtResource("4_lupdm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.927942, 0.9885185, 10.168537)
+playerPos = NodePath("Node3D")
+
+[node name="Node3D" type="Node3D" parent="PauseMenu/Campfire" unique_id=1533567626]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="Instructions" type="Control" parent="." unique_id=985956174]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_j6wm6")
+
+[node name="Label" type="Label" parent="Instructions" unique_id=916836974]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 419.0
+offset_right = 144.0
+offset_bottom = 520.0
+text = "CONTROLS:
+MOVE: WASD
+ATTACK: MOUSE 1
+INTERACT: E
+BLOCK/PARRY: MOUSE2
+USE HEAL: R"
+
+[node name="Label2" type="Label" parent="Instructions" unique_id=1681066928]
+layout_mode = 0
+offset_left = 940.0
+offset_top = 426.0
+offset_right = 1276.0
+offset_bottom = 527.0
+text = "REPEATEDLY ATTACKING
+GIVES MORE RESOLVE
+PERFECT PARRIES ALSO 
+GIVE BACK RESOLVE"
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1704449181]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28648186, 8.55284, 2.4392362)
+light_energy = 4.091
+light_bake_mode = 1
+shadow_enabled = true
+omni_range = 19.0
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="." unique_id=337958713]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28648186, 8.55284, 14.198769)
+light_energy = 4.091
+light_bake_mode = 1
+shadow_enabled = true
+omni_range = 19.0
+
+[node name="OmniLight3D5" type="OmniLight3D" parent="." unique_id=1042862032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28648186, 8.55284, -11.95562)
+light_energy = 4.091
+light_bake_mode = 1
+shadow_enabled = true
+omni_range = 19.0
+
+[node name="OmniLight3D6" type="OmniLight3D" parent="." unique_id=814482457]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.744028, 8.55284, -14.64092)
+light_energy = 4.091
+light_bake_mode = 1
+shadow_enabled = true
+omni_range = 19.0
+
+[node name="OmniLight3D9" type="OmniLight3D" parent="." unique_id=417707986]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.161522, 8.55284, -16.547503)
+light_energy = 4.091
+light_bake_mode = 1
+shadow_enabled = true
+omni_range = 19.0
+
+[node name="OmniLight3D7" type="OmniLight3D" parent="." unique_id=876273776]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.815334, 8.55284, 19.739944)
+light_energy = 4.091
+light_bake_mode = 1
+shadow_enabled = true
+omni_range = 19.0
+
+[node name="OmniLight3D8" type="OmniLight3D" parent="." unique_id=997531561]
+transform = Transform3D(0.9998974, -0.01036054, -0.009893287, 0.01033134, 0.9999422, -0.0029979777, 0.009923775, 0.002895459, 0.9999466, 10.923826, 8.55284, 19.739944)
+light_energy = 4.091
+light_bake_mode = 1
+shadow_enabled = true
+omni_range = 19.0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="." unique_id=1338688628]
+transform = Transform3D(0.8626726, 0.50576276, 0, -0.50576276, 0.8626726, 0, 0, 0, 1, 17.027302, 6.1803017, 7.302117)
+light_energy = 4.091
+light_bake_mode = 1
+shadow_enabled = true
+omni_range = 19.0
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="." unique_id=1231645197]
+transform = Transform3D(0.8711624, -0.49099502, 0, 0.49099502, 0.8711624, 0, 0, 0, 1, -11.97773, 9.941412, -2.2395415)
+light_energy = 4.091
+light_bake_mode = 1
+shadow_enabled = true
+omni_range = 19.0

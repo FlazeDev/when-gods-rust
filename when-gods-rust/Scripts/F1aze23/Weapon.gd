@@ -64,7 +64,7 @@ func startAttack(anim:AnimationPlayer):
 		anim.animation_finished.connect(_on_attack_animation_finished)
 		
 	var animName = "Attack_" + str(comboStep+1)
-	anim.play(animName)
+	anim.play(animName, -1, 1.5)
 	print(animName)
 	
 	#anim.animation_finished.connect(func(name:StringName):

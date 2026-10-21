@@ -35,6 +35,7 @@ Player=""
 PatrolPoint=""
 Gear=""
 Checkpoint=""
+DodgeArea=""
 
 [input]
 
@@ -113,6 +114,7 @@ lock_on={
 [layer_names]
 
 3d_physics/layer_2="Enemy"
+3d_physics/layer_16="DodgeArea"
 
 [limbo_ai]
 

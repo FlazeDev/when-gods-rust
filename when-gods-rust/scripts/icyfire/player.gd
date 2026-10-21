@@ -33,12 +33,14 @@ const PARRY_SPARK = preload("res://Assets/Randemlyy/ParrySpark.tscn")
 @export var SwitchControlAxes:bool = false
 @export var max_heals = 4
 @export var lock_on_range = 20.0
+@export var dodge_graze_resolve: float = 15
 
 var lock_on_target: Node3D = null
 var TimeSinceDmg:float = 0
 var DmgTime:float = 1
 var block_animation_started := false
 var	bodies_hit_this_swing: Array[Node3D] = []
+var grazed_attacks: Dictionary = {}
 
 func _ready() -> void:
 	cameraC.start()
@@ -80,7 +82,8 @@ func _process(delta: float) -> void:
 	var can_block := (
 		not menu_open and 
 		not _weapon_is_attacking() and
-		not staggerC.is_staggered
+		not staggerC.is_staggered and
+		not dodgeC.is_dodging
 	)
 	
 	blockC.update(
@@ -89,7 +92,7 @@ func _process(delta: float) -> void:
 		delta
 	)
 	
-	inventoryC.isAttack = inputC.attack and not menu_open
+	inventoryC.isAttack = inputC.attack and not menu_open and not dodgeC.is_dashing
 	
 	inventoryC.update(resolveC, anim, canStagger, canCombo, canCrit)
 	if inputC.lock_on and not menu_open:
@@ -110,10 +113,7 @@ func _process(delta: float) -> void:
 		
 	resolveC.update(delta)
 	healthC.update(delta)
-	
-	if inputC.dodge and not menu_open:
-		dodgeC.dodge()
-		
+
 	if inputC.use and not menu_open:
 		if inventoryC.Heals > 0:
 			healthC.current_health += 25
@@ -122,21 +122,23 @@ func _process(delta: float) -> void:
 	label_4.text = str(inventoryC.Heals)
 	
 func _physics_process(delta: float) -> void:
-	
 	if campfireMenu.visible or upgradeMenu.visible:
+		dodgeC.cancel_dash()
 		velocity = Vector3.ZERO
 		return
-		
+
 	TimeSinceDmg += delta
 	
+
 	if not is_on_floor():
 		velocity.y += get_gravity().y * delta
 		
 	if staggerC.is_staggered:
+		dodgeC.cancel_dash()
 		velocity.x = Vector3.ZERO.x
 		velocity.z = Vector3.ZERO.y
 		return
-		
+
 	var move_input: Vector2
 	
 	if not SwitchControlAxes:
@@ -146,6 +148,8 @@ func _physics_process(delta: float) -> void:
 		
 	var move_dir: Vector3	
 	
+
+	# LOCKING ON ENEMY
 	if is_instance_valid(lock_on_target):
 		var to_target = lock_on_target.global_position - global_position
 		to_target.y = 0
@@ -160,9 +164,26 @@ func _physics_process(delta: float) -> void:
 	else:
 		_set_lock_on_target(null)
 		move_dir = cameraC.get_move_direction(move_input)
-		
-	movementC.physics_update(delta, move_dir, self)
 	
+
+
+	if inputC.dodge and not _weapon_is_attacking() and not blockC.is_blocking:
+		var step_direction = move_dir
+
+		if step_direction.length_squared() < 0.001:
+			if is_instance_valid(lock_on_target):
+				step_direction = global_position - lock_on_target.global_position
+			else:
+				step_direction = global_basis.z
+
+		dodgeC.start_dash(step_direction)
+
+	dodgeC.physics_update(delta)
+
+	if not dodgeC.is_dashing:
+		movementC.physics_update(delta, move_dir, self)
+
+
 	if is_instance_valid(lock_on_target):
 		var to_target = lock_on_target.global_position - global_position
 		to_target.y = 0
@@ -171,17 +192,19 @@ func _physics_process(delta: float) -> void:
 			var target_yaw := atan2(-to_target.x, -to_target.z)
 			rotation.y = rotate_toward(rotation.y, target_yaw, 16.0 * delta)
 	
+
+
 	if inputC.dir != Vector2.ZERO:
 		animC.process(true, false)
 	else:
 		animC.process(false, false)
-	
+
 	move_and_slide()
 	
 func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction:Vector3 = Vector3.LEFT, attacker: Node3D = null, hit_collider: Node3D = null) -> void:
-	if dodgeC.isDodging:
-		resolveC.gainResolve(10)
-		return
+	# if dodgeC.is_dodging:
+	# 	resolveC.gainResolve(10)
+	# 	return
 	
 	var impact_time = float(Time.get_ticks_usec()) / 1_000_000.0
 	var was_blocking_at_impact = blockC.is_blocking
@@ -216,6 +239,19 @@ func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction:Vect
 	print(hit_direction)
 	velocity = hit_direction
 	
+func try_dodge_graze(attack: String) -> bool:
+	if not dodgeC.can_graze_attack():
+		return false
+	
+	if not grazed_attacks.has(attack):
+		grazed_attacks[attack] = true
+		resolveC.gainResolve(dodge_graze_resolve)
+	
+	return true
+
+func finish_dodge_graze_attack(attack_id: String) -> void:
+	grazed_attacks.erase(attack_id)
+
 func _spawn_parry_spark(target: Node3D) -> void:
 	var spark = PARRY_SPARK.instantiate() as GPUParticles3D
 	get_tree().current_scene.add_child(spark)
@@ -227,7 +263,7 @@ func _spawn_parry_spark(target: Node3D) -> void:
 	else:
 		spark.global_position = global_position + Vector3.UP
 	spark.restart()
-	
+
 func _on_blocking_started() -> void:
 	anim.play("Block")
 	

@@ -982,6 +982,9 @@ _data = {
 &"Walk2": SubResource("Animation_mjsa2")
 }
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_huo1t"]
+height = 1.8071289
+
 [node name="Player" type="CharacterBody3D" unique_id=1258498601 groups=["Player"]]
 script = ExtResource("1_dkbgn")
 canCombo = true
@@ -1403,3 +1406,10 @@ spring_length = 3.5
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D/ShakePivot" unique_id=324556177]
 fov = 70.0
+
+[node name="DodgeArea" type="Area3D" parent="." unique_id=2099225789 groups=["DodgeArea"]]
+collision_layer = 32768
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DodgeArea" unique_id=561380407]
+transform = Transform3D(1.575, 0, 0, 0, 1.575, 0, 0, 0, 1.575, 0, -0.15188599, 0)
+shape = SubResource("CapsuleShape3D_huo1t")

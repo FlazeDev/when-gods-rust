@@ -1,13 +1,14 @@
 extends Node
 
-@onready var canvas_layer: CanvasLayer = $"../CanvasLayer"
-@onready var cont: Button = $"../CanvasLayer/cont"
-@onready var quit: Button = $"../CanvasLayer/quit"
+@onready var pause_menu: CanvasLayer = $"../PauseMenu"
+@onready var cont: Button = $"../PauseMenu/cont"
+@onready var quit: Button = $"../PauseMenu/quit"
 
 func _ready() -> void:
-	canvas_layer.hide()
+	pause_menu.hide()
 	cont.pressed.connect(_on_resume_pressed)
 	quit.pressed.connect(_on_quit_pressed)
+	
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("menu"):
 		toggle_pause()
@@ -18,10 +19,10 @@ func toggle_pause() -> void:
 	get_tree().paused = new_pause_state
 	
 	if new_pause_state:
-		canvas_layer.show()
+		pause_menu.show()
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
-		canvas_layer.hide()
+		pause_menu.hide()
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		
 

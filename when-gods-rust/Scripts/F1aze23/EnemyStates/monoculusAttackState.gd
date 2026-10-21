@@ -27,6 +27,8 @@ var dir
 var aimSpeed = 1.5
 var hitpoint
 var windup_left := -1.0
+var attack_serial := 0
+var attack_id := ""
 
 func enter() -> void:
 	player = get_tree().get_first_node_in_group("Player")
@@ -79,6 +81,8 @@ func Attack() -> void:
 	if !canAttack:
 		return
 	print("attack")
+	attack_serial += 1
+	attack_id = "%s:%d" % [get_instance_id(), attack_serial]
 	canAttack = false
 	readyToAttack = false
 	body.isAttacking = true
@@ -103,7 +107,10 @@ func Attack() -> void:
 		print("Laser hit: ", target.name)
 		if target == player:
 			var direction = (player.global_position - body.global_position).normalized()
-			player.take_hit(10, 0.5, direction, body)
+			if not player.try_dodge_graze(attack_id):
+				player.take_hit(10, 0.5, direction, body)
+		elif target is Area3D and target.is_in_group("DodgeArea") and target.get_parent() == player:
+			player.try_dodge_graze(attack_id)
 	
 	await get_tree().create_timer(recovery_time).timeout
 	
@@ -126,6 +133,9 @@ func _turn_body_towards_player(delta: float) -> void:
 	
 
 func _finish_attack() -> void:
+	if is_instance_valid(player) and not attack_id.is_empty():
+		player.finish_dodge_graze_attack(attack_id)
+	attack_id = ""
 	if is_instance_valid(body):
 		body.isAttacking = false
 	canAttack = true	
