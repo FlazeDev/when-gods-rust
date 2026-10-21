@@ -13,22 +13,24 @@ signal RTA
 @onready var chargeIndicator: MeshInstance3D = $"../../LaserSpawn/ChargeIndicator"
 
 @export var body: CharacterBody3D
-@export var canAttack:=true
-@export var readyToAttack:bool = false
+@export var canAttack := true
+@export var readyToAttack := false
 @export var windup_time := 0.4
 @export var recovery_time := 0.27
-@export var attack_range = 10.0
-@export var aim_height = 1.0
-@export var aim_lock_time = 0.5
+@export var attack_range := 10.0
+@export var aim_height := 1.0
+@export var aim_lock_time := 0.5
 
-var lock_left = -1.0
+var lock_left := -1.0
 var player: CharacterBody3D
-var dir
-var aimSpeed = 1.5
-var hitpoint
+var dir: Vector3
 var windup_left := -1.0
 var attack_serial := 0
 var attack_id := ""
+
+func _ready() -> void:
+	if is_instance_valid(body):
+		attackRay.add_exception(body)
 
 func enter() -> void:
 	player = get_tree().get_first_node_in_group("Player")
@@ -42,6 +44,8 @@ func enter() -> void:
 
 
 func update(delta: float) -> void:
+	if not is_instance_valid(player):
+		return
 	nav.target_position = player.global_position
 	
 	if !canAttack:
@@ -69,9 +73,10 @@ func update(delta: float) -> void:
 		Attack()
 		return
 
-	elif nav.distance_to_target() > 10.0:
+	if nav.distance_to_target() > 10.0:
 		sm.change_state("Wander")
 		return
+
 	dir = (nav.get_next_path_position() - body.global_position).normalized()
 	movementC.physics_update(delta, dir, body)
 	body.move_and_slide()
@@ -80,20 +85,28 @@ func update(delta: float) -> void:
 func Attack() -> void:
 	if !canAttack:
 		return
+
 	print("attack")
+
 	attack_serial += 1
 	attack_id = "%s:%d" % [get_instance_id(), attack_serial]
+
 	canAttack = false
 	readyToAttack = false
 	body.isAttacking = true
 	windup_left = windup_time
 	lock_left = -1.0
 	chargeIndicator.visible = true
+
 	await RTA
+
+	if not is_inside_tree():
+		return
+
 	chargeIndicator.visible = false
 	readyToAttack = false
 	
-	if not is_inside_tree() or not is_instance_valid(player):
+	if not is_instance_valid(player):
 		_finish_attack()
 		return
 	
@@ -105,12 +118,19 @@ func Attack() -> void:
 	if attackRay.is_colliding():
 		var target = attackRay.get_collider()
 		print("Laser hit: ", target.name)
-		if target == player:
-			var direction = (player.global_position - body.global_position).normalized()
+
+		var hit_player: bool = target == player
+
+		if target is Node3D and player.is_ancestor_of(target):
+			hit_player = true
+
+		if hit_player:
 			if not player.try_dodge_graze(attack_id):
+				var direction = (
+					player.global_position - body.global_position
+				).normalized()
 				player.take_hit(10, 0.5, direction, body)
-		elif target is Area3D and target.is_in_group("DodgeArea") and target.get_parent() == player:
-			player.try_dodge_graze(attack_id)
+
 	
 	await get_tree().create_timer(recovery_time).timeout
 	
@@ -135,9 +155,12 @@ func _turn_body_towards_player(delta: float) -> void:
 func _finish_attack() -> void:
 	if is_instance_valid(player) and not attack_id.is_empty():
 		player.finish_dodge_graze_attack(attack_id)
+
 	attack_id = ""
+
 	if is_instance_valid(body):
 		body.isAttacking = false
+
 	canAttack = true	
 	readyToAttack = true
 	windup_left = -1.0

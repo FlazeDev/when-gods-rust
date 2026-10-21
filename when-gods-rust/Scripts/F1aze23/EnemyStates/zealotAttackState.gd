@@ -27,6 +27,9 @@ func update(delta):
 	if player == null or not is_instance_valid(player):
 		sm.change_state("wander")
 		return
+		
+	nav.target_position = player.global_position
+	
 	if attackDist.is_colliding() and canAttack and not attack_started:
 		Attack()
 		return
@@ -43,8 +46,7 @@ func update(delta):
 			player.finish_dodge_graze_attack(attack_id)
 			attack_id = ""
 			attack_started = false
-	nav.target_position = player.global_position
-	
+
 	dir = (nav.get_next_path_position() - body.global_position).normalized()
 	movementC.physics_update(delta, dir, body)
 	body.move_and_slide()

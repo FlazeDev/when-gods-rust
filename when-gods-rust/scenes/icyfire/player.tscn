@@ -1022,10 +1022,12 @@ script = ExtResource("1_fx4ke")
 script = ExtResource("2_que7a")
 accel = 60.0
 deccel = 100.0
-speed = 6.0
+speed = 4.5
 
 [node name="CameraComponent" type="Node" parent="." unique_id=1924322493]
 script = ExtResource("5_1mpnw")
+follow_smoothing = 26.0
+max_lock_on_camera_distance = 8.0
 metadata/_custom_type_script = "uid://c3q2bf4w8k2ae"
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1763875352 node_paths=PackedStringArray("healthBar", "ghostHealthBar")]
