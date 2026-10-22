@@ -22,6 +22,7 @@
 [ext_resource type="Script" uid="uid://cym6bodw36out" path="res://scripts/icyfire/AnimationComponent.gd" id="19_1cd4j"]
 [ext_resource type="Script" uid="uid://ci65tdq6gqlvu" path="res://scripts/F1aze23/DodgeComponent.gd" id="19_d4y3p"]
 [ext_resource type="Script" uid="uid://dihlsl8jcher0" path="res://scripts/icyfire/InteractComponent.gd" id="21_jcpvw"]
+[ext_resource type="Script" uid="uid://b5h1cv4lg5ont" path="res://scenes/randemlyy/RiposteComponent.gd" id="23_ety63"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fgv4r"]
 
@@ -1415,3 +1416,6 @@ collision_layer = 32768
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DodgeArea" unique_id=561380407]
 transform = Transform3D(1.575, 0, 0, 0, 1.575, 0, 0, 0, 1.575, 0, -0.15188599, 0)
 shape = SubResource("CapsuleShape3D_huo1t")
+
+[node name="RiposteComponent" type="Node" parent="." unique_id=530974712]
+script = ExtResource("23_ety63")

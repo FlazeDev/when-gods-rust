@@ -11,7 +11,7 @@ extends Node
 var isWalking
 var grounded:bool
 
-func physics_update(delta: float, movedir:Vector3, body:CharacterBody3D) -> void:
+func physics_update(delta: float, movedir:Vector3, body:CharacterBody3D, rotate_to_move: bool = true) -> void:
 	grounded = body.is_on_floor()
 	var target_velocity = movedir * speed
 	var horizontal_velocity = Vector2(body.velocity.x, body.velocity.z)
@@ -49,14 +49,14 @@ func physics_update(delta: float, movedir:Vector3, body:CharacterBody3D) -> void
 		isWalking = true
 	else:
 		isWalking = false
+	if rotate_to_move:
+		var look_dir: Vector3 = movedir
+		look_dir.y = 0
 		
-	var look_dir: Vector3 = movedir
-	look_dir.y = 0
-	
-	if look_dir.length_squared() > 0.05:
-		var target_yaw = atan2(-look_dir.x, -look_dir.z)
-		body.rotation.y = rotate_toward(
-			body.rotation.y,
-			target_yaw,
-			20.0 * delta
-		)
+		if look_dir.length_squared() > 0.05:
+			var target_yaw = atan2(-look_dir.x, -look_dir.z)
+			body.rotation.y = rotate_toward(
+				body.rotation.y,
+				target_yaw,
+				20.0 * delta
+			)

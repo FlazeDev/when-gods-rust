@@ -9,6 +9,10 @@ extends Node
 @export var lock_turn_speed: float = 4.0
 @export var lock_zoom_speed: float = 0.7
 @export var max_lock_on_camera_distance: float = 10.0
+@export var push_in_amount: float = 0.0
+@export var push_in_duration: float = 0.0
+@export var push_in_time_left: float = 0.0
+@export var lock_pitch_degrees: float = -18.0
 
 @onready var spring_arm: SpringArm3D = $"../CameraPivot/SpringArm3D"
 @onready var pivot: Node3D = $"../CameraPivot"
@@ -44,8 +48,9 @@ func _input(event: InputEvent) -> void:
 	
 	if event is InputEventMouseMotion:
 		yaw -= event.relative.x * mouse_sensitivity
-		pitch -= event.relative.y * mouse_sensitivity
-		pitch = clampf(pitch, deg_to_rad(min_pitch_degrees), deg_to_rad(max_pitch_degrees))
+		if not is_instance_valid(lock_target):
+			pitch -= event.relative.y * mouse_sensitivity
+			pitch = clampf(pitch, deg_to_rad(min_pitch_degrees), deg_to_rad(max_pitch_degrees))
 		pivot.global_rotation = Vector3(pitch, yaw, 0.0)
 
 func get_move_direction(input_dir: Vector2) -> Vector3:
@@ -67,21 +72,38 @@ func shake(strength: float, duration: float) -> void:
 	shake_duration = maxf(shake_duration, duration)
 	shake_timer = maxf(shake_timer, duration)
 
+func push_in(amount: float, duration: float) -> void:
+	if amount <= 0.0 or duration <= 0.0:
+		return
+	 
+	push_in_amount = amount
+	push_in_duration = duration
+	push_in_time_left = duration
+
 func update(body: CharacterBody3D, delta: float) -> void:
 	var target_position := body.global_position + Vector3.UP * follow_height
 	var weight := 1.0 - exp(-follow_smoothing * delta)
-	
+	var push_offset = 0.0
+
+	if push_in_time_left > 0.0:
+		push_in_time_left = maxf(push_in_time_left - delta, 0.0)
+		push_offset = push_in_amount * (push_in_time_left / push_in_duration)
+
 	if is_instance_valid(lock_target):
 		target_position = (body.global_position + lock_target.global_position) * .5 + Vector3.UP * follow_height
 		
 		var to_target = lock_target.global_position - body.global_position
 		to_target.y = 0
 		
-		if to_target.length_squared() > 0.001:
-			var target_yaw = atan2(-to_target.x, -to_target.z)
-			var turn_weight = 1.0 - exp(-lock_turn_speed * delta)
-			yaw = lerp_angle(yaw, target_yaw, turn_weight)
+		var target_yaw: float
+		if to_target.length_squared() > 0.25:
+			target_yaw = atan2(-to_target.x, -to_target.z)
+		else:
+			target_yaw = body.global_rotation.y
 		
+		yaw = lerp_angle(yaw, target_yaw, weight)
+		pitch = lerp_angle(pitch, deg_to_rad(lock_pitch_degrees), weight)
+
 		var distance = Vector2(to_target.x, to_target.z).length()
 		var wanted_length = clampf(
 			distance * lock_zoom_speed,
@@ -90,7 +112,7 @@ func update(body: CharacterBody3D, delta: float) -> void:
 		)
 		spring_arm.spring_length = lerpf(
 			spring_arm.spring_length,
-			wanted_length,
+			maxf(0.1, wanted_length - push_offset),
 			weight
 		)
 		
@@ -98,7 +120,7 @@ func update(body: CharacterBody3D, delta: float) -> void:
 		target_position = body.global_position + Vector3.UP * follow_height
 		spring_arm.spring_length = lerpf(
 			spring_arm.spring_length,
-			default_spring_length,
+			maxf(0.1, default_spring_length - push_offset),
 			weight
 		)
 		

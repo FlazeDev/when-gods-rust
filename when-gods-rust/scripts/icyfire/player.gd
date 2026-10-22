@@ -1,6 +1,8 @@
 extends CharacterBody3D
 
 
+signal parry_succeeded(target: Node3D, target_staggered: StaggerComponent)
+
 @onready var inputC: InputComponent = $InputComponent
 @onready var movementC: MovementComponent = $MovementComponent
 @onready var cameraC: CameraComponent = $CameraComponent
@@ -18,7 +20,7 @@ extends CharacterBody3D
 @onready var upgradeC: UpgradeComponent = $UpgradeComponent
 @onready var interactC: InteractComponent = $InteractComponent
 @onready var campfireMenu: CampfireMenu = $CanvasLayer/CampfireMenu
-
+@onready var riposteC: RiposteComponent = $RiposteComponent
 @onready var label_4: Label = $CanvasLayer/Control/Label4
 
 const PARRY_SPARK = preload("res://Assets/Randemlyy/ParrySpark.tscn")
@@ -32,7 +34,7 @@ const PARRY_SPARK = preload("res://Assets/Randemlyy/ParrySpark.tscn")
 @export var invertControlsY:float = 1
 @export var SwitchControlAxes:bool = false
 @export var max_heals = 4
-@export var lock_on_range = 20.0
+@export var lock_on_range = 12.0
 @export var dodge_graze_resolve: float = 15
 
 var lock_on_target: Node3D = null
@@ -53,6 +55,9 @@ func _ready() -> void:
 	blockC.blocking_ended.connect(_on_blocking_ended)
 	upgradeMenu.back_pressed.connect(_on_upgrade_back_pressed)
 	campfireMenu.exit_pressed.connect(_on_campfire_exit_pressed)
+	parry_succeeded.connect(riposteC.on_parry)
+	riposteC.feedback_requested.connect(_on_riposte_feedback_requested)
+
 	
 func _process(delta: float) -> void:
 	inputC.update(delta)
@@ -92,9 +97,24 @@ func _process(delta: float) -> void:
 		delta
 	)
 	
-	inventoryC.isAttack = inputC.attack and not menu_open and not dodgeC.is_dashing
-	
+	var riposte_consumed_attack = riposteC.update(
+		delta,
+		inputC.attack,
+		_weapon_is_attacking(),
+		not menu_open and 
+		not blockC.is_blocking and 
+		not dodgeC.is_dashing and 
+		not staggerC.is_staggered
+	)
+
+	inventoryC.isAttack = (inputC.attack and 
+		not menu_open and not dodgeC.is_dashing and 
+		not riposte_consumed_attack and 
+		not riposteC.is_active()
+	)
+		
 	inventoryC.update(resolveC, anim, canStagger, canCombo, canCrit)
+
 	if inputC.lock_on and not menu_open:
 		if is_instance_valid(lock_on_target):
 			_set_lock_on_target(null)
@@ -132,7 +152,13 @@ func _physics_process(delta: float) -> void:
 
 	if not is_on_floor():
 		velocity.y += get_gravity().y * delta
-		
+	
+	if inputC.dodge and riposteC.can_cancel_with_dodge():
+		riposteC.cancel_with_dodge()
+	
+	if riposteC.physics_update(delta, self):
+		return
+
 	if staggerC.is_staggered:
 		dodgeC.cancel_dash()
 		velocity.x = Vector3.ZERO.x
@@ -154,23 +180,22 @@ func _physics_process(delta: float) -> void:
 		var to_target = lock_on_target.global_position - global_position
 		to_target.y = 0
 		
+		var forward: Vector3
 		if to_target.length_squared() > 0.001:
-			var forward = to_target.normalized()
-			var right = forward.cross(Vector3.UP).normalized()
-			
-			move_dir = (right * move_input.x - forward * move_input.y).limit_length(1.0)
+			forward = to_target.normalized()
 		else:
-			move_dir = Vector3.ZERO
+			forward = -global_basis.z
+		
+		var right = forward.cross(Vector3.UP).normalized()
+		move_dir = (right * move_input.x - forward * move_input.y).limit_length(1.0)
 	else:
 		_set_lock_on_target(null)
 		move_dir = cameraC.get_move_direction(move_input)
 	
-
-
 	if inputC.dodge and not _weapon_is_attacking() and not blockC.is_blocking:
 		var step_direction = move_dir
 
-		if step_direction.length_squared() < 0.001:
+		if step_direction.length_squared() < 0.25:
 			if is_instance_valid(lock_on_target):
 				step_direction = global_position - lock_on_target.global_position
 			else:
@@ -181,7 +206,7 @@ func _physics_process(delta: float) -> void:
 	dodgeC.physics_update(delta)
 
 	if not dodgeC.is_dashing:
-		movementC.physics_update(delta, move_dir, self)
+		movementC.physics_update(delta, move_dir, self, not is_instance_valid(lock_on_target))
 
 
 	if is_instance_valid(lock_on_target):
@@ -220,6 +245,8 @@ func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction:Vect
 			var enemy_stagger = attacker.get_node_or_null("StaggerComponent") as StaggerComponent
 			if enemy_stagger:
 				enemy_stagger.apply_stagger(parry_stagger_duration)
+				parry_succeeded.emit(attacker, enemy_stagger)
+
 		HitStop.request(0.1, 0.3)
 		_spawn_parry_spark(attacker)
 		cameraC.shake(0.16, 0.12)
@@ -291,6 +318,15 @@ func _on_campfire_exit_pressed() -> void:
 func _on_upgrade_back_pressed() -> void:
 	upgradeMenu.toggle_menu()
 	campfireMenu.open()
+
+func _on_riposte_feedback_requested(effect: StringName, target: Node3D) -> void:
+	if effect != &"riposte_hit":
+		return
+	
+	HitStop.request(0.12, 0.6)
+	cameraC.push_in(0.7, 0.16)
+	cameraC.shake(0.24, 0.18)
+
 
 func _set_lock_on_target(target: Node3D) -> void:
 	lock_on_target = target

@@ -101,6 +101,9 @@ func _try_hit(target: Node3D) -> void:
 	
 	var crit_mult = 1.5 if is_current_attack_crit else 1.0
 	var final_damage := roundi(damage * (1.0 + damage_bonus / 100.0) * crit_mult)
+	var target_stagger = target.get_node_or_null("StaggerComponent") as StaggerComponent
+	if target_stagger and target_stagger.is_staggered:
+		final_damage = roundi(final_damage * 1.3)
 	target.get_node("HealthComponent").call("take_damage", final_damage)
 	HitStop.request(0.07 if is_current_attack_crit else 0.04)
 	
