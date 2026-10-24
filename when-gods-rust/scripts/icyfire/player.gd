@@ -43,7 +43,6 @@ var grazed_attacks: Dictionary = {}
 
 func _ready() -> void:
 	cameraC.start()
-	resolveC.start()
 	healthC.start()
 	healthC.died.connect(onDeath)
 	blockC.blocking_started.connect(_on_blocking_started)
