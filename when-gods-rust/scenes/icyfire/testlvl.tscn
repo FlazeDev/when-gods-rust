@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://1vu1ugm3m8u6"]
 
-[ext_resource type="PackedScene" uid="uid://d2i164qcqw4na" path="res://Scenes/icyfire/player.tscn" id="1_2dbcp"]
-[ext_resource type="PackedScene" uid="uid://cf6amcblndo4i" path="res://Scenes/F1aze23/Zealot.tscn" id="2_25x4d"]
-[ext_resource type="PackedScene" uid="uid://8ki1um74b20t" path="res://Scenes/F1aze23/TestWeaponItem.tscn" id="3_0jgn4"]
-[ext_resource type="Script" uid="uid://bo6mdnv4kfwx3" path="res://Scripts/icyfire/control.gd" id="4_0rvhb"]
-[ext_resource type="Script" uid="uid://ceaptm6x6iqxo" path="res://Scenes/icyfire/worldboundary.gd" id="5_10rk6"]
-[ext_resource type="PackedScene" uid="uid://eapa1kt7w17j" path="res://Scenes/F1aze23/ChronoCroupier.tscn" id="6_c4had"]
+[ext_resource type="PackedScene" uid="uid://d2i164qcqw4na" path="res://scenes/icyfire/player.tscn" id="1_2dbcp"]
+[ext_resource type="PackedScene" uid="uid://cf6amcblndo4i" path="res://scenes/F1aze23/Zealot.tscn" id="2_25x4d"]
+[ext_resource type="PackedScene" uid="uid://8ki1um74b20t" path="res://scenes/F1aze23/TestWeaponItem.tscn" id="3_0jgn4"]
+[ext_resource type="Script" uid="uid://bo6mdnv4kfwx3" path="res://scripts/icyfire/control.gd" id="4_0rvhb"]
+[ext_resource type="Script" uid="uid://ceaptm6x6iqxo" path="res://scenes/icyfire/worldboundary.gd" id="5_10rk6"]
+[ext_resource type="PackedScene" uid="uid://eapa1kt7w17j" path="res://scenes/F1aze23/ChronoCroupier.tscn" id="6_c4had"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_l0j3u"]
 vertices = PackedVector3Array(-1.6476479, 1.3005524, -1.2508545, 0.10235214, 1.3005524, -1.5008545, 0.10235214, 1.3005524, -9.5008545, -60.897648, 1.3005524, -9.5008545, 0.10235214, 1.3005524, 9.7491455, 0.10235214, 1.3005524, 1.4991455, -1.6476479, 1.3005524, 1.2491455, -60.897648, 1.3005524, 9.7491455, 1.6023521, 1.3005524, -1.2508545, 61.102352, 1.3005524, -9.5008545, 1.6023521, 1.3005524, 1.2491455, 61.102352, 1.3005524, 9.7491455, 63.852352, -11.699448, -9.5008545, 63.852352, -11.699448, 9.7491455, 112.102356, -8.449448, 9.7491455, 112.102356, -8.449448, -9.5008545, 106.852356, -22.949448, -3.7508545, 106.852356, -22.949448, 15.4991455, 142.85236, -22.949448, 15.4991455, 142.85236, -22.949448, -3.7508545, -0.64764786, 4.0505524, -0.5008545, -0.64764786, 4.0505524, 0.4991455, 0.60235214, 4.0505524, 0.4991455, 0.60235214, 4.0505524, -0.5008545, -0.39764786, 1.3005524, -0.2508545, -0.39764786, 1.3005524, 0.24914551, 0.35235214, 1.3005524, 0.24914551, 0.35235214, 1.3005524, -0.2508545, 35.352352, -2.6994476, 12.2491455, 35.352352, -2.6994476, 31.249146, 71.352356, -2.6994476, 31.249146, 71.352356, -2.6994476, 12.2491455)

@@ -1,7 +1,7 @@
 class_name AnimationComponent
 extends Node
 
-@onready var animation_player: AnimationPlayer = $"../Model2/WGR3/AnimationPlayer"
+@onready var animation_player: AnimationPlayer = $"../Model2/WGR4/AnimationPlayer"
 
 func process(is_moving: bool, is_staggered: bool) -> void:
 	var animation := &"Staggered" if is_staggered else (&"Walk2" if is_moving else &"Idle")

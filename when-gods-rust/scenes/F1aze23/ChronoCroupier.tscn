@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://eapa1kt7w17j"]
 
-[ext_resource type="Script" uid="uid://dyp3dlym7cmbv" path="res://Scripts/F1aze23/StateMachine.gd" id="1_1t2ud"]
-[ext_resource type="Script" uid="uid://hanm45w65igs" path="res://Scripts/F1aze23/EnemyStates/kingOfClubs.gd" id="2_73nya"]
-[ext_resource type="Script" uid="uid://cpwwu1gw7sj85" path="res://Scripts/F1aze23/state.gd" id="3_e85m6"]
-[ext_resource type="Script" uid="uid://dtnjxw1vua83h" path="res://Scripts/icyfire/MovementComponent.gd" id="4_xc4l3"]
-[ext_resource type="Script" uid="uid://dq71svuwl2njr" path="res://Scripts/randem/HealthComponent.gd" id="5_woblf"]
-[ext_resource type="Script" uid="uid://c5yf8bxmdfcr5" path="res://Scripts/randem/StaggerComponent.gd" id="6_73nya"]
+[ext_resource type="Script" uid="uid://dyp3dlym7cmbv" path="res://scripts/F1aze23/StateMachine.gd" id="1_1t2ud"]
+[ext_resource type="Script" uid="uid://hanm45w65igs" path="res://scripts/F1aze23/EnemyStates/kingOfClubs.gd" id="2_73nya"]
+[ext_resource type="Script" uid="uid://cpwwu1gw7sj85" path="res://scripts/F1aze23/state.gd" id="3_e85m6"]
+[ext_resource type="Script" uid="uid://dtnjxw1vua83h" path="res://scripts/icyfire/MovementComponent.gd" id="4_xc4l3"]
+[ext_resource type="Script" uid="uid://dq71svuwl2njr" path="res://scripts/randem/HealthComponent.gd" id="5_woblf"]
+[ext_resource type="Script" uid="uid://c5yf8bxmdfcr5" path="res://scripts/randem/StaggerComponent.gd" id="6_73nya"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bsnpc"]
 radius = 1.0

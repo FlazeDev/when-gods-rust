@@ -54,7 +54,6 @@ func _ready() -> void:
 	lockOnC.target_changed.connect(cameraC.set_lock_on_target)
 	uiC.refill_heals_requested.connect(_on_refill_heals_pressed)
 	
-
 func _process(delta: float) -> void:
 	inputC.update(delta)
 	
