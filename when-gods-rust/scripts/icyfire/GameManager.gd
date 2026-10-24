@@ -1,38 +1,35 @@
 extends Node
 
 @onready var pause_menu: CanvasLayer = $"../PauseMenu"
-@onready var cont: Button = $"../PauseMenu/cont"
-@onready var quit: Button = $"../PauseMenu/quit"
+@onready var resume_button: Button = $"../PauseMenu/cont"
+@onready var quit_button: Button = $"../PauseMenu/quit"
+
+var mouse_mode_before_pause: Input.MouseMode = Input.MOUSE_MODE_CAPTURED
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	pause_menu.hide()
-	cont.pressed.connect(_on_resume_pressed)
-	quit.pressed.connect(_on_quit_pressed)
-	
+	resume_button.pressed.connect(toggle_pause)
+	quit_button.pressed.connect(_quit_game)
+
 func _input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("menu"):
+	if event.is_action_pressed("menu") and not event.is_echo():
 		toggle_pause()
 
 func toggle_pause() -> void:
-#	print("Pause toggled")
-	var new_pause_state = !get_tree().paused
-	get_tree().paused = new_pause_state
+	var pausing = not get_tree().paused
+
+	if pausing:
+		mouse_mode_before_pause = Input.mouse_mode
 	
-	if new_pause_state:
-		pause_menu.show()
+	get_tree().paused = pausing
+	pause_menu.visible = pausing
+
+	if pausing:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
-		pause_menu.hide()
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		
+		Input.mouse_mode = mouse_mode_before_pause
 
-
-func _on_resume_pressed() -> void:
-#	print("resume pressed")
-	toggle_pause()
-	
-func _on_quit_pressed() -> void:
-	print ("quit pressed")
+func _quit_game() -> void:
 	get_tree().paused = false
 	get_tree().quit()
-	pass

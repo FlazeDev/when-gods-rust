@@ -3,15 +3,7 @@ extends Node
 
 @onready var animation_player: AnimationPlayer = $"../Model2/WGR3/AnimationPlayer"
 
-func process(IsMoving:bool, IsStaggered:bool) -> void:
-	if !IsStaggered:
-		if IsMoving:
-#			print("moveanim")
-			animation_player.play("Walk2")
-		elif !IsMoving:
-#			print("walkanim")
-			animation_player.play("Idle")
-	else:
-		animation_player.stop()
-		animation_player.play("Staggered")
-#		print("staggeredanim")
+func process(is_moving: bool, is_staggered: bool) -> void:
+	var animation := &"Staggered" if is_staggered else (&"Walk2" if is_moving else &"Idle")
+	if animation_player.current_animation != animation:
+		animation_player.play(animation)

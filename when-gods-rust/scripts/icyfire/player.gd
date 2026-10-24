@@ -12,32 +12,29 @@ signal parry_succeeded(target: Node3D, target_staggered: StaggerComponent)
 @onready var inventoryC: InventoryComponent = $InventoryComponent
 @onready var blockC: BlockComponent = $BlockComponent
 @onready var animC: AnimationComponent = $AnimationComponent
-@onready var upgradeMenu: UpgradeMenu = $CanvasLayer/UpgradeMenu
 @onready var anim: AnimationPlayer = $TestAnimPlayer
 @onready var iArea: Area3D = $InteractArea
 @onready var loadPenaltyC: LoadPenaltyComponent = $LoadPenaltyComponent
 @onready var dodgeC: DodgeComponent = $DodgeComponent
 @onready var upgradeC: UpgradeComponent = $UpgradeComponent
 @onready var interactC: InteractComponent = $InteractComponent
-@onready var campfireMenu: CampfireMenu = $CanvasLayer/CampfireMenu
 @onready var riposteC: RiposteComponent = $RiposteComponent
 @onready var label_4: Label = $CanvasLayer/Control/Label4
-
-const PARRY_SPARK = preload("res://Assets/Randemlyy/ParrySpark.tscn")
+@onready var lockOnC: LockOnComponent = $LockOnComponent
+@onready var uiC: PlayerUIController = $PlayerUIController
+@onready var hitReponse: PlayerHitResponse = $PlayerHitResponse
 
 @export var canCombo:bool = false
 @export var canCrit:bool = false
 @export var canStagger:bool = false
 @export var stagger_dura: float = 0.7
-@export var parry_stagger_duration: float = 1.2
 @export var invertControlsX:float = 1
 @export var invertControlsY:float = 1
 @export var SwitchControlAxes:bool = false
 @export var max_heals = 4
-@export var lock_on_range = 12.0
 @export var dodge_graze_resolve: float = 15
+@export var heal_amount: int = 25
 
-var lock_on_target: Node3D = null
 var TimeSinceDmg:float = 0
 var DmgTime:float = 1
 var block_animation_started := false
@@ -49,28 +46,23 @@ func _ready() -> void:
 	resolveC.start()
 	healthC.start()
 	healthC.died.connect(onDeath)
-	campfireMenu.set_gears_pressed.connect(_on_set_gears_pressed)
-	campfireMenu.refill_heals_pressed.connect(_on_refill_heals_pressed)
 	blockC.blocking_started.connect(_on_blocking_started)
 	blockC.blocking_ended.connect(_on_blocking_ended)
-	upgradeMenu.back_pressed.connect(_on_upgrade_back_pressed)
-	campfireMenu.exit_pressed.connect(_on_campfire_exit_pressed)
+	hitReponse.parry_succeeded.connect(_on_hit_response_parry_succeeded)
 	parry_succeeded.connect(riposteC.on_parry)
 	riposteC.feedback_requested.connect(_on_riposte_feedback_requested)
-
+	lockOnC.target_changed.connect(cameraC.set_lock_on_target)
+	uiC.refill_heals_requested.connect(_on_refill_heals_pressed)
 	
+
 func _process(delta: float) -> void:
 	inputC.update(delta)
+	
+	uiC.handle_menu_input(inputC.upgrade_menu)
 
-	if inputC.upgrade_menu:
-		if campfireMenu.visible:
-			campfireMenu.close()
-		elif upgradeMenu.visible:
-			upgradeMenu.toggle_menu()
-			
 	inventoryC.isEquip = false
 	
-	var menu_open = campfireMenu.visible or upgradeMenu.visible
+	var menu_open = uiC.is_menu_open
 	
 	if inputC.interact and not menu_open:
 		var handled := interactC.process(delta, true)
@@ -82,7 +74,7 @@ func _process(delta: float) -> void:
 					upgradeC.pickupGear(item.gearData)
 					item.queue_free()
 	
-	menu_open = campfireMenu.visible or upgradeMenu.visible
+	menu_open = uiC.is_menu_open
 	
 	var can_block := (
 		not menu_open and 
@@ -116,17 +108,9 @@ func _process(delta: float) -> void:
 	inventoryC.update(resolveC, anim, canStagger, canCombo, canCrit)
 
 	if inputC.lock_on and not menu_open:
-		if is_instance_valid(lock_on_target):
-			_set_lock_on_target(null)
-		else:
-			_set_lock_on_target(_find_lock_on_target())
+		lockOnC.toggle_target()
 	
-	if lock_on_target != null:
-		if not is_instance_valid(lock_on_target):
-			_set_lock_on_target(null)
-		elif global_position.distance_to(lock_on_target.global_position) > lock_on_range:
-			_set_lock_on_target(null)
-	
+	lockOnC.update()
 	
 	if not menu_open:
 		cameraC.update(self, delta)
@@ -134,15 +118,15 @@ func _process(delta: float) -> void:
 	resolveC.update(delta)
 	healthC.update(delta)
 
-	if inputC.use and not menu_open:
+	if inputC.use and not menu_open and healthC.current_health < healthC.max_health:
 		if inventoryC.Heals > 0:
-			healthC.current_health += 25
+			healthC.heal(heal_amount)
 			inventoryC.UseHeal()
 			
 	label_4.text = str(inventoryC.Heals)
 	
 func _physics_process(delta: float) -> void:
-	if campfireMenu.visible or upgradeMenu.visible:
+	if uiC.is_menu_open:
 		dodgeC.cancel_dash()
 		velocity = Vector3.ZERO
 		return
@@ -161,8 +145,9 @@ func _physics_process(delta: float) -> void:
 
 	if staggerC.is_staggered:
 		dodgeC.cancel_dash()
-		velocity.x = Vector3.ZERO.x
-		velocity.z = Vector3.ZERO.y
+		velocity.x = 0.0
+		velocity.z = 0.0
+		move_and_slide()
 		return
 
 	var move_input: Vector2
@@ -176,8 +161,8 @@ func _physics_process(delta: float) -> void:
 	
 
 	# LOCKING ON ENEMY
-	if is_instance_valid(lock_on_target):
-		var to_target = lock_on_target.global_position - global_position
+	if is_instance_valid(lockOnC.target):
+		var to_target = lockOnC.target.global_position - global_position
 		to_target.y = 0
 		
 		var forward: Vector3
@@ -189,15 +174,14 @@ func _physics_process(delta: float) -> void:
 		var right = forward.cross(Vector3.UP).normalized()
 		move_dir = (right * move_input.x - forward * move_input.y).limit_length(1.0)
 	else:
-		_set_lock_on_target(null)
 		move_dir = cameraC.get_move_direction(move_input)
 	
 	if inputC.dodge and not _weapon_is_attacking() and not blockC.is_blocking:
 		var step_direction = move_dir
 
 		if step_direction.length_squared() < 0.25:
-			if is_instance_valid(lock_on_target):
-				step_direction = global_position - lock_on_target.global_position
+			if is_instance_valid(lockOnC.target):
+				step_direction = global_position - lockOnC.target.global_position
 			else:
 				step_direction = global_basis.z
 
@@ -206,11 +190,11 @@ func _physics_process(delta: float) -> void:
 	dodgeC.physics_update(delta)
 
 	if not dodgeC.is_dashing:
-		movementC.physics_update(delta, move_dir, self, not is_instance_valid(lock_on_target))
+		movementC.physics_update(delta, move_dir, self, not is_instance_valid(lockOnC.target))
 
 
-	if is_instance_valid(lock_on_target):
-		var to_target = lock_on_target.global_position - global_position
+	if is_instance_valid(lockOnC.target):
+		var to_target = lockOnC.target.global_position - global_position
 		to_target.y = 0
 		
 		if to_target.length_squared() > 0.001:
@@ -227,44 +211,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction:Vector3 = Vector3.LEFT, attacker: Node3D = null, hit_collider: Node3D = null) -> void:
-	# if dodgeC.is_dodging:
-	# 	resolveC.gainResolve(10)
-	# 	return
-	
-	var impact_time = float(Time.get_ticks_usec()) / 1_000_000.0
-	var was_blocking_at_impact = blockC.is_blocking
-	await get_tree().create_timer(blockC.late_parry_window).timeout
-	await get_tree().process_frame
-	
-	if not is_inside_tree():
-		return
-		
-	if blockC.check_parry_press(impact_time):
-		resolveC.gainResolve(blockC.resolve_on_parry)
-		if is_instance_valid(attacker):
-			var enemy_stagger = attacker.get_node_or_null("StaggerComponent") as StaggerComponent
-			if enemy_stagger:
-				enemy_stagger.apply_stagger(parry_stagger_duration)
-				parry_succeeded.emit(attacker, enemy_stagger)
-
-		HitStop.request(0.1, 0.3)
-		_spawn_parry_spark(attacker)
-		cameraC.shake(0.16, 0.12)
-		print ("parried")
-		return
-		
-	if was_blocking_at_impact and blockC.spend_for_block():
-		print("blocked")
-		return
-		
-	var final_damage = roundi(damage * loadPenaltyC.damage_taken_mult())
-		
-	healthC.take_damage(final_damage)
-	cameraC.shake(0.12, 0.18)
-	staggerC.apply_stagger(hit_stagger_duration)
-	animC.process(false, true)
-	print(hit_direction)
-	velocity = hit_direction
+	await hitReponse.take_hit(damage, hit_stagger_duration, hit_direction, attacker, hit_collider)
 	
 func try_dodge_graze(attack: String) -> bool:
 	if not dodgeC.can_graze_attack():
@@ -279,18 +226,6 @@ func try_dodge_graze(attack: String) -> bool:
 func finish_dodge_graze_attack(attack_id: String) -> void:
 	grazed_attacks.erase(attack_id)
 
-func _spawn_parry_spark(target: Node3D) -> void:
-	var spark = PARRY_SPARK.instantiate() as GPUParticles3D
-	get_tree().current_scene.add_child(spark)
-	
-	if is_instance_valid(target):
-		spark.global_position = (
-			global_position.lerp(target.global_position, .5) + Vector3.UP * 0.8
-		)
-	else:
-		spark.global_position = global_position + Vector3.UP
-	spark.restart()
-
 func _on_blocking_started() -> void:
 	anim.play("Block")
 	
@@ -302,22 +237,13 @@ func _weapon_is_attacking() -> bool:
 	return is_instance_valid(inventoryC.cWeapon) and inventoryC.cWeapon.isAttacking
 
 func open_campfire_menu() -> void:
-	campfireMenu.open()
-
-func _on_set_gears_pressed() -> void:
-	campfireMenu.close()
-	upgradeMenu.toggle_menu()
+	uiC.open_campfire_menu()
 
 func _on_refill_heals_pressed() -> void:
-	inventoryC.Heals = max_heals
-	campfireMenu.close()
+	inventoryC.Heals = max_heals 
 
-func _on_campfire_exit_pressed() -> void:
-	campfireMenu.close()
-
-func _on_upgrade_back_pressed() -> void:
-	upgradeMenu.toggle_menu()
-	campfireMenu.open()
+func _on_hit_response_parry_succeeded(target: Node3D, target_staggered: StaggerComponent) -> void:
+	parry_succeeded.emit(target, target_staggered)
 
 func _on_riposte_feedback_requested(effect: StringName, target: Node3D) -> void:
 	if effect != &"riposte_hit":
@@ -328,29 +254,10 @@ func _on_riposte_feedback_requested(effect: StringName, target: Node3D) -> void:
 	cameraC.shake(0.24, 0.18)
 
 
-func _set_lock_on_target(target: Node3D) -> void:
-	lock_on_target = target
-	cameraC.set_lock_on_target(lock_on_target)
-
-func _find_lock_on_target() -> Node3D:
-	var closest: Node3D = null
-	var closest_distance = lock_on_range
-	
-	for node in get_tree().get_nodes_in_group("Enemy"):
-		if not node is Node3D:
-			continue
-		
-		var candidate = node as Node3D
-		var distance = global_position.distance_to(candidate.global_position)
-		
-		if distance < closest_distance:
-			closest = candidate
-			closest_distance = distance
-	return closest
-
 func onDeath():
 	queue_free()
 	print("Wow ma so bad you are")
 	print("daeth")
 	print("changed")
-	get_tree().change_scene_to_packed(load("uid://o73v2cty65b6"))
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	get_tree().change_scene_to_packed(load("uid://o73v2cty65b6")) 
