@@ -43,11 +43,6 @@ viewport_path = NodePath("ResolveComponent/Resolve")
 radius = 0.9296875
 height = 2.8999023
 
-[sub_resource type="BoxMesh" id="BoxMesh_8qorh"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ahkby"]
-albedo_color = Color(0.4745098, 0.25882354, 0, 1)
-
 [sub_resource type="Animation" id="Animation_vjlaq"]
 resource_name = "Attack_1"
 tracks/0/type = "value"
@@ -89,7 +84,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Hand:rotation")
+tracks/3/path = NodePath("Model2/WGR4/Armature/Skeleton3D/Bone_004_R/Hand:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -140,7 +135,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Hand:rotation")
+tracks/3/path = NodePath("Model2/WGR4/Armature/Skeleton3D/Bone_004_R/Hand:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -191,7 +186,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Hand:rotation")
+tracks/3/path = NodePath("Model2/WGR4/Armature/Skeleton3D/Bone_004_R/Hand:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -206,7 +201,7 @@ resource_name = "Block"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Hand:rotation")
+tracks/0/path = NodePath("Model2/WGR4/Armature/Skeleton3D/Bone_004_R/Hand:rotation")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -257,7 +252,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Hand:rotation")
+tracks/3/path = NodePath("Model2/WGR4/Armature/Skeleton3D/Bone_004_R/Hand:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -272,7 +267,7 @@ resource_name = "Unblock"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Hand:rotation")
+tracks/0/path = NodePath("Model2/WGR4/Armature/Skeleton3D/Bone_004_R/Hand:rotation")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -409,6 +404,11 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_k0ufs")
+
+[sub_resource type="BoxMesh" id="BoxMesh_8qorh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ahkby"]
+albedo_color = Color(0.4745098, 0.25882354, 0, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_sr4h8"]
 _surfaces = [{
@@ -2432,7 +2432,7 @@ resolve_on_parry = 20.0
 
 [node name="InventoryComponent" type="Node" parent="." unique_id=332656653 node_paths=PackedStringArray("hand_slot", "iArea", "anim")]
 script = ExtResource("2_vjlaq")
-hand_slot = NodePath("../Hand")
+hand_slot = NodePath("../Model2/WGR4/Armature/Skeleton3D/Bone_004_R/Hand")
 iArea = NodePath("../InteractArea")
 anim = NodePath("../TestAnimPlayer")
 metadata/_custom_type_script = "uid://2ykk4lgaj6yg"
@@ -2468,6 +2468,7 @@ metadata/_custom_type_script = "uid://c6h2bauklbph"
 
 [node name="ResolveSprite" type="Sprite3D" parent="ResolveComponent" unique_id=1348298327]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.575, 0)
+visible = false
 billboard = 1
 texture = SubResource("ViewportTexture_ahkby")
 
@@ -2493,14 +2494,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea" unique_id=1964796884]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.072753906, 0)
 shape = SubResource("CapsuleShape3D_8qorh")
-
-[node name="Hand" type="Node3D" parent="." unique_id=169300047]
-transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0.36683017, 0, -0.15630639)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Hand" unique_id=1531921442]
-transform = Transform3D(0.1128499, 0, 0, 0, 0.13321495, 0, 0, 0, 0.12648994, 0, 0, 0)
-mesh = SubResource("BoxMesh_8qorh")
-surface_material_override/0 = SubResource("StandardMaterial3D_ahkby")
 
 [node name="TestAnimPlayer" type="AnimationPlayer" parent="." unique_id=841370186]
 libraries/ = SubResource("AnimationLibrary_u7fmy")
@@ -2720,6 +2713,14 @@ bone_idx = 6
 [node name="Arm_R_L" type="MeshInstance3D" parent="Model2/WGR4/Armature/Skeleton3D/Bone_004_R" unique_id=387739135]
 transform = Transform3D(-1.7881395e-07, 1.0000001, 4.475004e-07, 1, 1.7881393e-07, 5.3550977e-08, -5.3550895e-08, -4.4750047e-07, 1, -0.03396783, 1.0575763, -0.07651504)
 mesh = SubResource("ArrayMesh_7hf0v")
+
+[node name="Hand" type="Node3D" parent="Model2/WGR4/Armature/Skeleton3D/Bone_004_R" unique_id=169300047]
+transform = Transform3D(8.333335, 0, 0, 0, 8.333334, 0, 0, 0, 8.333333, -0.0128088, 2.1958237, -1.1920929e-07)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model2/WGR4/Armature/Skeleton3D/Bone_004_R/Hand" unique_id=1531921442]
+transform = Transform3D(0.1128499, 0, 0, 0, 0.13321495, 0, 0, 0, 0.12648994, 0, 0, 0)
+mesh = SubResource("BoxMesh_8qorh")
+surface_material_override/0 = SubResource("StandardMaterial3D_ahkby")
 
 [node name="Bone_003_R" type="BoneAttachment3D" parent="Model2/WGR4/Armature/Skeleton3D" unique_id=2138913233]
 transform = Transform3D(-0.056818753, -0.9983844, 2.4192946e-07, 0.9983844, -0.056818753, -6.931282e-07, 7.057546e-07, 2.0215593e-07, 0.99999994, -2.3104217, 3.2408347, -4.6695142e-08)

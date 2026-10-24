@@ -54,7 +54,7 @@ func _set_blocking(value: bool) -> void:
 	if is_blocking:
 		blocking_started.emit()
 	else:
-		blocking_ended.emit()	
+		blocking_ended.emit()
 
 func check_parry_press(impact_time: float) -> bool:
 	var press_time = last_block_press_time
