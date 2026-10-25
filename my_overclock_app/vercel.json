@@ -1,0 +1,5 @@
+{
+  "installCommand": "curl --fail --location https://googleapis.com -o dart-sdk.zip && unzip -q dart-sdk.zip",
+  "buildCommand": "./dart-sdk/bin/dart pub global activate jaspr_cli && ./dart-sdk/bin/dart pub global run jaspr_cli:jaspr build",
+  "outputDirectory": "build/jaspr"
+}
