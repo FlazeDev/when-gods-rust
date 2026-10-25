@@ -23,15 +23,15 @@ jobs:
       - name: Install Jaspr CLI
         run: dart pub global activate jaspr_cli
 
-      # Added working-directory to navigate into the subfolder
       - name: Build Static Assets
         working-directory: my_overclock_app 
         run: |
           dart pub get
           jaspr build --port 8085
 
-      - name: Deploy to gh-pages Branch
+      - name: Deploy to Main Branch Subfolder
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: my_overclock_app/build/jaspr # Adjusted to point to the subfolder output
-          branch: gh-pages
+          folder: my_overclock_app/build/jaspr # The built Jaspr folder
+          branch: main # Pushing it straight back to the main branch
+          target-folder: app # Puts the Jaspr site into a folder named "app"
