@@ -18,3 +18,5 @@ dev_dependencies:
 
 jaspr:
   mode: static
+  basePath: /when-gods-rust/
+
