@@ -13,11 +13,14 @@ class App extends StatefulComponent {
 
 class AppState extends State<App> {
   Timer? countdownTimer;
+
   int countdownTime = 20;
-  String countdownText = 'Solve The Puzzle';
   String enteredCode = '';
-  bool isCodeCorrect = false;
+  String currentScreen = 'code';
   bool gameFinished = false;
+
+  final String accessCode = 'FlazeGoat';
+  final String rewardCode = 'CORE-7392';
 
   List<String> tiles = [
     'R', 'R', 'R',
@@ -27,16 +30,29 @@ class AppState extends State<App> {
 
   int emptyIndex = 9;
 
-  Component tile(String tile) {
-    if (tile == 'R') {
+  @override
+  void initState() {
+    super.initState();
+    tiles.shuffle();
+    tiles.add(' ');
+  }
+
+  @override
+  void dispose() {
+    countdownTimer?.cancel();
+    super.dispose();
+  }
+
+  Component tile(String value) {
+    if (value == 'R') {
       return div(classes: 'tile red', [Component.text('R')]);
-    } else if (tile == 'G') {
+    } else if (value == 'G') {
       return div(classes: 'tile green', [Component.text('G')]);
-    } else if (tile == 'B') {
+    } else if (value == 'B') {
       return div(classes: 'tile blue', [Component.text('B')]);
-    } else {
-      return div(classes: 'tile empty', [Component.text(' ')]);
     }
+
+    return div(classes: 'tile empty', [Component.text(' ')]);
   }
 
   bool isPuzzleSolved() {
@@ -55,25 +71,13 @@ class AppState extends State<App> {
     return true;
   }
 
-  @override
-  void initState() {
-    super.initState();
-    tiles.shuffle();
-    tiles.add(' ');
-  }
-
-  void codeCheck() {
-    if (enteredCode.trim() == 'FlazeGoat') {
+  void checkCode() {
+    if (enteredCode.trim() == accessCode) {
       setState(() {
-        isCodeCorrect = true;
-        countdownText = 'Solve The Puzzle';
+        currentScreen = 'puzzle';
       });
 
       startCountdown();
-    } else {
-      setState(() {
-        isCodeCorrect = false;
-      });
     }
   }
 
@@ -83,7 +87,12 @@ class AppState extends State<App> {
     countdownTimer = Timer.periodic(
       const Duration(seconds: 1),
       (timer) {
-        if (countdownTime > 0 && !gameFinished) {
+        if (gameFinished) {
+          timer.cancel();
+          return;
+        }
+
+        if (countdownTime > 0) {
           setState(() {
             countdownTime--;
           });
@@ -94,9 +103,7 @@ class AppState extends State<App> {
 
           setState(() {
             gameFinished = true;
-            countdownText = isPuzzleSolved()
-                ? 'Good Job! Puzzle Solved!'
-                : 'Time is up! Reload to try again.';
+            currentScreen = isPuzzleSolved() ? 'victory' : 'failed';
           });
         }
       },
@@ -113,89 +120,69 @@ class AppState extends State<App> {
 
       if (isPuzzleSolved()) {
         gameFinished = true;
-        countdownText = 'Good Job! Puzzle Solved!';
+        currentScreen = 'victory';
         countdownTimer?.cancel();
       }
     });
   }
 
   @override
-  void dispose() {
-    countdownTimer?.cancel();
-    super.dispose();
-  }
-
-  @override
   Component build(BuildContext context) {
     return div([
-      div(classes: 'app', [
-        h1([Component.text('OVERCLOCK')]),
-        p(
-          classes: 'subtitle',
-          [Component.text('SOLVE THE GRID BEFORE TIME RUNS OUT')],
-        ),
+      if (currentScreen == 'code')
+        div(classes: 'app', [
+          input(
+            classes: 'code-input',
+            attributes: {
+              'placeholder': 'Enter code',
+              'autocomplete': 'off',
+              'autocapitalize': 'off',
+              'spellcheck': 'false',
+            },
+            events: events(
+              onInput: (String value) {
+                enteredCode = value;
 
-        if (!isCodeCorrect)
-          div(classes: 'panel', [
-            h2([Component.text('ACCESS REQUIRED')]),
-            p(
-              classes: 'subtitle',
-              [Component.text('Enter the code to unlock the puzzle.')],
-            ),
-            input(
-              classes: 'code-input',
-              attributes: {
-                'placeholder': 'Enter Code',
+                if (enteredCode.trim() == accessCode) {
+                  checkCode();
+                }
               },
-              events: events(
-                onInput: (String value) {
-                  enteredCode = value;
+            ),
+          ),
+        ]),
+
+      if (currentScreen == 'puzzle')
+        div(classes: 'app', [
+          h2([Component.text('$countdownTime')]),
+          div(
+            classes: 'puzzle-grid',
+            tiles.asMap().entries.map((entry) {
+              final index = entry.key;
+              final value = entry.value;
+
+              return button(
+                classes: 'tile-button',
+                events: {
+                  'click': (event) => onTileClick(index),
                 },
-              ),
-            ),
-            button(
-              classes: 'action-button',
-              events: {
-                'click': (event) => codeCheck(),
-              },
-              [Component.text('UNLOCK')],
-            ),
-          ]),
+                [tile(value)],
+              );
+            }).toList(),
+          ),
+        ]),
 
-        if (isCodeCorrect)
-          div(classes: 'panel', [
-            h2([Component.text('THE GRID')]),
-            p(
-              classes: 'status',
-              [Component.text('$countdownTime seconds remaining')],
-            ),
-            div(
-              classes: 'puzzle-grid',
-              tiles.asMap().entries.map((entry) {
-                final index = entry.key;
-                final value = entry.value;
-
-                return button(
-                  classes: 'tile-button',
-                  events: {
-                    'click': (event) => onTileClick(index),
-                  },
-                  [tile(value)],
-                );
-              }).toList(),
-            ),
-            p(
-              classes: 'status',
-              [Component.text(countdownText)],
-            ),
+      if (currentScreen == 'victory')
+        div(classes: 'app', [
+          div(classes: 'reward-code', [
+            Component.text(rewardCode),
           ]),
-      ]),
+        ]),
+
+      if (currentScreen == 'failed')
+        div(classes: 'app', []),
 
       div(classes: 'desktop-warning', [
-        h2([Component.text('PHONE REQUIRED')]),
-        p([
-          Component.text('Open this puzzle on your phone to play.'),
-        ]),
+        Component.text(''),
       ]),
     ]);
   }
