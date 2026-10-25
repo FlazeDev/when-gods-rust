@@ -15,10 +15,14 @@ const PARRY_SPARK = preload("res://Assets/Randemlyy/ParrySpark.tscn")
 @onready var load_penaltyC: LoadPenaltyComponent = $"../LoadPenaltyComponent"
 @onready var cameraC: CameraComponent = $"../CameraComponent"
 @onready var animationC: AnimationComponent = $"../AnimationComponent"
+@onready var dodgeC: DodgeComponent = $"../DodgeComponent"
 
 func take_hit(damage: int, hit_stagger_duration: float = 0.8, hit_direction: Vector3 = Vector3.LEFT, attacker: Node3D = null, hit_collider: Node3D = null) -> void:
     var impact_time = float(Time.get_ticks_usec()) / 1_000_000
     var was_blocking = blockC.is_blocking
+
+    if dodgeC.has_iframes():
+        return
 
     await get_tree().create_timer(blockC.late_parry_window).timeout
     await get_tree().process_frame

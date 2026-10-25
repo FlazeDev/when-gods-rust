@@ -3,9 +3,12 @@ extends Node
 
 @export var follow_speed = 18.0
 @export var smoothing_speed = 12.0
+@export var screen_offset = 0.8
+@export var height_offset = 0.5
 
 @onready var resolveC: ResolveComponent = $"../ResolveComponent"
 @onready var upgradeC: UpgradeComponent = $"../UpgradeComponent"
+@onready var cameraC: CameraComponent = $"../CameraComponent"
 
 @onready var world_sprite: Sprite3D = $"../ResolveComponent/ResolveSprite"
 @onready var world_viewport: SubViewport = $"../ResolveComponent/Resolve"
@@ -22,8 +25,7 @@ func _ready() -> void:
 
 	world_bar.max_value = resolveC.maxResolve
 	hud_bar.max_value = 100.0
-	world_sprite.global_position = resolveC.player.global_position - resolveC.player.global_basis.x * 0.8 + Vector3.UP * 0.5
-
+	world_sprite.global_position = _get_world_bar_position()
 	_on_resolve_changed(resolveC.cResolve, resolveC.maxResolve)
 	_on_load_changed(upgradeC.get_current_load(), resolveC.maxResolve)
 	call_deferred("_assign_viewport_texture")
@@ -35,7 +37,7 @@ func _process(delta: float) -> void:
 	var hud_target = target_resolve / max_resolve * 100.0
 	hud_bar.value = lerpf(hud_bar.value, hud_target, weight)
 
-	var target_position = resolveC.player.global_position - resolveC.player.global_basis.x * 0.8 + Vector3.UP * 0.5
+	var target_position = _get_world_bar_position()
 	var follow_weight = 1.0 - exp(-follow_speed * delta)
 
 	world_sprite.global_position = world_sprite.global_position.lerp(target_position, follow_weight)
@@ -61,3 +63,10 @@ func _on_load_changed(current: float, maximum: float) -> void:
 	
 func _assign_viewport_texture() -> void:
 	world_sprite.texture = world_viewport.get_texture()
+
+func _get_world_bar_position() -> Vector3:
+	var screen_left = -cameraC.cam.global_basis.x
+	screen_left.y = 0.0
+	screen_left = screen_left.normalized()
+
+	return (resolveC.player.global_position + screen_left * screen_offset + Vector3.UP * height_offset)

@@ -2815,6 +2815,8 @@ script = ExtResource("19_1cd4j")
 [node name="DodgeComponent" type="Node" parent="." unique_id=890325805 node_paths=PackedStringArray("body")]
 script = ExtResource("19_d4y3p")
 body = NodePath("..")
+step_speed = 16.0
+step_duration = 0.1
 metadata/_custom_type_script = "uid://ci65tdq6gqlvu"
 
 [node name="InteractComponent" type="Node" parent="." unique_id=750357832]
