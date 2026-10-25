@@ -1,0 +1,35 @@
+name: Deploy Jaspr Site via Git Branch
+
+on:
+  push:
+    branches: [main] # Change to 'master' if your main branch is named master
+
+permissions:
+  contents: write # Crucial: Allows the script to push files to the gh-pages branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter/Dart
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install Jaspr CLI
+        run: dart pub global activate jaspr_cli
+
+      - name: Build Static Assets
+        run: |
+          dart pub get
+          jaspr build --port 8085
+
+      - name: Deploy to gh-pages Branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build/jaspr # The folder containing your generated HTML files
+          branch: gh-pages # The branch the action will push to

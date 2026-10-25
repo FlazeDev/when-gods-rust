@@ -19,7 +19,7 @@ class AppState extends State<App> {
   String currentScreen = 'code';
   bool gameFinished = false;
 
-  final String accessCode = 'FlazeGoat';
+  final String accessCode = 'EAB7642';
   final String rewardCode = 'CORE-7392';
 
   List<String> tiles = [

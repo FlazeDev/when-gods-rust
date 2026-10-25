@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 HitStop="*uid://b1spu6sk5a6ml"
-MCPRuntimeServer="*res://addons/godot_mcp_toolkit/runtime/mcp_runtime_server.gd"
 
 [display]
 

@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bf3v16yeoptno"]
+
+[ext_resource type="Script" uid="uid://mraxvcxpqlfd" path="res://Scripts/F1aze23/ModTable.gd" id="1_ymh8e"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wcicf"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_wlg4q"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ymh8e"]
+viewport_path = NodePath("Sprite3D/SubViewport")
+
+[node name="ModTable" type="StaticBody3D" unique_id=757975161]
+script = ExtResource("1_ymh8e")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1636321409]
+shape = SubResource("BoxShape3D_wcicf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1040730894]
+mesh = SubResource("BoxMesh_wlg4q")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=525864149]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0600935, 0)
+texture = SubResource("ViewportTexture_ymh8e")
+
+[node name="SubViewport" type="SubViewport" parent="Sprite3D" unique_id=1392387669]
+transparent_bg = true
+size = Vector2i(200, 40)
+
+[node name="Label" type="Label" parent="Sprite3D/SubViewport" unique_id=53426969]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 35
+text = "MOD TABLE"

@@ -12,6 +12,8 @@ var cWeapon:Weapon = null
 var isEquip:bool = false
 var isAttack:bool = false
 
+var unlocked:= []
+
 var Heals:int = 3
 
 func update(resolve:ResolveComponent, anim:AnimationPlayer, canStagger:bool, canCombo:bool, canCrit:bool):
@@ -25,6 +27,10 @@ func update(resolve:ResolveComponent, anim:AnimationPlayer, canStagger:bool, can
 		return
 	for item in iArea.get_overlapping_bodies():
 		if not item.has_node("ItemWeapon"):
+			continue
+		if item.has_node("ItemWeapon") and item.get_node("ItemWeapon").Name not in unlocked:
+			print("Not Unlocked")
+			item.get_node("ItemWeapon").unlocked = false
 			continue
 		equip(item.get_node("ItemWeapon"))
 		item.queue_free()
